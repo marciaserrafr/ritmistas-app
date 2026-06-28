@@ -8,8 +8,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a4a2e 0%, #2d7a4f 100%);
+            font-family: 'Georgia', serif;
+            background: linear-gradient(160deg, #0d2e18 0%, #1a4d28 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -25,18 +25,17 @@
             align-items: center;
             margin-bottom: 16px;
         }
-        .topo-nome { color: #fff; font-size: 12px; letter-spacing: 1px; opacity: 0.8; }
+        .topo-nome { color: #c9a227; font-size: 12px; letter-spacing: 1px; }
         .btn-sair {
             background: transparent;
-            border: 1px solid rgba(255,255,255,0.4);
-            color: #fff;
+            border: 1px solid rgba(201,162,39,0.5);
+            color: #c9a227;
             padding: 5px 14px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 12px;
         }
 
-        /* FLIP */
         .carteirinha-wrapper { width: 300px; height: 510px; perspective: 1200px; }
         .carteirinha-inner {
             position: relative;
@@ -54,136 +53,152 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
         .verso { transform: rotateY(180deg); }
 
         /* ══ FRENTE ══ */
-        .frente {
-            background: linear-gradient(160deg, #4db87a 0%, #2d8a55 40%, #1a5c35 100%);
+        .frente { background: #f0ede6; position: relative; }
+
+        .frente-svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+        }
+
+        .frente-corpo {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 28px 24px 24px;
         }
 
-        /* Topo da frente */
-        .frente-topo {
+        /* Header — sobre o verde do topo */
+        .frente-header {
             width: 100%;
+            height: 118px;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 24px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            flex-shrink: 0;
         }
-        .escola-info { text-align: left; }
-        .escola-sigla {
-            font-size: 8px;
-            color: rgba(255,255,255,0.6);
-            letter-spacing: 2px;
+        .h-escola {
+            font-size: 7.5px;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 2.5px;
             text-transform: uppercase;
-            margin-bottom: 2px;
+            margin-bottom: 5px;
+            text-align: center;
         }
-        .escola-nome {
-            font-size: 15px;
+        .h-bateria {
+            font-size: 20px;
             font-weight: bold;
             color: #fff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
             line-height: 1.2;
-            letter-spacing: 1px;
         }
-        .escola-nome em { color: #f0c842; font-style: normal; }
+        .h-bateria em { color: #f0c842; font-style: normal; }
 
-        /* Mini coroa como ícone no topo direito */
-        .icone-coroa { opacity: 0.9; }
+        /* Área clara central */
+        .frente-meio {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 24px 0;
+            overflow: hidden;
+        }
 
-        /* Foto */
-        .foto-area {
-            width: 120px; height: 120px;
+        .foto-anel {
+            width: 112px; height: 112px;
             border-radius: 50%;
             padding: 3px;
-            background: rgba(255,255,255,0.3);
-            margin-bottom: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #8B6914, #f0c842, #c9a227, #8B6914);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+            margin-bottom: 12px;
+            flex-shrink: 0;
         }
         .foto-interno {
             width: 100%; height: 100%;
             border-radius: 50%;
-            background: rgba(255,255,255,0.15);
+            background: #d8d5ce;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
-            font-size: 46px;
+            font-size: 42px;
         }
         .foto-interno img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Nome */
         .funcao-tag {
-            font-size: 9px;
-            color: rgba(255,255,255,0.65);
+            font-size: 8px;
+            color: #0d5228;
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         .nome {
             font-size: 22px;
             font-weight: bold;
-            color: #fff;
+            color: #1a1a1a;
             text-align: center;
             line-height: 1.2;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         .apelido {
             font-size: 13px;
-            color: rgba(255,255,255,0.7);
+            color: #666;
             font-style: italic;
-            margin-bottom: 24px;
+            margin-bottom: 14px;
         }
-
-        /* Linha divisória */
         .linha {
             width: 100%;
             height: 1px;
-            background: rgba(255,255,255,0.2);
-            margin-bottom: 20px;
+            background: rgba(0,0,0,0.1);
+            margin-bottom: 12px;
         }
-
-        /* Dados */
         .dados-grid {
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 20px;
+            gap: 12px;
         }
         .dado { text-align: left; }
         .dado-label {
-            font-size: 8px;
-            color: rgba(255,255,255,0.55);
+            font-size: 7px;
+            color: #aaa;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
-        .dado-valor {
-            font-size: 12px;
-            font-weight: bold;
-            color: #fff;
-        }
+        .dado-valor { font-size: 12px; font-weight: bold; color: #1a1a1a; }
 
-        /* Validade */
-        .validade-row {
+        /* Rodapé — sobre o verde de baixo */
+        .frente-rodape {
             width: 100%;
+            height: 78px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255,255,255,0.2);
+            justify-content: center;
+            flex-shrink: 0;
         }
         .val-label {
             font-size: 8px;
             color: rgba(255,255,255,0.55);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
         }
         .val-data {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: bold;
             color: #f0c842;
             letter-spacing: 1px;
@@ -191,95 +206,106 @@
 
         /* ══ VERSO ══ */
         .verso {
-            background: linear-gradient(160deg, #1a5c35 0%, #0d3b1a 100%);
+            background: linear-gradient(170deg, #061a0a 0%, #0d3b1a 50%, #061a0a 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 32px 28px;
+            position: relative;
         }
+        .verso-borda {
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(201,162,39,0.2);
+            border-radius: 14px;
+            pointer-events: none;
+        }
+        .canto {
+            position: absolute;
+            width: 20px; height: 20px;
+            border-color: rgba(201,162,39,0.4);
+            border-style: solid;
+        }
+        .canto-tl { top: 16px; left: 16px; border-width: 1.5px 0 0 1.5px; }
+        .canto-tr { top: 16px; right: 16px; border-width: 1.5px 1.5px 0 0; }
+        .canto-bl { bottom: 16px; left: 16px; border-width: 0 0 1.5px 1.5px; }
+        .canto-br { bottom: 16px; right: 16px; border-width: 0 1.5px 1.5px 0; }
 
+        .verso-conteudo {
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
         .verso-logo {
             width: 100px; height: 100px;
             border-radius: 50%;
             border: 1.5px solid rgba(201,162,39,0.5);
-            background: rgba(255,255,255,0.04);
+            background: rgba(201,162,39,0.04);
             display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         .verso-escola {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            color: #f0c842;
+            color: #c9a227;
             letter-spacing: 2px;
             text-transform: uppercase;
-            text-align: center;
             line-height: 1.5;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         .verso-linha {
             width: 50%;
             height: 1px;
             background: rgba(255,255,255,0.15);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
-        .verso-cargo-label {
+        .verso-mestre-label {
             font-size: 8px;
             color: rgba(255,255,255,0.35);
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 6px;
         }
-        .verso-cargo-nome {
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 24px;
+        .verso-mestre-nome {
+            font-size: 18px;
+            font-weight: bold;
+            color: rgba(255,255,255,0.75);
+            margin-bottom: 20px;
         }
-        .verso-linha-ass {
+        .verso-assinatura {
             width: 100px;
             height: 1px;
             background: rgba(255,255,255,0.15);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
         .verso-rodape {
             font-size: 9px;
             color: rgba(255,255,255,0.25);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            text-align: center;
             line-height: 1.8;
         }
 
         /* Botões */
         .btn-virar {
             margin-top: 20px;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.4);
-            color: #fff;
+            background: linear-gradient(135deg, #8B6914, #c9a227, #8B6914);
+            border: none;
+            color: #fff8e0;
             padding: 11px 34px;
             border-radius: 25px;
             cursor: pointer;
             font-size: 13px;
             font-weight: bold;
             letter-spacing: 1px;
-            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 15px rgba(201,162,39,0.3);
         }
-        .acoes {
-            width: 300px;
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-        }
-        .btn-acao {
-            flex: 1; padding: 11px; border: none;
-            border-radius: 12px; font-size: 13px;
-            font-weight: bold; cursor: pointer;
-        }
-        .btn-salvar {
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #fff;
-        }
+        .acoes { width: 300px; margin-top: 10px; display: flex; gap: 10px; }
+        .btn-acao { flex: 1; padding: 11px; border: none; border-radius: 12px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .btn-salvar { background: transparent; border: 1px solid #c9a227; color: #c9a227; }
         .btn-compartilhar { background: #128C7E; color: #fff; }
     </style>
 </head>
@@ -295,103 +321,114 @@
 
         <!-- ════ FRENTE ════ -->
         <div class="frente">
+            <svg class="frente-svg" viewBox="0 0 300 510" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="gVerde" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#0a4822"/>
+                        <stop offset="100%" style="stop-color:#0f6030"/>
+                    </linearGradient>
+                </defs>
 
-            <div class="frente-topo">
-                <div class="escola-info">
-                    <div class="escola-sigla">G.R.E.S. Imperatriz Leopoldinense</div>
-                    <div class="escola-nome">Swing da <em>Leopoldina</em></div>
+                <!-- Fundo claro -->
+                <rect width="300" height="510" fill="#f0ede6"/>
+
+                <!-- Verde topo — borda diagonal embaixo -->
+                <polygon points="0,0 300,0 300,112 0,144" fill="url(#gVerde)"/>
+
+                <!-- Linhas douradas separadoras (topo) -->
+                <line x1="0" y1="147" x2="300" y2="115" stroke="#c9a227" stroke-width="3.5"/>
+                <line x1="0" y1="154" x2="300" y2="122" stroke="#c9a227" stroke-width="1.2" opacity="0.5"/>
+
+                <!-- Verde baixo — borda diagonal em cima -->
+                <polygon points="0,432 300,400 300,510 0,510" fill="url(#gVerde)"/>
+
+                <!-- Linhas douradas separadoras (baixo) -->
+                <line x1="0" y1="429" x2="300" y2="397" stroke="#c9a227" stroke-width="3.5"/>
+                <line x1="0" y1="422" x2="300" y2="390" stroke="#c9a227" stroke-width="1.2" opacity="0.5"/>
+            </svg>
+
+            <div class="frente-corpo">
+                <div class="frente-header">
+                    <div class="h-escola">G.R.E.S. Imperatriz Leopoldinense</div>
+                    <div class="h-bateria">Swing da<br><em>Leopoldina</em></div>
                 </div>
-                <!-- Mini coroa SVG no canto -->
-                <svg class="icone-coroa" viewBox="0 0 44 36" width="44" height="36">
-                    <g transform="translate(22, 28)" fill="none" stroke="#f0c842" stroke-width="1.2" stroke-linejoin="round">
-                        <rect x="-18" y="0" width="36" height="8" rx="2" fill="rgba(240,200,66,0.15)"/>
-                        <path d="
-                            M-18,0 L-18,-7
-                            C-18,-14 -14,-18 -11,-20
-                            C-8,-18 -7,-11 -7,-7
-                            C-7,-14 -3,-21 0,-26
-                            C3,-21 7,-14 7,-7
-                            C7,-11 8,-18 11,-20
-                            C14,-18 18,-14 18,-7
-                            L18,0 Z
-                        " fill="rgba(240,200,66,0.1)"/>
-                        <circle cx="-11" cy="-21" r="2.5" fill="#f0c842" stroke="none"/>
-                        <circle cx="0"   cy="-27" r="3"   fill="#f0c842" stroke="none"/>
-                        <circle cx="11"  cy="-21" r="2.5" fill="#f0c842" stroke="none"/>
-                    </g>
-                </svg>
-            </div>
 
-            <div class="foto-area">
-                <div class="foto-interno" id="fotoRitmista">👤</div>
-            </div>
-
-            <div class="funcao-tag">Ritmista</div>
-            <div class="nome" id="nomeRitmista">—</div>
-            <div class="apelido" id="apelidoRitmista"></div>
-
-            <div class="linha"></div>
-
-            <div class="dados-grid">
-                <div class="dado">
-                    <div class="dado-label">CPF</div>
-                    <div class="dado-valor" id="cpfRitmista">—</div>
+                <div class="frente-meio">
+                    <div class="foto-anel">
+                        <div class="foto-interno" id="fotoRitmista">👤</div>
+                    </div>
+                    <div class="funcao-tag">✦ Ritmista ✦</div>
+                    <div class="nome" id="nomeRitmista">—</div>
+                    <div class="apelido" id="apelidoRitmista"></div>
+                    <div class="linha"></div>
+                    <div class="dados-grid">
+                        <div class="dado">
+                            <div class="dado-label">CPF</div>
+                            <div class="dado-valor" id="cpfRitmista">—</div>
+                        </div>
+                        <div class="dado">
+                            <div class="dado-label">Instrumento</div>
+                            <div class="dado-valor" id="instrumentoRitmista">—</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="dado">
-                    <div class="dado-label">Instrumento</div>
-                    <div class="dado-valor" id="instrumentoRitmista">—</div>
+
+                <div class="frente-rodape">
+                    <div class="val-label">Válida até</div>
+                    <div class="val-data" id="validadeCarteirinha">31/07/2027</div>
                 </div>
             </div>
-
-            <div class="validade-row">
-                <span class="val-label">Válida até</span>
-                <span class="val-data" id="validadeCarteirinha">31/07/2027</span>
-            </div>
-
         </div>
 
         <!-- ════ VERSO ════ -->
         <div class="verso">
-            <div class="verso-logo">
-                <svg viewBox="0 0 90 90" width="72" height="72">
-                    <g transform="translate(45, 60)" fill="none" stroke="#f0c842" stroke-width="1.3" stroke-linejoin="round">
-                        <rect x="-30" y="0" width="60" height="12" rx="2" fill="rgba(240,200,66,0.1)"/>
-                        <circle cx="-20" cy="6" r="3" fill="#f0c842" stroke="none" opacity="0.7"/>
-                        <circle cx="-7"  cy="6" r="3" fill="#f0c842" stroke="none" opacity="0.7"/>
-                        <circle cx="7"   cy="6" r="3" fill="#f0c842" stroke="none" opacity="0.7"/>
-                        <circle cx="20"  cy="6" r="3" fill="#f0c842" stroke="none" opacity="0.7"/>
-                        <path d="
-                            M-30,0 L-30,-9
-                            C-30,-22 -25,-28 -20,-32
-                            C-15,-28 -13,-18 -13,-9
-                            C-13,-24 -7,-38 0,-48
-                            C7,-38 13,-24 13,-9
-                            C13,-18 15,-28 20,-32
-                            C25,-28 30,-22 30,-9
-                            L30,0 Z
-                        " fill="rgba(240,200,66,0.1)"/>
-                        <circle cx="-20" cy="-34" r="4"   fill="#f0c842" stroke="none"/>
-                        <circle cx="0"   cy="-50" r="5"   fill="#f0c842" stroke="none"/>
-                        <circle cx="20"  cy="-34" r="4"   fill="#f0c842" stroke="none"/>
-                        <line x1="0" y1="-59" x2="0" y2="-43" stroke="#f0c842" stroke-width="1.2"/>
-                        <line x1="-5" y1="-51" x2="5" y2="-51" stroke="#f0c842" stroke-width="1.2"/>
-                    </g>
-                </svg>
-            </div>
+            <div class="verso-borda"></div>
+            <div class="canto canto-tl"></div>
+            <div class="canto canto-tr"></div>
+            <div class="canto canto-bl"></div>
+            <div class="canto canto-br"></div>
 
-            <div class="verso-escola">Imperatriz<br>Leopoldinense</div>
-            <div class="verso-linha"></div>
-            <div class="verso-cargo-label">Mestre de Bateria</div>
-            <div class="verso-cargo-nome">A definir</div>
-            <div class="verso-linha-ass"></div>
-            <div class="verso-rodape">Swing da Leopoldina<br>Temporada 2027</div>
+            <div class="verso-conteudo">
+                <div class="verso-logo">
+                    <svg viewBox="0 0 90 90" width="72" height="72">
+                        <g transform="translate(45, 60)" fill="none" stroke="#c9a227" stroke-width="1.3" stroke-linejoin="round">
+                            <rect x="-30" y="0" width="60" height="12" rx="2" fill="rgba(201,162,39,0.1)"/>
+                            <circle cx="-20" cy="6" r="3" fill="#c9a227" stroke="none" opacity="0.7"/>
+                            <circle cx="-7"  cy="6" r="3" fill="#c9a227" stroke="none" opacity="0.7"/>
+                            <circle cx="7"   cy="6" r="3" fill="#c9a227" stroke="none" opacity="0.7"/>
+                            <circle cx="20"  cy="6" r="3" fill="#c9a227" stroke="none" opacity="0.7"/>
+                            <path d="
+                                M-30,0 L-30,-9
+                                C-30,-22 -25,-28 -20,-32
+                                C-15,-28 -13,-18 -13,-9
+                                C-13,-24 -7,-38 0,-48
+                                C7,-38 13,-24 13,-9
+                                C13,-18 15,-28 20,-32
+                                C25,-28 30,-22 30,-9
+                                L30,0 Z
+                            " fill="rgba(201,162,39,0.1)"/>
+                            <circle cx="-20" cy="-34" r="4" fill="#c9a227" stroke="none"/>
+                            <circle cx="0"   cy="-50" r="5" fill="#c9a227" stroke="none"/>
+                            <circle cx="20"  cy="-34" r="4" fill="#c9a227" stroke="none"/>
+                            <line x1="0" y1="-59" x2="0" y2="-43" stroke="#c9a227" stroke-width="1.2"/>
+                            <line x1="-5" y1="-51" x2="5" y2="-51" stroke="#c9a227" stroke-width="1.2"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="verso-escola">Imperatriz<br>Leopoldinense</div>
+                <div class="verso-linha"></div>
+                <div class="verso-mestre-label">Mestre de Bateria</div>
+                <div class="verso-mestre-nome">Lolo</div>
+                <div class="verso-assinatura"></div>
+                <div class="verso-rodape">Swing da Leopoldina<br>Temporada 2027</div>
+            </div>
         </div>
 
     </div>
 </div>
 
 <button class="btn-virar" onclick="virarCarteirinha()">🔄 Virar carteirinha</button>
-
 <div class="acoes">
     <button class="btn-acao btn-salvar" onclick="salvarImagem()">💾 Salvar</button>
     <button class="btn-acao btn-compartilhar" onclick="compartilhar()">📲 Compartilhar</button>
@@ -399,7 +436,6 @@
 
 <script>
     const ritmista = JSON.parse(localStorage.getItem('ritmista'));
-
     if (!ritmista) {
         window.location.href = 'login.html';
     } else {
@@ -407,7 +443,6 @@
         document.getElementById('apelidoRitmista').textContent = ritmista.apelido ? `"${ritmista.apelido}"` : '';
         document.getElementById('cpfRitmista').textContent = ritmista.cpf;
         document.getElementById('instrumentoRitmista').textContent = ritmista.instrumento || '—';
-
         if (ritmista.foto_url) {
             const img = document.createElement('img');
             img.src = ritmista.foto_url;
@@ -416,29 +451,18 @@
             box.appendChild(img);
         }
     }
-
     function virarCarteirinha() {
         document.getElementById('carteirinhaWrapper').classList.toggle('virada');
     }
-
     function sair() {
         localStorage.removeItem('ritmista');
         window.location.href = 'login.html';
     }
-
-    function salvarImagem() {
-        alert('Função de salvar imagem será ativada em breve!');
-    }
-
+    function salvarImagem() { alert('Função de salvar imagem será ativada em breve!'); }
     function compartilhar() {
         if (navigator.share && ritmista) {
-            navigator.share({
-                title: 'Minha Carteirinha — Swing da Leopoldina',
-                text: `${ritmista.nome} — Ritmista da Imperatriz Leopoldinense. Válida até 31/07/2027!`,
-            });
-        } else {
-            alert('Compartilhamento não disponível neste dispositivo.');
-        }
+            navigator.share({ title: 'Minha Carteirinha — Swing da Leopoldina', text: `${ritmista.nome} — Ritmista da Imperatriz Leopoldinense. Válida até 31/07/2027!` });
+        } else { alert('Compartilhamento não disponível neste dispositivo.'); }
     }
 </script>
 </body>
