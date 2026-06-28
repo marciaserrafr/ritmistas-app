@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritmistas - Carteirinha</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            flex-direction: column;
+        }
+        .topo {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .topo span {
+            color: white;
+            font-size: 14px;
+        }
+        .btn-sair {
+            background: transparent;
+            border: 1px solid white;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .carteirinha {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 20px;
+            padding: 28px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .carteirinha::before {
+            content: '🥁';
+            position: absolute;
+            font-size: 120px;
+            right: -20px;
+            top: -20px;
+            opacity: 0.1;
+        }
+        .carteirinha-header {
+            text-align: center;
+            margin-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 16px;
+        }
+        .carteirinha-header h2 {
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .carteirinha-header p {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+        .carteirinha-body {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .foto-container {
+            flex-shrink: 0;
+        }
+        .foto {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.5);
+            object-fit: cover;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+        .dados { flex: 1; }
+        .nome-principal {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        .apelido {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+        .info-linha {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+        }
+        .info-label {
+            font-size: 10px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .info-valor {
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .carteirinha-footer {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status-aprovado {
+            background: #28a745;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .temporada {
+            font-size: 12px;
+            opacity: 0.6;
+        }
+        .acoes {
+            width: 100%;
+            max-width: 420px;
+            margin-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+        .btn-acao {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-salvar {
+            background: white;
+            color: #1a1a2e;
+        }
+        .btn-compartilhar {
+            background: #25D366;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topo">
+        <span>🥁 Ritmistas</span>
+        <button class="btn-sair" onclick="sair()">Sair</button>
+    </div>
+
+    <div class="carteirinha" id="carteirinha">
+        <div class="carteirinha-header">
+            <h2>CARTEIRINHA DO RITMISTA</h2>
+            <p>Sistema de Gestão da Bateria</p>
+        </div>
+
+        <div class="carteirinha-body">
+            <div class="foto-container">
+                <div class="foto" id="fotoRitmista">👤</div>
+            </div>
+            <div class="dados">
+                <div class="nome-principal" id="nomeRitmista">-</div>
+                <div class="apelido" id="apelidoRitmista"></div>
+
+                <div class="info-linha">
+                    <span class="info-label">CPF</span>
+                    <span class="info-valor" id="cpfRitmista">-</span>
+                </div>
+                <div class="info-linha">
+                    <span class="info-label">Nascimento</span>
+                    <span class="info-valor" id="nascimentoRitmista">-</span>
+                </div>
+                <div class="info-linha">
+                    <span class="info-label">Cidade / Estado</span>
+                    <span class="info-valor" id="cidadeRitmista">-</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="carteirinha-footer">
+            <span class="status-aprovado">✓ APROVADO</span>
+            <span class="temporada">Temporada 2026</span>
+        </div>
+    </div>
+
+    <div class="acoes">
+        <button class="btn-acao btn-salvar" onclick="salvarImagem()">💾 Salvar imagem</button>
+        <button class="btn-acao btn-compartilhar" onclick="compartilhar()">📲 Compartilhar</button>
+    </div>
+
+<script>
+    const ritmista = JSON.parse(localStorage.getItem('ritmista'));
+
+    if (!ritmista) {
+        window.location.href = 'login.html';
+    } else {
+        document.getElementById('nomeRitmista').textContent = ritmista.nome;
+        document.getElementById('apelidoRitmista').textContent = ritmista.apelido ? `"${ritmista.apelido}"` : '';
+        document.getElementById('cpfRitmista').textContent = ritmista.cpf;
+        document.getElementById('cidadeRitmista').textContent = `${ritmista.cidade} / ${ritmista.estado}`;
+
+        if (ritmista.nascimento) {
+            const d = new Date(ritmista.nascimento + 'T00:00:00');
+            document.getElementById('nascimentoRitmista').textContent = d.toLocaleDateString('pt-BR');
+        }
+
+        if (ritmista.foto_url) {
+            document.getElementById('fotoRitmista').innerHTML = `<img src="${ritmista.foto_url}" style="width:90px;height:90px;border-radius:50%;object-fit:cover;">`;
+        }
+    }
+
+    function sair() {
+        localStorage.removeItem('ritmista');
+        window.location.href = 'login.html';
+    }
+
+    function salvarImagem() {
+        alert('Função de salvar imagem será ativada em breve!');
+    }
+
+    function compartilhar() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Minha Carteirinha de Ritmista',
+                text: `${ritmista.nome} - Ritmista aprovado! Temporada 2026`,
+            });
+        } else {
+            alert('Compartilhamento não disponível neste dispositivo.');
+        }
+    }
+</script>
+</body>
+</html>
