@@ -6,9 +6,10 @@
     <title>Carteirinha - Swing da Leopoldina</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Georgia', serif;
-            background: #0a0a0a;
+            background: radial-gradient(ellipse at center, #0d2b0d 0%, #050f05 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -16,6 +17,7 @@
             padding: 20px;
             flex-direction: column;
         }
+
         .topo {
             width: 100%;
             max-width: 320px;
@@ -24,185 +26,202 @@
             align-items: center;
             margin-bottom: 16px;
         }
-        .topo span { color: #c9a84c; font-size: 13px; font-weight: bold; }
+        .topo span { color: #d4a017; font-size: 13px; font-weight: bold; letter-spacing: 1px; }
         .btn-sair {
             background: transparent;
-            border: 1px solid #c9a84c;
-            color: #c9a84c;
-            padding: 5px 12px;
-            border-radius: 8px;
+            border: 1px solid #d4a017;
+            color: #d4a017;
+            padding: 5px 14px;
+            border-radius: 20px;
             cursor: pointer;
             font-size: 12px;
         }
 
-        /* WRAPPER VERTICAL */
+        /* CARD WRAPPER */
         .carteirinha-wrapper {
             width: 300px;
-            height: 500px;
-            perspective: 1000px;
+            height: 510px;
+            perspective: 1200px;
         }
         .carteirinha-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 0.8s;
+            transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
             transform-style: preserve-3d;
         }
         .carteirinha-wrapper.virada .carteirinha-inner {
             transform: rotateY(180deg);
         }
+
         .frente, .verso {
             position: absolute;
             width: 100%;
             height: 100%;
-            border-radius: 20px;
+            border-radius: 22px;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(212,160,23,0.15);
         }
         .verso { transform: rotateY(180deg); }
 
-        /* FRENTE */
+        /* ═══ FRENTE ═══ */
         .frente {
-            background: linear-gradient(170deg, #0d3320 0%, #1a5c35 40%, #0d3320 100%);
-            border: 2px solid #c9a84c;
+            background: #0d3b1a;
+            border: 1.5px solid #c8960c;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0;
+            position: relative;
         }
 
-        /* Arte do topo */
-        .arte-topo {
-            width: 100%;
-            height: 160px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        .arte-topo svg {
+        /* Fundo artístico — SVG de fundo completo */
+        .fundo-arte {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
         }
-        .arte-topo-content {
+
+        /* Faixa dourada no topo */
+        .faixa-topo {
             position: relative;
             z-index: 2;
+            width: 100%;
+            background: linear-gradient(135deg, #8B6914 0%, #d4a017 30%, #f0c842 50%, #d4a017 70%, #8B6914 100%);
+            padding: 12px 16px 10px;
             text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
         }
-        .escola-nome-topo {
-            font-size: 10px;
-            color: #c9a84c;
+        .escola-label {
+            font-size: 8px;
+            color: rgba(0,0,0,0.7);
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
-        .bateria-nome-topo {
-            font-size: 18px;
+        .bateria-titulo {
+            font-size: 16px;
             font-weight: bold;
-            color: white;
-            letter-spacing: 2px;
+            color: #0a2510;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(201,168,76,0.5);
+            font-family: 'Georgia', serif;
         }
 
         /* Foto */
-        .foto-container {
-            margin-top: -40px;
+        .foto-area {
             position: relative;
-            z-index: 3;
+            z-index: 2;
+            margin-top: 18px;
         }
-        .foto-box {
-            width: 90px;
-            height: 90px;
+        .foto-anel {
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
-            border: 3px solid #c9a84c;
-            overflow: hidden;
-            background: rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, #d4a017, #f0c842, #8B6914, #d4a017);
+            padding: 3px;
+            box-shadow: 0 0 25px rgba(212,160,23,0.5);
+        }
+        .foto-anel-interno {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #0d3b1a;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            box-shadow: 0 0 20px rgba(201,168,76,0.4);
+            overflow: hidden;
+            font-size: 32px;
         }
-        .foto-box img { width: 100%; height: 100%; object-fit: cover; }
+        .foto-anel-interno img {
+            width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+        }
 
-        /* Dados */
-        .dados-container {
+        /* Conteúdo do card */
+        .card-body {
+            position: relative;
+            z-index: 2;
             width: 100%;
-            padding: 16px 20px;
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 12px 20px 16px;
         }
-        .funcao-badge {
-            background: linear-gradient(90deg, #c9a84c, #e8c96d, #c9a84c);
-            color: #0a2518;
-            font-size: 9px;
+
+        .funcao-tag {
+            background: linear-gradient(90deg, #8B6914, #d4a017, #8B6914);
+            color: #fff8e7;
+            font-size: 8px;
             font-weight: bold;
-            padding: 3px 16px;
+            padding: 3px 18px;
             border-radius: 20px;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 10px;
-            margin-top: 8px;
+            margin-bottom: 8px;
         }
-        .ritmista-nome {
-            font-size: 18px;
+
+        .nome-principal {
+            font-size: 19px;
             font-weight: bold;
-            color: white;
+            color: #ffffff;
             text-align: center;
             line-height: 1.2;
-            margin-bottom: 2px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
-        .ritmista-apelido {
-            font-size: 12px;
-            color: #c9a84c;
+        .apelido {
+            font-size: 13px;
+            color: #d4a017;
             font-style: italic;
-            margin-bottom: 16px;
+            margin-top: 2px;
+            margin-bottom: 14px;
         }
-        .divisor {
-            width: 80%;
+
+        .linha-dourada {
+            width: 75%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #c9a84c, transparent);
-            margin-bottom: 16px;
+            background: linear-gradient(90deg, transparent, #d4a017, transparent);
+            margin-bottom: 14px;
         }
-        .dados-grid {
+
+        .info-grid {
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
-        .dado-item { text-align: center; }
-        .dado-label {
-            font-size: 8px;
+        .info-bloco {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(212,160,23,0.2);
+            border-radius: 8px;
+            padding: 7px 10px;
+            text-align: center;
+        }
+        .info-label {
+            font-size: 7px;
             color: rgba(255,255,255,0.4);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2px;
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
         }
-        .dado-valor {
-            font-size: 12px;
-            color: white;
+        .info-valor {
+            font-size: 11px;
+            color: #fff;
             font-weight: bold;
         }
-        .dado-instrumento {
+
+        .validade-bloco {
             width: 100%;
-            text-align: center;
-            margin-bottom: 16px;
-        }
-        .validade-box {
-            border: 1px solid rgba(201,168,76,0.5);
-            border-radius: 8px;
-            padding: 6px 20px;
-            text-align: center;
-            background: rgba(201,168,76,0.05);
+            background: rgba(212,160,23,0.08);
+            border: 1px solid rgba(212,160,23,0.4);
+            border-radius: 10px;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .validade-label {
             font-size: 8px;
@@ -210,104 +229,108 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .validade-valor {
-            font-size: 13px;
-            color: #c9a84c;
+        .validade-data {
+            font-size: 15px;
+            color: #d4a017;
             font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        /* VERSO */
+        /* ═══ VERSO ═══ */
         .verso {
-            background: linear-gradient(170deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
-            border: 2px solid #c9a84c;
+            background: #06150a;
+            border: 1.5px solid #c8960c;
+            position: relative;
+        }
+        .verso-fundo {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+        .verso-conteudo {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 24px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            padding: 28px 24px;
         }
-        .verso svg.bg {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            opacity: 0.08;
-        }
-        .verso-content { position: relative; z-index: 2; width: 100%; }
-        .verso-logo-circle {
-            width: 100px;
-            height: 100px;
+        .verso-logo-area {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            border: 2px solid #c9a84c;
+            background: radial-gradient(circle, rgba(212,160,23,0.1) 0%, transparent 70%);
+            border: 1.5px solid rgba(212,160,23,0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px;
-            background: rgba(201,168,76,0.05);
+            margin-bottom: 16px;
         }
-        .verso-escola {
-            font-size: 14px;
+        .verso-escola-nome {
+            font-size: 13px;
             font-weight: bold;
-            color: #c9a84c;
+            color: #d4a017;
             letter-spacing: 3px;
             text-transform: uppercase;
+            text-align: center;
             margin-bottom: 4px;
         }
-        .verso-subtitulo {
-            font-size: 10px;
-            color: rgba(255,255,255,0.5);
+        .verso-fundacao {
+            font-size: 9px;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 2px;
             margin-bottom: 24px;
-            letter-spacing: 1px;
         }
         .verso-divisor {
-            width: 60%;
+            width: 55%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, #c9a84c, transparent);
-            margin: 0 auto 20px;
+            background: linear-gradient(90deg, transparent, #d4a017, transparent);
+            margin-bottom: 20px;
         }
-        .verso-cargo {
+        .verso-cargo-label {
             font-size: 8px;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.3);
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 4px;
         }
-        .verso-nome {
-            font-size: 13px;
-            color: white;
-            font-weight: bold;
-            margin-bottom: 20px;
+        .verso-cargo-nome {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 18px;
         }
-        .assinatura {
-            font-family: 'Brush Script MT', cursive;
-            font-size: 32px;
-            color: rgba(255,255,255,0.6);
-            margin-bottom: 4px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 4px;
-            width: 60%;
-            margin: 0 auto 6px;
+        .assinatura-linha {
+            width: 120px;
+            height: 1px;
+            background: rgba(255,255,255,0.2);
+            margin-bottom: 6px;
         }
         .verso-mestre-label {
             font-size: 8px;
-            color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.25);
             text-transform: uppercase;
             letter-spacing: 1px;
+            text-align: center;
         }
 
         /* BOTÕES */
         .btn-virar {
-            margin-top: 16px;
-            background: transparent;
-            border: 1px solid #c9a84c;
-            color: #c9a84c;
-            padding: 8px 24px;
-            border-radius: 20px;
+            margin-top: 18px;
+            background: linear-gradient(135deg, #8B6914, #d4a017);
+            border: none;
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(212,160,23,0.3);
         }
+
         .acoes {
             width: 300px;
             margin-top: 12px;
@@ -318,147 +341,220 @@
             flex: 1;
             padding: 12px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 13px;
             font-weight: bold;
             cursor: pointer;
         }
-        .btn-salvar { background: #c9a84c; color: #0a2518; }
+        .btn-salvar { background: rgba(212,160,23,0.15); color: #d4a017; border: 1px solid #d4a017; }
         .btn-compartilhar { background: #25D366; color: white; }
     </style>
 </head>
 <body>
 
-    <div class="topo">
-        <span>👑 Imperatriz Leopoldinense</span>
-        <button class="btn-sair" onclick="sair()">Sair</button>
-    </div>
+<div class="topo">
+    <span>♛ Imperatriz Leopoldinense</span>
+    <button class="btn-sair" onclick="sair()">Sair</button>
+</div>
 
-    <div class="carteirinha-wrapper" id="carteirinhaWrapper">
-        <div class="carteirinha-inner">
+<div class="carteirinha-wrapper" id="carteirinhaWrapper">
+    <div class="carteirinha-inner">
 
-            <!-- FRENTE -->
-            <div class="frente">
-                <div class="arte-topo">
-                    <!-- Arte SVG de fundo -->
-                    <svg viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Fundo degradê -->
-                        <defs>
-                            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-                                <stop offset="0%" style="stop-color:#c9a84c;stop-opacity:0.3"/>
-                                <stop offset="100%" style="stop-color:#c9a84c;stop-opacity:0"/>
-                            </radialGradient>
-                        </defs>
-                        <ellipse cx="150" cy="80" rx="120" ry="60" fill="url(#glow)"/>
+        <!-- ══════ FRENTE ══════ -->
+        <div class="frente">
 
-                        <!-- Coroa estilizada -->
-                        <g transform="translate(90, 20)" fill="none" stroke="#c9a84c" stroke-width="1.5">
-                            <!-- Base da coroa -->
-                            <rect x="10" y="55" width="100" height="18" rx="3" fill="rgba(201,168,76,0.2)" stroke="#c9a84c"/>
-                            <!-- Corpo da coroa -->
-                            <path d="M10,55 L10,30 L35,50 L60,15 L85,50 L110,30 L110,55 Z" fill="rgba(201,168,76,0.15)" stroke="#c9a84c" stroke-linejoin="round"/>
-                            <!-- Ponto central -->
-                            <circle cx="60" cy="12" r="4" fill="#c9a84c"/>
-                            <!-- Pontos laterais -->
-                            <circle cx="33" cy="48" r="3" fill="#c9a84c"/>
-                            <circle cx="87" cy="48" r="3" fill="#c9a84c"/>
-                            <!-- Joias na base -->
-                            <circle cx="35" cy="64" r="4" fill="rgba(201,168,76,0.6)"/>
-                            <circle cx="60" cy="64" r="4" fill="rgba(201,168,76,0.6)"/>
-                            <circle cx="85" cy="64" r="4" fill="rgba(201,168,76,0.6)"/>
-                        </g>
+            <!-- FUNDO ARTÍSTICO COMPLETO -->
+            <svg class="fundo-arte" viewBox="0 0 300 510" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <radialGradient id="bgGlow" cx="50%" cy="45%" r="55%">
+                        <stop offset="0%" style="stop-color:#1a6b30;stop-opacity:1"/>
+                        <stop offset="100%" style="stop-color:#0a2510;stop-opacity:1"/>
+                    </radialGradient>
+                    <radialGradient id="coroa-glow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#d4a017;stop-opacity:0.18"/>
+                        <stop offset="100%" style="stop-color:#d4a017;stop-opacity:0"/>
+                    </radialGradient>
+                    <linearGradient id="coroa-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#f0c842;stop-opacity:0.25"/>
+                        <stop offset="100%" style="stop-color:#8B6914;stop-opacity:0.08"/>
+                    </linearGradient>
+                    <filter id="brilho">
+                        <feGaussianBlur stdDeviation="2" result="blur"/>
+                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                </defs>
 
-                        <!-- Linhas decorativas -->
-                        <line x1="20" y1="145" x2="130" y2="145" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
-                        <line x1="170" y1="145" x2="280" y2="145" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
-                        <circle cx="150" cy="145" r="3" fill="#c9a84c" opacity="0.6"/>
-                    </svg>
+                <!-- Fundo base -->
+                <rect width="300" height="510" fill="url(#bgGlow)"/>
 
-                    <div class="arte-topo-content">
-                        <div class="escola-nome-topo">G.R.E.S. Imperatriz Leopoldinense</div>
-                        <div class="bateria-nome-topo">Swing da Leopoldina</div>
-                    </div>
-                </div>
+                <!-- Brilho central -->
+                <ellipse cx="150" cy="280" rx="160" ry="200" fill="url(#coroa-glow)"/>
 
-                <div class="foto-container">
-                    <div class="foto-box" id="fotoRitmista">👤</div>
-                </div>
+                <!-- ★ COROA GRANDE DE FUNDO — centro do card ★ -->
+                <g transform="translate(150, 295) scale(1.6)" opacity="0.22" fill="url(#coroa-grad)" stroke="#d4a017" stroke-width="0.8">
+                    <!-- Base retangular com entalhes -->
+                    <rect x="-65" y="52" width="130" height="22" rx="4"/>
+                    <!-- Pérolas da base -->
+                    <circle cx="-42" cy="63" r="5"/>
+                    <circle cx="-14" cy="63" r="5"/>
+                    <circle cx="14" cy="63" r="5"/>
+                    <circle cx="42" cy="63" r="5"/>
+                    <!-- Corpo da coroa -->
+                    <path d="M-65,52 L-65,15 L-38,36 L-18,8 L0,-18 L18,8 L38,36 L65,15 L65,52 Z" stroke-linejoin="round"/>
+                    <!-- Ornamentos nos pontos da coroa -->
+                    <!-- Topo central (pico mais alto) -->
+                    <circle cx="0" cy="-22" r="7" fill="#d4a017" opacity="0.5"/>
+                    <circle cx="0" cy="-22" r="4" fill="#fff" opacity="0.3"/>
+                    <!-- Picos laterais altos -->
+                    <circle cx="-19" cy="5" r="5" fill="#d4a017" opacity="0.4"/>
+                    <circle cx="19" cy="5" r="5" fill="#d4a017" opacity="0.4"/>
+                    <!-- Picos externos (virados para baixo) -->
+                    <circle cx="-38" cy="33" r="4" fill="#d4a017" opacity="0.35"/>
+                    <circle cx="38" cy="33" r="4" fill="#d4a017" opacity="0.35"/>
+                    <!-- Detalhe: pequenas cruzes nos picos -->
+                    <line x1="0" y1="-32" x2="0" y2="-14" stroke="#d4a017" stroke-width="1.2" opacity="0.5"/>
+                    <line x1="-8" y1="-23" x2="8" y2="-23" stroke="#d4a017" stroke-width="1.2" opacity="0.5"/>
+                </g>
 
-                <div class="dados-container">
-                    <div class="funcao-badge" id="funcaoRitmista">Ritmista</div>
-                    <div class="ritmista-nome" id="nomeRitmista">-</div>
-                    <div class="ritmista-apelido" id="apelidoRitmista"></div>
-                    <div class="divisor"></div>
-                    <div class="dados-grid">
-                        <div class="dado-item">
-                            <div class="dado-label">CPF</div>
-                            <div class="dado-valor" id="cpfRitmista">-</div>
-                        </div>
-                        <div class="dado-item">
-                            <div class="dado-label">Instrumento</div>
-                            <div class="dado-valor" id="instrumentoRitmista">-</div>
-                        </div>
-                    </div>
-                    <div class="validade-box">
-                        <div class="validade-label">Válida até</div>
-                        <div class="validade-valor" id="validadeCarteirinha">31/07/2027</div>
-                    </div>
+                <!-- Ornamentos de canto — losangos e pontos decorativos -->
+                <g opacity="0.15" stroke="#d4a017" stroke-width="0.8" fill="none">
+                    <!-- Canto inferior esquerdo -->
+                    <polygon points="20,460 35,445 50,460 35,475" />
+                    <circle cx="35" cy="460" r="3" fill="#d4a017"/>
+                    <!-- Canto inferior direito -->
+                    <polygon points="250,460 265,445 280,460 265,475" />
+                    <circle cx="265" cy="460" r="3" fill="#d4a017"/>
+                </g>
+
+                <!-- Linhas diagonais sutis de fundo -->
+                <g opacity="0.05" stroke="#d4a017" stroke-width="0.5">
+                    <line x1="0" y1="80" x2="300" y2="380"/>
+                    <line x1="0" y1="130" x2="300" y2="430"/>
+                    <line x1="300" y1="80" x2="0" y2="380"/>
+                    <line x1="300" y1="130" x2="0" y2="430"/>
+                </g>
+
+                <!-- Borda interna decorativa -->
+                <rect x="8" y="8" width="284" height="494" rx="16" fill="none" stroke="#d4a017" stroke-width="0.6" opacity="0.25"/>
+
+                <!-- Pontos decorativos no meio -->
+                <g fill="#d4a017" opacity="0.2">
+                    <circle cx="30" cy="300" r="1.5"/>
+                    <circle cx="270" cy="300" r="1.5"/>
+                    <circle cx="30" cy="320" r="1"/>
+                    <circle cx="270" cy="320" r="1"/>
+                </g>
+            </svg>
+
+            <!-- Faixa dourada -->
+            <div class="faixa-topo">
+                <div class="escola-label">G.R.E.S. Imperatriz Leopoldinense</div>
+                <div class="bateria-titulo">Swing da Leopoldina</div>
+            </div>
+
+            <!-- Foto -->
+            <div class="foto-area">
+                <div class="foto-anel">
+                    <div class="foto-anel-interno" id="fotoRitmista">👤</div>
                 </div>
             </div>
 
-            <!-- VERSO -->
-            <div class="verso">
-                <!-- Arte de fundo -->
-                <svg class="bg" viewBox="0 0 300 500" xmlns="http://www.w3.org/2000/svg">
-                    <g transform="translate(60, 100)" fill="none" stroke="#c9a84c" stroke-width="2">
-                        <rect x="10" y="55" width="180" height="30" rx="4" fill="rgba(201,168,76,0.3)"/>
-                        <path d="M10,55 L10,20 L55,45 L100,0 L145,45 L190,20 L190,55 Z" fill="rgba(201,168,76,0.2)" stroke-linejoin="round"/>
-                        <circle cx="100" cy="-5" r="8" fill="rgba(201,168,76,0.6)"/>
-                        <circle cx="53" cy="42" r="5" fill="rgba(201,168,76,0.5)"/>
-                        <circle cx="147" cy="42" r="5" fill="rgba(201,168,76,0.5)"/>
-                        <circle cx="50" cy="70" r="7" fill="rgba(201,168,76,0.4)"/>
-                        <circle cx="100" cy="70" r="7" fill="rgba(201,168,76,0.4)"/>
-                        <circle cx="150" cy="70" r="7" fill="rgba(201,168,76,0.4)"/>
-                    </g>
-                    <!-- Ornamentos circulares -->
-                    <circle cx="150" cy="250" r="200" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-                    <circle cx="150" cy="250" r="150" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.2"/>
-                </svg>
-
-                <div class="verso-content">
-                    <div class="verso-logo-circle">
-                        <svg viewBox="0 0 80 80" width="70" height="70">
-                            <g transform="translate(10, 8)" fill="none" stroke="#c9a84c" stroke-width="1.5">
-                                <rect x="5" y="38" width="50" height="14" rx="2" fill="rgba(201,168,76,0.2)"/>
-                                <path d="M5,38 L5,18 L20,30 L30,5 L40,30 L55,18 L55,38 Z" fill="rgba(201,168,76,0.15)" stroke-linejoin="round"/>
-                                <circle cx="30" cy="3" r="3" fill="#c9a84c"/>
-                                <circle cx="19" cy="28" r="2" fill="#c9a84c"/>
-                                <circle cx="41" cy="28" r="2" fill="#c9a84c"/>
-                                <circle cx="18" cy="45" r="3" fill="rgba(201,168,76,0.7)"/>
-                                <circle cx="30" cy="45" r="3" fill="rgba(201,168,76,0.7)"/>
-                                <circle cx="42" cy="45" r="3" fill="rgba(201,168,76,0.7)"/>
-                            </g>
-                        </svg>
+            <!-- Dados -->
+            <div class="card-body">
+                <div class="funcao-tag" id="funcaoRitmista">✦ Ritmista ✦</div>
+                <div class="nome-principal" id="nomeRitmista">—</div>
+                <div class="apelido" id="apelidoRitmista"></div>
+                <div class="linha-dourada"></div>
+                <div class="info-grid">
+                    <div class="info-bloco">
+                        <div class="info-label">CPF</div>
+                        <div class="info-valor" id="cpfRitmista">—</div>
                     </div>
-                    <div class="verso-escola">Imperatriz Leopoldinense</div>
-                    <div class="verso-subtitulo">Fundada em 1959 · Rio de Janeiro</div>
-                    <div class="verso-divisor"></div>
-                    <div class="verso-cargo">Presidente</div>
-                    <div class="verso-nome">A definir com a diretoria</div>
-                    <div class="assinatura">✦ ✦ ✦</div>
-                    <div class="verso-mestre-label">Mestre de Bateria — Swing da Leopoldina</div>
+                    <div class="info-bloco">
+                        <div class="info-label">Instrumento</div>
+                        <div class="info-valor" id="instrumentoRitmista">—</div>
+                    </div>
+                </div>
+                <div class="validade-bloco">
+                    <span class="validade-label">Válida até</span>
+                    <span class="validade-data" id="validadeCarteirinha">31/07/2027</span>
                 </div>
             </div>
-
         </div>
-    </div>
 
-    <button class="btn-virar" onclick="virarCarteirinha()">🔄 Virar carteirinha</button>
+        <!-- ══════ VERSO ══════ -->
+        <div class="verso">
+            <!-- Fundo artístico verso -->
+            <svg class="verso-fundo" viewBox="0 0 300 510" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <radialGradient id="verso-bg" cx="50%" cy="50%" r="60%">
+                        <stop offset="0%" style="stop-color:#0f2d15;stop-opacity:1"/>
+                        <stop offset="100%" style="stop-color:#040c06;stop-opacity:1"/>
+                    </radialGradient>
+                </defs>
+                <rect width="300" height="510" fill="url(#verso-bg)"/>
+                <!-- Círculos concêntricos ornamentais -->
+                <circle cx="150" cy="200" r="180" fill="none" stroke="#d4a017" stroke-width="0.5" opacity="0.12"/>
+                <circle cx="150" cy="200" r="140" fill="none" stroke="#d4a017" stroke-width="0.5" opacity="0.10"/>
+                <circle cx="150" cy="200" r="100" fill="none" stroke="#d4a017" stroke-width="0.5" opacity="0.08"/>
+                <!-- Coroa menor de fundo (verso) -->
+                <g transform="translate(150, 200) scale(1)" opacity="0.1" fill="none" stroke="#d4a017" stroke-width="1.2">
+                    <rect x="-55" y="44" width="110" height="18" rx="3"/>
+                    <path d="M-55,44 L-55,12 L-32,30 L-15,5 L0,-12 L15,5 L32,30 L55,12 L55,44 Z" stroke-linejoin="round"/>
+                    <circle cx="0" cy="-16" r="5"/>
+                    <circle cx="-16" cy="3" r="3.5"/>
+                    <circle cx="16" cy="3" r="3.5"/>
+                </g>
+                <!-- Bordas decorativas -->
+                <rect x="8" y="8" width="284" height="494" rx="16" fill="none" stroke="#d4a017" stroke-width="0.6" opacity="0.2"/>
+                <!-- Ornamentos de canto -->
+                <g opacity="0.15" stroke="#d4a017" stroke-width="0.7" fill="none">
+                    <polygon points="20,20 34,34 20,48" fill="rgba(212,160,23,0.1)"/>
+                    <polygon points="280,20 266,34 280,48" fill="rgba(212,160,23,0.1)"/>
+                    <polygon points="20,490 34,476 20,462" fill="rgba(212,160,23,0.1)"/>
+                    <polygon points="280,490 266,476 280,462" fill="rgba(212,160,23,0.1)"/>
+                </g>
+            </svg>
 
-    <div class="acoes">
-        <button class="btn-acao btn-salvar" onclick="salvarImagem()">💾 Salvar</button>
-        <button class="btn-acao btn-compartilhar" onclick="compartilhar()">📲 Compartilhar</button>
+            <div class="verso-conteudo">
+                <!-- Logo Imperatriz (SVG artístico) -->
+                <div class="verso-logo-area">
+                    <svg viewBox="0 0 100 100" width="80" height="80">
+                        <g transform="translate(50, 55)" fill="none" stroke="#d4a017" stroke-width="1.5">
+                            <rect x="-36" y="28" width="72" height="14" rx="3" fill="rgba(212,160,23,0.15)"/>
+                            <path d="M-36,28 L-36,5 L-20,18 L-10,2 L0,-14 L10,2 L20,18 L36,5 L36,28 Z" fill="rgba(212,160,23,0.1)" stroke-linejoin="round"/>
+                            <circle cx="0" cy="-18" r="5" fill="#d4a017" opacity="0.6"/>
+                            <circle cx="-11" cy="0" r="3.5" fill="#d4a017" opacity="0.5"/>
+                            <circle cx="11" cy="0" r="3.5" fill="#d4a017" opacity="0.5"/>
+                            <circle cx="-20" cy="17" r="3" fill="#d4a017" opacity="0.4"/>
+                            <circle cx="0" cy="17" r="3" fill="#d4a017" opacity="0.4"/>
+                            <circle cx="20" cy="17" r="3" fill="#d4a017" opacity="0.4"/>
+                            <!-- Cruz no pico -->
+                            <line x1="0" y1="-26" x2="0" y2="-10" stroke="#d4a017" stroke-width="1"/>
+                            <line x1="-6" y1="-18" x2="6" y2="-18" stroke="#d4a017" stroke-width="1"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="verso-escola-nome">Imperatriz Leopoldinense</div>
+                <div class="verso-fundacao">✦ Fundada em 1959 ✦</div>
+                <div class="verso-divisor"></div>
+                <div class="verso-cargo-label">Presidente</div>
+                <div class="verso-cargo-nome">A definir com a diretoria</div>
+                <div class="assinatura-linha"></div>
+                <div class="verso-mestre-label">Mestre de Bateria<br>Swing da Leopoldina</div>
+            </div>
+        </div>
+
     </div>
+</div>
+
+<button class="btn-virar" onclick="virarCarteirinha()">🔄 Virar carteirinha</button>
+
+<div class="acoes">
+    <button class="btn-acao btn-salvar" onclick="salvarImagem()">💾 Salvar</button>
+    <button class="btn-acao btn-compartilhar" onclick="compartilhar()">📲 Compartilhar</button>
+</div>
 
 <script>
     const ritmista = JSON.parse(localStorage.getItem('ritmista'));
@@ -469,10 +565,14 @@
         document.getElementById('nomeRitmista').textContent = ritmista.nome;
         document.getElementById('apelidoRitmista').textContent = ritmista.apelido ? `"${ritmista.apelido}"` : '';
         document.getElementById('cpfRitmista').textContent = ritmista.cpf;
-        document.getElementById('instrumentoRitmista').textContent = ritmista.instrumento || '-';
+        document.getElementById('instrumentoRitmista').textContent = ritmista.instrumento || '—';
 
         if (ritmista.foto_url) {
-            document.getElementById('fotoRitmista').innerHTML = `<img src="${ritmista.foto_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+            const img = document.createElement('img');
+            img.src = ritmista.foto_url;
+            const el = document.getElementById('fotoRitmista');
+            el.innerHTML = '';
+            el.appendChild(img);
         }
     }
 
@@ -490,7 +590,7 @@
     }
 
     function compartilhar() {
-        if (navigator.share) {
+        if (navigator.share && ritmista) {
             navigator.share({
                 title: 'Minha Carteirinha — Swing da Leopoldina',
                 text: `${ritmista.nome} — Ritmista da Imperatriz Leopoldinense. Válida até 31/07/2027!`,
