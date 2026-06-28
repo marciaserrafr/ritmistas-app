@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Arial, sans-serif;
-            background: #1a1a2e;
+            background: #1a1a1a;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -18,132 +18,273 @@
         }
         .topo {
             width: 100%;
-            max-width: 420px;
+            max-width: 380px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
-        .topo span {
-            color: white;
-            font-size: 14px;
-        }
+        .topo span { color: #c9a84c; font-size: 14px; font-weight: bold; }
         .btn-sair {
             background: transparent;
-            border: 1px solid white;
-            color: white;
+            border: 1px solid #c9a84c;
+            color: #c9a84c;
             padding: 6px 14px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 13px;
         }
-        .carteirinha {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            border-radius: 20px;
-            padding: 28px;
+
+        /* CARTEIRINHA */
+        .carteirinha-wrapper {
             width: 100%;
-            max-width: 420px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-            color: white;
+            max-width: 380px;
+            perspective: 1000px;
+        }
+        .carteirinha-inner {
             position: relative;
-            overflow: hidden;
+            width: 100%;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
         }
-        .carteirinha::before {
-            content: '🥁';
+        .carteirinha-wrapper.virada .carteirinha-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* FRENTE */
+        .frente, .verso {
+            width: 100%;
+            border-radius: 16px;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .verso {
             position: absolute;
-            font-size: 120px;
-            right: -20px;
-            top: -20px;
-            opacity: 0.1;
+            top: 0;
+            left: 0;
+            transform: rotateY(180deg);
         }
-        .carteirinha-header {
+
+        /* FRENTE - ESTILO */
+        .frente {
+            background: linear-gradient(160deg, #1a4a2e 0%, #0d3320 60%, #0a2518 100%);
+            border: 2px solid #c9a84c;
+            padding: 20px;
+            color: white;
+        }
+        .frente-header {
             text-align: center;
-            margin-bottom: 24px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 16px;
+            border-bottom: 1px solid #c9a84c;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
         }
-        .carteirinha-header h2 {
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-        .carteirinha-header p {
-            font-size: 12px;
-            opacity: 0.7;
-            margin-top: 4px;
-        }
-        .carteirinha-body {
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #c9a84c;
+            background: rgba(201,168,76,0.1);
             display: flex;
-            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 24px;
+        }
+        .escola-nome {
+            font-size: 13px;
+            font-weight: bold;
+            color: #c9a84c;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .bateria-nome {
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+            margin-top: 2px;
+            letter-spacing: 1px;
+        }
+        .frente-body {
+            display: flex;
+            gap: 16px;
             align-items: flex-start;
         }
-        .foto-container {
+        .foto-box {
             flex-shrink: 0;
-        }
-        .foto {
             width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.5);
-            object-fit: cover;
+            height: 110px;
+            border: 2px solid #c9a84c;
+            border-radius: 8px;
+            overflow: hidden;
             background: rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 36px;
         }
-        .dados { flex: 1; }
-        .nome-principal {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 2px;
+        .foto-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        .apelido {
-            font-size: 13px;
-            opacity: 0.7;
-            margin-bottom: 12px;
-            font-style: italic;
-        }
-        .info-linha {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 8px;
-        }
-        .info-label {
+        .dados-box { flex: 1; }
+        .funcao-badge {
+            background: #c9a84c;
+            color: #0a2518;
             font-size: 10px;
-            opacity: 0.6;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .ritmista-nome {
+            font-size: 15px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+        .ritmista-apelido {
+            font-size: 12px;
+            color: #c9a84c;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .dado-linha {
+            margin-bottom: 6px;
+        }
+        .dado-label {
+            font-size: 9px;
+            color: rgba(255,255,255,0.5);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .info-valor {
-            font-size: 13px;
+        .dado-valor {
+            font-size: 12px;
+            color: white;
             font-weight: bold;
         }
-        .carteirinha-footer {
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255,255,255,0.2);
+        .frente-footer {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(201,168,76,0.4);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .status-aprovado {
+        .validade-box {
+            border: 1px solid #c9a84c;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+        .validade-label {
+            font-size: 9px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+        }
+        .validade-valor {
+            font-size: 12px;
+            color: #c9a84c;
+            font-weight: bold;
+        }
+        .status-badge {
             background: #28a745;
             color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
             letter-spacing: 1px;
         }
-        .temporada {
+
+        /* VERSO */
+        .verso {
+            background: linear-gradient(160deg, #0a2518 0%, #1a4a2e 100%);
+            border: 2px solid #c9a84c;
+            padding: 20px;
+            color: white;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .verso-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #c9a84c;
+            background: rgba(201,168,76,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        .verso-escola {
+            font-size: 16px;
+            font-weight: bold;
+            color: #c9a84c;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .verso-bateria {
             font-size: 12px;
-            opacity: 0.6;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .verso-linha {
+            width: 60%;
+            height: 1px;
+            background: #c9a84c;
+            margin: 0 auto 16px;
+        }
+        .verso-presidente {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .verso-presidente-nome {
+            font-size: 13px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .assinatura {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 28px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 4px;
+        }
+        .verso-mestre {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* BOTÕES */
+        .btn-virar {
+            margin-top: 12px;
+            background: transparent;
+            border: 1px solid #c9a84c;
+            color: #c9a84c;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
         }
         .acoes {
             width: 100%;
-            max-width: 420px;
-            margin-top: 20px;
+            max-width: 380px;
+            margin-top: 12px;
             display: flex;
             gap: 12px;
         }
@@ -156,57 +297,68 @@
             font-weight: bold;
             cursor: pointer;
         }
-        .btn-salvar {
-            background: white;
-            color: #1a1a2e;
-        }
-        .btn-compartilhar {
-            background: #25D366;
-            color: white;
-        }
+        .btn-salvar { background: #c9a84c; color: #0a2518; }
+        .btn-compartilhar { background: #25D366; color: white; }
     </style>
 </head>
 <body>
 
     <div class="topo">
-        <span>🥁 Ritmistas</span>
+        <span>👑 Imperatriz Leopoldinense</span>
         <button class="btn-sair" onclick="sair()">Sair</button>
     </div>
 
-    <div class="carteirinha" id="carteirinha">
-        <div class="carteirinha-header">
-            <h2>CARTEIRINHA DO RITMISTA</h2>
-            <p>Sistema de Gestão da Bateria</p>
-        </div>
+    <div class="carteirinha-wrapper" id="carteirinhaWrapper">
+        <div class="carteirinha-inner">
 
-        <div class="carteirinha-body">
-            <div class="foto-container">
-                <div class="foto" id="fotoRitmista">👤</div>
+            <!-- FRENTE -->
+            <div class="frente">
+                <div class="frente-header">
+                    <div class="logo-placeholder">👑</div>
+                    <div class="escola-nome">Imperatriz Leopoldinense</div>
+                    <div class="bateria-nome">Swing da Leopoldina</div>
+                </div>
+                <div class="frente-body">
+                    <div class="foto-box" id="fotoRitmista">👤</div>
+                    <div class="dados-box">
+                        <div class="funcao-badge" id="funcaoRitmista">Ritmista</div>
+                        <div class="ritmista-nome" id="nomeRitmista">-</div>
+                        <div class="ritmista-apelido" id="apelidoRitmista"></div>
+                        <div class="dado-linha">
+                            <div class="dado-label">CPF</div>
+                            <div class="dado-valor" id="cpfRitmista">-</div>
+                        </div>
+                        <div class="dado-linha">
+                            <div class="dado-label">Instrumento</div>
+                            <div class="dado-valor" id="instrumentoRitmista">-</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="frente-footer">
+                    <div class="validade-box">
+                        <div class="validade-label">Válida até</div>
+                        <div class="validade-valor">Carnaval 2027</div>
+                    </div>
+                    <div class="status-badge">✓ APROVADO</div>
+                </div>
             </div>
-            <div class="dados">
-                <div class="nome-principal" id="nomeRitmista">-</div>
-                <div class="apelido" id="apelidoRitmista"></div>
 
-                <div class="info-linha">
-                    <span class="info-label">CPF</span>
-                    <span class="info-valor" id="cpfRitmista">-</span>
-                </div>
-                <div class="info-linha">
-                    <span class="info-label">Nascimento</span>
-                    <span class="info-valor" id="nascimentoRitmista">-</span>
-                </div>
-                <div class="info-linha">
-                    <span class="info-label">Cidade / Estado</span>
-                    <span class="info-valor" id="cidadeRitmista">-</span>
-                </div>
+            <!-- VERSO -->
+            <div class="verso">
+                <div class="verso-logo">👑</div>
+                <div class="verso-escola">Imperatriz Leopoldinense</div>
+                <div class="verso-bateria">Swing da Leopoldina — Temporada 2027</div>
+                <div class="verso-linha"></div>
+                <div class="verso-presidente">Presidente</div>
+                <div class="verso-presidente-nome">A definir com a diretoria</div>
+                <div class="assinatura">♪ ♫ ♪</div>
+                <div class="verso-mestre">Mestre de Bateria</div>
             </div>
-        </div>
 
-        <div class="carteirinha-footer">
-            <span class="status-aprovado">✓ APROVADO</span>
-            <span class="temporada">Temporada 2026</span>
         </div>
     </div>
+
+    <button class="btn-virar" onclick="virarCarteirinha()">🔄 Virar carteirinha</button>
 
     <div class="acoes">
         <button class="btn-acao btn-salvar" onclick="salvarImagem()">💾 Salvar imagem</button>
@@ -222,16 +374,15 @@
         document.getElementById('nomeRitmista').textContent = ritmista.nome;
         document.getElementById('apelidoRitmista').textContent = ritmista.apelido ? `"${ritmista.apelido}"` : '';
         document.getElementById('cpfRitmista').textContent = ritmista.cpf;
-        document.getElementById('cidadeRitmista').textContent = `${ritmista.cidade} / ${ritmista.estado}`;
-
-        if (ritmista.nascimento) {
-            const d = new Date(ritmista.nascimento + 'T00:00:00');
-            document.getElementById('nascimentoRitmista').textContent = d.toLocaleDateString('pt-BR');
-        }
+        document.getElementById('instrumentoRitmista').textContent = ritmista.instrumento || '-';
 
         if (ritmista.foto_url) {
-            document.getElementById('fotoRitmista').innerHTML = `<img src="${ritmista.foto_url}" style="width:90px;height:90px;border-radius:50%;object-fit:cover;">`;
+            document.getElementById('fotoRitmista').innerHTML = `<img src="${ritmista.foto_url}">`;
         }
+    }
+
+    function virarCarteirinha() {
+        document.getElementById('carteirinhaWrapper').classList.toggle('virada');
     }
 
     function sair() {
@@ -246,8 +397,8 @@
     function compartilhar() {
         if (navigator.share) {
             navigator.share({
-                title: 'Minha Carteirinha de Ritmista',
-                text: `${ritmista.nome} - Ritmista aprovado! Temporada 2026`,
+                title: 'Minha Carteirinha — Swing da Leopoldina',
+                text: `${ritmista.nome} — Ritmista da Imperatriz Leopoldinense. Temporada 2027!`,
             });
         } else {
             alert('Compartilhamento não disponível neste dispositivo.');
