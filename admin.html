@@ -607,6 +607,7 @@
                         <div class="card-dado"><strong>CPF:</strong> ${r.cpf || '-'}</div>
                         <div class="card-dado"><strong>Celular:</strong> ${r.celular || '-'}</div>
                         <div class="card-dado"><strong>Aniversário:</strong> ${aniverEmoji}${nascFormatado}</div>
+                        <div class="card-dado"><strong>Desde:</strong> ${new Date(r.created_at).toLocaleDateString('pt-BR', {month:'2-digit',year:'numeric'})}</div>
                     </div>
                     ${menor ? `
                     <div class="declaracao-area">
