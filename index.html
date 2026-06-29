@@ -199,8 +199,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Bairro</label>
-            <input type="text" id="bairro" placeholder="Bairro">
+            <label>Bairro <span class="obrigatorio">*</span></label>
+            <input type="text" id="bairro" placeholder="Bairro" required>
         </div>
         <div class="form-row">
             <div class="form-group">
@@ -222,6 +222,46 @@
                     <option>SP</option><option>SE</option><option>TO</option>
                 </select>
             </div>
+        </div>
+
+        <div class="secao">Medidas</div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Tamanho da Camisa <span class="obrigatorio">*</span></label>
+                <select id="tamanho_camisa" required>
+                    <option value="">Selecione</option>
+                    <option>PP</option>
+                    <option>P</option>
+                    <option>M</option>
+                    <option>G</option>
+                    <option>GG</option>
+                    <option>XGG</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Tamanho da Fantasia <span class="obrigatorio">*</span></label>
+                <select id="tamanho_fantasia" required>
+                    <option value="">Selecione</option>
+                    <option>PP</option>
+                    <option>P</option>
+                    <option>M</option>
+                    <option>G</option>
+                    <option>GG</option>
+                    <option>XGG</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Tamanho do Sapato <span class="obrigatorio">*</span></label>
+            <select id="tamanho_sapato" required>
+                <option value="">Selecione</option>
+                <option>33</option><option>34</option><option>35</option>
+                <option>36</option><option>37</option><option>38</option>
+                <option>39</option><option>40</option><option>41</option>
+                <option>42</option><option>43</option><option>44</option>
+                <option>45</option><option>46</option><option>47</option>
+            </select>
         </div>
 
         <div class="secao">Acesso</div>
@@ -293,6 +333,9 @@
             bairro: document.getElementById('bairro').value,
             cidade: document.getElementById('cidade').value,
             estado: document.getElementById('estado').value,
+            tamanho_camisa: document.getElementById('tamanho_camisa').value,
+            tamanho_fantasia: document.getElementById('tamanho_fantasia').value,
+            tamanho_sapato: document.getElementById('tamanho_sapato').value,
             senha: document.getElementById('senha').value,
             status: 'pendente'
         };
