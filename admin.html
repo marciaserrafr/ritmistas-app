@@ -54,18 +54,21 @@
         }
         /* RODAPÉ */
         .rodape {
-            margin-top: 48px; padding: 24px;
-            border-top: 1px solid #e0e0e0;
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            margin-top: 40px; padding: 14px 24px;
+            border-top: 1px solid #e8e8e8;
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 8px;
         }
         .rodape-logo {
-            width: 48px; height: 48px; border-radius: 50%;
-            background: #f0f0f0; border: 1px solid #ddd;
+            width: 22px; height: 22px; border-radius: 50%;
             overflow: hidden; display: flex; align-items: center; justify-content: center;
-            font-size: 13px; color: #999;
+            font-size: 8px; color: #bbb; background: #f0f0f0;
+            flex-shrink: 0;
         }
         .rodape-logo img { width: 100%; height: 100%; object-fit: cover; }
-        .rodape-texto { font-size: 11px; color: #aaa; text-align: center; line-height: 1.6; }
+        .rodape-esquerda { display: flex; align-items: center; gap: 6px; }
+        .rodape-texto { font-size: 11px; color: #bbb; }
+        .rodape-dev { font-size: 11px; color: #bbb; }
 
         /* CONTAINER */
         .container { padding: 24px; max-width: 1100px; margin: 0 auto; }
@@ -287,13 +290,13 @@
 </div>
 
 <div class="rodape">
-    <div class="rodape-logo">
-        <img src="logo-imperatriz.png" onerror="this.parentNode.textContent='IL'"/>
+    <div class="rodape-esquerda">
+        <div class="rodape-logo">
+            <img src="logo-imperatriz.png" onerror="this.style.display='none'"/>
+        </div>
+        <span class="rodape-texto">Imperatriz Leopoldinense · Swing da Leopoldina</span>
     </div>
-    <div class="rodape-texto">
-        Imperatriz Leopoldinense<br>
-        Sistema de Gestão da Bateria
-    </div>
+    <span class="rodape-dev">Desenvolvido por Márcia Serra · 2026</span>
 </div>
 
 <!-- MODAL SUSPENDER -->
