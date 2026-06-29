@@ -93,11 +93,14 @@
         /* Multi-select instrumento */
         .multi-select { position: relative; display: inline-block; }
         .multi-select-trigger {
-            padding: 7px 14px; border-radius: 20px;
-            border: 2px solid #1a1a2e; background: white;
-            color: #1a1a2e; cursor: pointer; font-size: 12px; font-weight: bold;
+            padding: 6px 13px; border-radius: 6px;
+            border: 1px solid #e0e0e0; background: #fafafa;
+            color: #555; cursor: pointer; font-size: 13px; font-weight: normal;
             display: inline-flex; align-items: center; gap: 8px; min-width: 180px;
             justify-content: space-between; user-select: none;
+        }
+        .multi-select-trigger.ativo {
+            background: #1a1a2e; color: white; border-color: #1a1a2e;
         }
         .multi-select-dropdown {
             position: absolute; top: calc(100% + 4px); left: 0; z-index: 200;
@@ -318,8 +321,10 @@
 
     <!-- NAIPES -->
     <div style="font-size:11px;font-weight:bold;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Naipes</div>
-    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:16px;">
-        <div id="ocupacaoBar" style="display:contents;"></div>
+    <div id="ocupacaoBar" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;"></div>
+
+    <div style="font-size:11px;font-weight:bold;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Filtrar por naipes</div>
+    <div style="margin-bottom:16px;">
         <div class="multi-select" id="multiSelectWrap">
             <div class="multi-select-trigger" id="multiSelectTrigger" onclick="toggleMultiSelect()">
                 <span id="multiSelectLabel">Todos os naipes</span>
@@ -766,8 +771,9 @@
         filtroInstrumentosSelecionados = Array.from(checks).map(c => c.value);
         const label = document.getElementById('multiSelectLabel');
         label.textContent = filtroInstrumentosSelecionados.length === 0
-            ? 'Todos os instrumentos'
+            ? 'Todos os naipes'
             : filtroInstrumentosSelecionados.join(', ');
+        document.getElementById('multiSelectTrigger').classList.toggle('ativo', filtroInstrumentosSelecionados.length > 0);
         aplicarFiltros();
     }
 
