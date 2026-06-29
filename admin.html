@@ -236,6 +236,26 @@
         .btn-modal-confirmar.vermelho { background: #dc3545; }
         .btn-modal-confirmar.azul { background: #1a1a2e; }
 
+        /* MODAL CADASTRO COMPLETO */
+        .modal-cadastro { max-width: 600px; }
+        .modal-cadastro h2 { font-size: 20px; margin-bottom: 4px; }
+        .modal-cadastro .subtitulo { font-size: 13px; color: #888; margin-bottom: 20px; }
+        .ficha-secao { margin-bottom: 18px; }
+        .ficha-secao-titulo { font-size: 10px; font-weight: bold; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
+        .ficha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+        .ficha-campo { font-size: 13px; color: #333; }
+        .ficha-campo span { display: block; font-size: 11px; color: #999; margin-bottom: 1px; }
+        .ficha-campo strong { font-size: 14px; color: #1a1a2e; }
+        .ficha-campo.full { grid-column: 1 / -1; }
+        .btn-imprimir { display: inline-flex; align-items: center; gap: 6px; background: #1a1a2e; color: white; border: none; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
+
+        @media print {
+            body > *:not(#modalCadastroOverlay) { display: none !important; }
+            #modalCadastroOverlay { position: static !important; background: none !important; display: block !important; }
+            #modalCadastroOverlay .modal { box-shadow: none; margin: 0; max-width: 100%; }
+            .modal-acoes { display: none !important; }
+        }
+
         @media (max-width: 600px) {
             .header { padding: 12px 16px; gap: 8px; }
             .header-bateria { font-size: 14px; }
@@ -340,6 +360,58 @@
         <span class="rodape-texto">G.R.E.S. Imperatriz Leopoldinense</span>
     </div>
     <span class="rodape-dev">Desenvolvido por Márcia Serra · 2026</span>
+</div>
+
+<!-- MODAL CADASTRO COMPLETO -->
+<div class="modal-overlay" id="modalCadastroOverlay">
+    <div class="modal modal-cadastro">
+        <h2 id="modalCadastroNome"></h2>
+        <div class="subtitulo" id="modalCadastroSubtitulo"></div>
+
+        <div class="ficha-secao">
+            <div class="ficha-secao-titulo">Dados pessoais</div>
+            <div class="ficha-grid">
+                <div class="ficha-campo"><span>CPF</span><strong id="fc-cpf"></strong></div>
+                <div class="ficha-campo"><span>Data de nascimento</span><strong id="fc-nascimento"></strong></div>
+                <div class="ficha-campo"><span>Celular</span><strong id="fc-celular"></strong></div>
+                <div class="ficha-campo"><span>Cadastro</span><strong id="fc-cadastro"></strong></div>
+            </div>
+        </div>
+
+        <div class="ficha-secao">
+            <div class="ficha-secao-titulo">Endereço</div>
+            <div class="ficha-grid">
+                <div class="ficha-campo full"><span>Rua / Logradouro</span><strong id="fc-endereco"></strong></div>
+                <div class="ficha-campo"><span>Número</span><strong id="fc-numero"></strong></div>
+                <div class="ficha-campo"><span>Complemento</span><strong id="fc-complemento"></strong></div>
+                <div class="ficha-campo"><span>Bairro</span><strong id="fc-bairro"></strong></div>
+                <div class="ficha-campo"><span>Cidade / Estado</span><strong id="fc-cidade"></strong></div>
+            </div>
+        </div>
+
+        <div class="ficha-secao">
+            <div class="ficha-secao-titulo">Bateria</div>
+            <div class="ficha-grid">
+                <div class="ficha-campo"><span>Instrumento</span><strong id="fc-instrumento"></strong></div>
+                <div class="ficha-campo"><span>Status</span><strong id="fc-status"></strong></div>
+                <div class="ficha-campo full"><span>Na Swing desde</span><strong id="fc-tempo"></strong></div>
+            </div>
+        </div>
+
+        <div class="ficha-secao" id="fc-secao-vestimenta">
+            <div class="ficha-secao-titulo">Vestimenta</div>
+            <div class="ficha-grid">
+                <div class="ficha-campo"><span>Tamanho de camisa</span><strong id="fc-camisa"></strong></div>
+                <div class="ficha-campo"><span>Tamanho de fantasia</span><strong id="fc-fantasia"></strong></div>
+                <div class="ficha-campo"><span>Número do sapato</span><strong id="fc-sapato"></strong></div>
+            </div>
+        </div>
+
+        <div class="modal-acoes">
+            <button class="btn-modal-cancelar" onclick="fecharModal('modalCadastroOverlay')">Fechar</button>
+            <button class="btn-imprimir" onclick="window.print()">🖨 Imprimir</button>
+        </div>
+    </div>
 </div>
 
 <!-- MODAL SUSPENDER -->
@@ -489,7 +561,7 @@
 
             const badgeStatus = {
                 pendente:  `<span class="badge badge-pendente">${svgClock} PENDENTE</span>`,
-                aprovado:  `<span class="badge badge-aprovado">${svgCheck} APROVADO</span>`,
+                aprovado:  `<span class="badge badge-aprovado">${svgCheck} ATIVO</span>`,
                 suspenso:  `<span class="badge badge-suspenso">${svgPause} SUSPENSO</span>`,
                 desligado: `<span class="badge badge-desligado">${svgSlash} DESLIGADO</span>`,
                 rejeitado: `<span class="badge badge-rejeitado">${svgX} REJEITADO</span>`,
@@ -509,8 +581,7 @@
                     <div class="card-dados">
                         <div class="card-dado"><strong>CPF:</strong> ${r.cpf || '-'}</div>
                         <div class="card-dado"><strong>Celular:</strong> ${r.celular || '-'}</div>
-                        <div class="card-dado"><strong>Cidade:</strong> ${r.cidade || '-'} / ${r.estado || '-'}</div>
-                        <div class="card-dado"><strong>Cadastro:</strong> ${new Date(r.created_at).toLocaleDateString('pt-BR')}</div>
+                        <div class="card-dado"><strong>Cidade:</strong> ${r.cidade || '-'} / ${r.estado || '-'} &nbsp;·&nbsp; <strong>Cadastro:</strong> ${new Date(r.created_at).toLocaleDateString('pt-BR')}</div>
                     </div>
                     ${menor ? `
                     <div class="declaracao-area">
@@ -525,6 +596,7 @@
                 </div>
                 <div class="card-acoes">
                     <div class="acoes-linha">${botoesAcao}</div>
+                    <button class="btn-acao btn-editar-inst" style="font-size:12px;padding:6px 12px;" onclick="abrirCadastro(${r.id})">📋 Cadastro</button>
                 </div>
             </div>`;
         }).join('');
@@ -598,6 +670,31 @@
 
     function fecharModal(id) {
         document.getElementById(id).classList.remove('aberto');
+    }
+
+    function abrirCadastro(id) {
+        const r = todosRitmistas.find(x => x.id === id);
+        if (!r) return;
+        const idade = calcularIdade(r.nascimento);
+        const statusLabels = { pendente: 'Pendente', aprovado: 'Ativo', suspenso: 'Suspenso', desligado: 'Desligado', rejeitado: 'Rejeitado' };
+        document.getElementById('modalCadastroNome').textContent = r.nome;
+        document.getElementById('modalCadastroSubtitulo').textContent = [r.apelido ? `"${r.apelido}"` : '', r.instrumento || '', idade !== null ? `${idade} anos` : ''].filter(Boolean).join(' · ');
+        document.getElementById('fc-cpf').textContent = r.cpf || '—';
+        document.getElementById('fc-nascimento').textContent = r.nascimento ? new Date(r.nascimento + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
+        document.getElementById('fc-celular').textContent = r.celular || '—';
+        document.getElementById('fc-cadastro').textContent = new Date(r.created_at).toLocaleDateString('pt-BR');
+        document.getElementById('fc-endereco').textContent = r.endereco || '—';
+        document.getElementById('fc-numero').textContent = r.numero || '—';
+        document.getElementById('fc-complemento').textContent = r.complemento || '—';
+        document.getElementById('fc-bairro').textContent = r.bairro || '—';
+        document.getElementById('fc-cidade').textContent = [r.cidade, r.estado].filter(Boolean).join(' / ') || '—';
+        document.getElementById('fc-instrumento').textContent = r.instrumento || '—';
+        document.getElementById('fc-status').textContent = statusLabels[r.status] || r.status || '—';
+        document.getElementById('fc-tempo').textContent = r.tempo_casa || '—';
+        document.getElementById('fc-camisa').textContent = r.tamanho_camisa || '—';
+        document.getElementById('fc-fantasia').textContent = r.tamanho_fantasia || '—';
+        document.getElementById('fc-sapato').textContent = r.numero_sapato || '—';
+        document.getElementById('modalCadastroOverlay').classList.add('aberto');
     }
 
     // Fechar modal clicando fora
