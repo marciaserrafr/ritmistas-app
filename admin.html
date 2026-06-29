@@ -502,6 +502,7 @@
 
     let todosRitmistas = [];
     let filtroStatusAtual = 'todos';
+    const semAcento = s => (s||'').toLowerCase().normalize('NFD').split('').filter(c => c.charCodeAt(0) < 768 || c.charCodeAt(0) > 879).join('').trim();
     let acaoAtualId = null;
 
     function calcularIdade(nascimento) {
@@ -543,12 +544,13 @@
             lista = lista.filter(r => filtroInstrumentosSelecionados.includes(r.instrumento));
         }
 
-        const busca = (document.getElementById('campoBusca')?.value || '').toLowerCase().trim();
+        const busca = semAcento(document.getElementById('campoBusca')?.value || '');
         if (busca) {
+            const buscaCpf = busca.replace(/\D/g,'');
             lista = lista.filter(r =>
-                (r.nome || '').toLowerCase().includes(busca) ||
-                (r.apelido || '').toLowerCase().includes(busca) ||
-                (r.cpf || '').replace(/\D/g,'').includes(busca.replace(/\D/g,''))
+                semAcento(r.nome).includes(busca) ||
+                semAcento(r.apelido).includes(busca) ||
+                (buscaCpf.length > 0 && (r.cpf || '').replace(/\D/g,'').includes(buscaCpf))
             );
         }
 
