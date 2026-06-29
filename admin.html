@@ -35,19 +35,13 @@
         .filtros-label { font-size: 11px; font-weight: bold; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
         .filtros { display: flex; gap: 8px; flex-wrap: wrap; }
         .btn-filtro {
-            padding: 7px 14px; border-radius: 20px;
-            border: 2px solid #1a1a2e; background: transparent;
-            color: #1a1a2e; cursor: pointer; font-size: 12px; font-weight: bold;
+            padding: 7px 14px; border-radius: 6px;
+            border: 1px solid #ccc; background: white;
+            color: #444; cursor: pointer; font-size: 12px;
         }
-        .btn-filtro.ativo { background: #1a1a2e; color: white; }
-        .btn-filtro.laranja { border-color: #fd7e14; color: #fd7e14; }
-        .btn-filtro.laranja.ativo { background: #fd7e14; color: white; }
-        .btn-filtro.azul { border-color: #0d6efd; color: #0d6efd; }
-        .btn-filtro.azul.ativo { background: #0d6efd; color: white; }
-        .btn-filtro.verde { border-color: #28a745; color: #28a745; }
-        .btn-filtro.verde.ativo { background: #28a745; color: white; }
-        .btn-filtro.vermelho { border-color: #dc3545; color: #dc3545; }
-        .btn-filtro.vermelho.ativo { background: #dc3545; color: white; }
+        .btn-filtro.ativo { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+        .btn-filtro.laranja, .btn-filtro.azul, .btn-filtro.verde, .btn-filtro.vermelho { border-color: #ccc; color: #444; }
+        .btn-filtro.laranja.ativo, .btn-filtro.azul.ativo, .btn-filtro.verde.ativo, .btn-filtro.vermelho.ativo { background: #1a1a2e; color: white; border-color: #1a1a2e; }
 
         select.filtro-instrumento {
             padding: 7px 14px; border-radius: 20px;
@@ -72,7 +66,7 @@
         .card.suspenso { border-left-color: #fd7e14; }
         .card.desligado { border-left-color: #dc3545; }
         .card.rejeitado { border-left-color: #6c757d; }
-        .card.menor-flag { outline: 2px dashed #0d6efd; outline-offset: 2px; }
+        .card.menor-flag { outline: none; }
 
         .card-info { flex: 1; min-width: 0; }
         .card-topo { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
@@ -91,13 +85,13 @@
         .card-dado { font-size: 12px; color: #666; }
         .card-dado strong { color: #333; }
 
-        .badge { padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: bold; }
-        .badge-aprovado { background: #d4edda; color: #155724; }
-        .badge-rejeitado { background: #e2e3e5; color: #383d41; }
-        .badge-pendente { background: #fff3cd; color: #856404; }
-        .badge-suspenso { background: #ffe5d0; color: #c0440a; }
-        .badge-desligado { background: #f8d7da; color: #721c24; }
-        .badge-menor { background: #dbeafe; color: #1d4ed8; }
+        .badge { padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; border: 1px solid; }
+        .badge-aprovado { background: #f0faf4; color: #2d7a4f; border-color: #b8ddc8; }
+        .badge-rejeitado { background: #f5f5f5; color: #666; border-color: #ddd; }
+        .badge-pendente { background: #fffbf0; color: #8a6800; border-color: #ffe69c; }
+        .badge-suspenso { background: #fff8f0; color: #9a4e00; border-color: #ffd0a0; }
+        .badge-desligado { background: #fff5f5; color: #9a1f1f; border-color: #f5c0c0; }
+        .badge-menor { background: #f5f5f5; color: #555; border-color: #ddd; }
 
         .motivo-status {
             font-size: 11px; color: #888; font-style: italic;
@@ -109,27 +103,28 @@
         /* DECLARAÇÃO MENOR */
         .declaracao-area {
             display: flex; align-items: center; gap: 8px;
-            background: #fff8f0; border: 1px solid #fdc98a;
+            background: #f8f8f8; border: 1px solid #e0e0e0;
             border-radius: 8px; padding: 6px 10px;
-            font-size: 12px; color: #8a4a00; margin-top: 8px;
+            font-size: 12px; color: #555; margin-top: 8px;
         }
-        .btn-declaracao { border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; }
-        .btn-declaracao.pendente { background: #0d6efd; color: white; }
-        .btn-declaracao.entregue { background: #28a745; color: white; }
+        .btn-declaracao { border: 1.5px solid; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; background: transparent; }
+        .btn-declaracao.pendente { border-color: #1a1a2e; color: #1a1a2e; }
+        .btn-declaracao.entregue { border-color: #2d7a4f; color: #2d7a4f; }
 
         /* AÇÕES */
         .card-acoes { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; flex-shrink: 0; }
         .acoes-linha { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
         .btn-acao {
-            border: none; padding: 7px 13px; border-radius: 8px;
+            border: 1.5px solid; padding: 7px 13px; border-radius: 8px;
             cursor: pointer; font-size: 12px; font-weight: bold;
+            background: transparent;
         }
-        .btn-aprovar { background: #28a745; color: white; }
-        .btn-rejeitar { background: #6c757d; color: white; }
-        .btn-suspender { background: #fd7e14; color: white; }
-        .btn-desligar { background: #dc3545; color: white; }
-        .btn-reativar { background: #17a2b8; color: white; }
-        .btn-editar-inst { background: #1a1a2e; color: white; }
+        .btn-aprovar { border-color: #2d7a4f; color: #2d7a4f; }
+        .btn-rejeitar { border-color: #999; color: #666; }
+        .btn-suspender { border-color: #9a4e00; color: #9a4e00; }
+        .btn-desligar { border-color: #9a1f1f; color: #9a1f1f; }
+        .btn-reativar { border-color: #1a1a2e; color: #1a1a2e; }
+        .btn-editar-inst { border-color: #1a1a2e; color: #1a1a2e; }
 
         /* VAZIO */
         .vazio { text-align: center; padding: 40px; color: #999; font-size: 15px; }
