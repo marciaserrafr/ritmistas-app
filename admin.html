@@ -447,30 +447,38 @@
             const declaracaoEntregue = r.declaracao_responsavel;
             const status = r.status || 'pendente';
 
+            const svgCheck   = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2d7a4f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>';
+            const svgX       = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+            const svgPause   = '<svg width="13" height="13" viewBox="0 0 24 24" fill="#d4720a" style="flex-shrink:0"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+            const svgSlash   = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9a1f1f" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>';
+            const svgReativar= '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>';
+            const svgEdit    = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+            const svgClock   = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a6800" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+
             let botoesAcao = '';
             if (status === 'pendente') {
                 botoesAcao = `
-                    <button class="btn-acao btn-aprovar" onclick="atualizarStatus(${r.id}, 'aprovado')">✓ Aprovar</button>
-                    <button class="btn-acao btn-rejeitar" onclick="atualizarStatus(${r.id}, 'rejeitado')">✗ Rejeitar</button>`;
+                    <button class="btn-acao btn-aprovar" onclick="atualizarStatus(${r.id}, 'aprovado')">${svgCheck} Aprovar</button>
+                    <button class="btn-acao btn-rejeitar" onclick="atualizarStatus(${r.id}, 'rejeitado')">${svgX} Rejeitar</button>`;
             } else if (status === 'aprovado') {
                 botoesAcao = `
-                    <button class="btn-acao btn-editar-inst" onclick="abrirModalInstrumento(${r.id}, '${r.nome}', '${r.instrumento || ''}')">✎ Instrumento</button>
-                    <button class="btn-acao btn-suspender" onclick="abrirModalSuspender(${r.id}, '${r.nome}')">⏸ Suspender</button>
-                    <button class="btn-acao btn-desligar" onclick="abrirModalDesligar(${r.id}, '${r.nome}')">⊘ Desligar</button>`;
+                    <button class="btn-acao btn-editar-inst" onclick="abrirModalInstrumento(${r.id}, '${r.nome}', '${r.instrumento || ''}')">${svgEdit} Instrumento</button>
+                    <button class="btn-acao btn-suspender" onclick="abrirModalSuspender(${r.id}, '${r.nome}')">${svgPause} Suspender</button>
+                    <button class="btn-acao btn-desligar" onclick="abrirModalDesligar(${r.id}, '${r.nome}')">${svgSlash} Desligar</button>`;
             } else if (status === 'suspenso') {
                 botoesAcao = `
-                    <button class="btn-acao btn-reativar" onclick="atualizarStatus(${r.id}, 'aprovado')">↩ Reativar</button>
-                    <button class="btn-acao btn-desligar" onclick="abrirModalDesligar(${r.id}, '${r.nome}')">⊘ Desligar</button>`;
+                    <button class="btn-acao btn-reativar" onclick="atualizarStatus(${r.id}, 'aprovado')">${svgReativar} Reativar</button>
+                    <button class="btn-acao btn-desligar" onclick="abrirModalDesligar(${r.id}, '${r.nome}')">${svgSlash} Desligar</button>`;
             } else {
-                botoesAcao = `<button class="btn-acao btn-reativar" onclick="atualizarStatus(${r.id}, 'aprovado')">↩ Reativar</button>`;
+                botoesAcao = `<button class="btn-acao btn-reativar" onclick="atualizarStatus(${r.id}, 'aprovado')">${svgReativar} Reativar</button>`;
             }
 
             const badgeStatus = {
-                pendente: '<span class="badge badge-pendente">⏳ PENDENTE</span>',
-                aprovado: '<span class="badge badge-aprovado">✓ APROVADO</span>',
-                suspenso: '<span class="badge badge-suspenso">⏸ SUSPENSO</span>',
-                desligado: '<span class="badge badge-desligado">⊘ DESLIGADO</span>',
-                rejeitado: '<span class="badge badge-rejeitado">✗ REJEITADO</span>',
+                pendente:  `<span class="badge badge-pendente">${svgClock} PENDENTE</span>`,
+                aprovado:  `<span class="badge badge-aprovado">${svgCheck} APROVADO</span>`,
+                suspenso:  `<span class="badge badge-suspenso">${svgPause} SUSPENSO</span>`,
+                desligado: `<span class="badge badge-desligado">${svgSlash} DESLIGADO</span>`,
+                rejeitado: `<span class="badge badge-rejeitado">${svgX} REJEITADO</span>`,
             }[status] || '';
 
             return `
