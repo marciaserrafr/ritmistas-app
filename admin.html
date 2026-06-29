@@ -82,6 +82,7 @@
             padding: 7px 14px; border-radius: 6px;
             border: 1px solid #ccc; background: white;
             color: #444; cursor: pointer; font-size: 12px;
+            display: inline-flex; align-items: center; gap: 5px;
         }
         .btn-filtro.ativo { background: #1a1a2e; color: white; border-color: #1a1a2e; }
         .btn-filtro.laranja, .btn-filtro.azul, .btn-filtro.verde, .btn-filtro.vermelho { border-color: #ccc; color: #444; }
@@ -91,6 +92,23 @@
             padding: 7px 14px; border-radius: 20px;
             border: 2px solid #1a1a2e; background: white;
             color: #1a1a2e; cursor: pointer; font-size: 12px; font-weight: bold;
+        }
+
+        /* VAGAS */
+        .vagas-section { margin-bottom: 20px; }
+        .vagas-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .vaga-chip {
+            background: white; border: 1px solid #e0e0e0; border-radius: 8px;
+            padding: 8px 12px; font-size: 12px; min-width: 120px;
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .vaga-chip.alerta { border-color: #f5c0c0; background: #fff5f5; }
+        .vaga-instrumento { font-weight: bold; color: #1a1a2e; font-size: 11px; }
+        .vaga-contagem { font-size: 13px; color: #333; }
+        .vaga-contagem span { color: #888; font-size: 11px; }
+        .vaga-input {
+            width: 48px; border: 1px solid #ccc; border-radius: 4px;
+            padding: 2px 4px; font-size: 12px; text-align: center;
         }
 
         /* CONTADOR */
@@ -256,12 +274,12 @@
         <div class="filtros-label">Filtrar por status</div>
         <div class="filtros">
             <button class="btn-filtro ativo" onclick="filtrarStatus('todos', this)">Todos</button>
-            <button class="btn-filtro" onclick="filtrarStatus('pendente', this)">⏳ Pendentes</button>
-            <button class="btn-filtro verde" onclick="filtrarStatus('aprovado', this)">✓ Aprovados</button>
-            <button class="btn-filtro vermelho" onclick="filtrarStatus('rejeitado', this)">✗ Rejeitados</button>
-            <button class="btn-filtro laranja" onclick="filtrarStatus('suspenso', this)">⏸ Suspensos</button>
-            <button class="btn-filtro vermelho" onclick="filtrarStatus('desligado', this)">⊘ Desligados</button>
-            <button class="btn-filtro azul" onclick="filtrarStatus('menor', this)">⚠️ Menores</button>
+            <button class="btn-filtro" onclick="filtrarStatus('pendente', this)"><span style="width:8px;height:8px;border-radius:50%;background:#e0a800;flex-shrink:0;display:inline-block"></span> Pendentes</button>
+            <button class="btn-filtro verde" onclick="filtrarStatus('aprovado', this)"><span style="width:8px;height:8px;border-radius:50%;background:#2d7a4f;flex-shrink:0;display:inline-block"></span> Aprovados</button>
+            <button class="btn-filtro vermelho" onclick="filtrarStatus('rejeitado', this)"><span style="width:8px;height:8px;border-radius:50%;background:#888;flex-shrink:0;display:inline-block"></span> Rejeitados</button>
+            <button class="btn-filtro laranja" onclick="filtrarStatus('suspenso', this)"><span style="width:8px;height:8px;border-radius:50%;background:#d4720a;flex-shrink:0;display:inline-block"></span> Suspensos</button>
+            <button class="btn-filtro vermelho" onclick="filtrarStatus('desligado', this)"><span style="width:8px;height:8px;border-radius:50%;background:#9a1f1f;flex-shrink:0;display:inline-block"></span> Desligados</button>
+            <button class="btn-filtro azul" onclick="filtrarStatus('menor', this)"><span style="width:8px;height:8px;border-radius:50%;background:#3a5bbf;flex-shrink:0;display:inline-block"></span> Menores</button>
         </div>
     </div>
 
@@ -279,6 +297,17 @@
                 <option>Surdo de Terceira</option>
                 <option>Tamborim</option>
             </select>
+        </div>
+    </div>
+
+    <!-- VAGAS POR INSTRUMENTO -->
+    <div class="vagas-section">
+        <div class="filtros-label" style="cursor:pointer;user-select:none;" onclick="toggleVagas()">
+            Vagas por instrumento <span id="vagasToggleIcon">▼</span>
+        </div>
+        <div id="vagasContainer" style="display:none;">
+            <div class="vagas-grid" id="vagasGrid"></div>
+            <div style="font-size:11px;color:#aaa;margin-top:8px;">Clique no número de vagas para editar. 🔴 = acima do limite.</div>
         </div>
     </div>
 
@@ -377,6 +406,7 @@
         });
         todosRitmistas = await res.json();
         aplicarFiltros();
+        renderizarVagas();
     }
 
     function filtrarStatus(status, btn) {
@@ -560,6 +590,47 @@
         const iniciais = nome.split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
         document.getElementById('headerNome').textContent = nome;
         document.getElementById('headerAvatar').textContent = iniciais;
+    }
+
+    const INSTRUMENTOS = ['Caixa','Chocalho','Cuíca','Repique','Surdo de Primeira','Surdo de Segunda','Surdo de Terceira','Tamborim'];
+
+    function toggleVagas() {
+        const c = document.getElementById('vagasContainer');
+        const icon = document.getElementById('vagasToggleIcon');
+        const aberto = c.style.display !== 'none';
+        c.style.display = aberto ? 'none' : 'block';
+        icon.textContent = aberto ? '▼' : '▲';
+    }
+
+    function renderizarVagas() {
+        const vagas = JSON.parse(localStorage.getItem('vagasPorInstrumento') || '{}');
+        const contagem = {};
+        INSTRUMENTOS.forEach(i => contagem[i] = 0);
+        todosRitmistas.filter(r => r.status === 'aprovado').forEach(r => {
+            if (r.instrumento && contagem[r.instrumento] !== undefined) contagem[r.instrumento]++;
+        });
+
+        document.getElementById('vagasGrid').innerHTML = INSTRUMENTOS.map(inst => {
+            const limite = vagas[inst] || 0;
+            const atual = contagem[inst] || 0;
+            const alerta = limite > 0 && atual > limite;
+            return `
+            <div class="vaga-chip ${alerta ? 'alerta' : ''}">
+                <div class="vaga-instrumento">${inst}</div>
+                <div class="vaga-contagem">
+                    ${alerta ? '🔴' : '🟢'} <strong>${atual}</strong> <span>/ vagas:</span>
+                    <input class="vaga-input" type="number" min="0" value="${limite}"
+                        onchange="salvarVaga('${inst}', this.value)"/>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function salvarVaga(instrumento, valor) {
+        const vagas = JSON.parse(localStorage.getItem('vagasPorInstrumento') || '{}');
+        vagas[instrumento] = parseInt(valor) || 0;
+        localStorage.setItem('vagasPorInstrumento', JSON.stringify(vagas));
+        renderizarVagas();
     }
 
     iniciarUsuario();
