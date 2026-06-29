@@ -794,15 +794,17 @@
         instrumentosDiretor.forEach(inst => {
             const limite = vagas[inst] || 0;
             const atual = contagem[inst] || 0;
-            const alerta = limite > 0 && atual >= limite * 0.9;
+            const semLimite = limite === 0 && atual > 0;
             const over = limite > 0 && atual > limite;
+            const alerta = limite > 0 && !over && atual >= limite * 0.9;
+            const vermelho = over || semLimite;
 
             const chip = document.createElement('div');
             chip.style.cssText = `
                 display:inline-flex;align-items:center;gap:6px;
-                background:white;border:1px solid ${over ? '#f5c0c0' : alerta ? '#ffe0a0' : '#e8e8e8'};
                 border-radius:20px;padding:4px 12px;font-size:12px;
-                background:${over ? '#fff8f8' : alerta ? '#fffbf0' : 'white'};
+                border:1px solid ${vermelho ? '#f5c0c0' : alerta ? '#ffe0a0' : '#e8e8e8'};
+                background:${vermelho ? '#fff8f8' : alerta ? '#fffbf0' : 'white'};
             `;
 
             const nome = document.createElement('span');
@@ -810,7 +812,7 @@
             nome.textContent = inst;
 
             const count = document.createElement('span');
-            count.style.cssText = `font-weight:bold;color:${over ? '#c0392b' : alerta ? '#b8860b' : '#1a1a2e'};`;
+            count.style.cssText = `font-weight:bold;color:${vermelho ? '#c0392b' : alerta ? '#b8860b' : '#1a1a2e'};`;
             count.textContent = limite > 0 ? `${atual}/${limite}` : `${atual}`;
 
             chip.appendChild(nome);
