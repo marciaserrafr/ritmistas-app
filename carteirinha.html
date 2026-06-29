@@ -47,16 +47,9 @@
             letter-spacing: 1px;
         }
 
-        /* FLIP */
-        .carteirinha-wrapper { width: 320px; height: 540px; perspective: 1400px; }
-        .carteirinha-inner {
-            position: relative;
-            width: 100%; height: 100%;
-            transition: transform 1s cubic-bezier(0.4, 0.2, 0.2, 1);
-            transform-style: preserve-3d;
-            will-change: transform;
-        }
-        .carteirinha-wrapper.virada .carteirinha-inner { transform: rotateY(180deg); }
+        /* FLIP — perspectiva em cada face, sem preserve-3d no container */
+        .carteirinha-wrapper { width: 320px; height: 540px; position: relative; }
+        .carteirinha-inner { position: relative; width: 100%; height: 100%; }
 
         .frente, .verso {
             position: absolute;
@@ -67,11 +60,17 @@
             -webkit-backface-visibility: hidden;
             overflow: hidden;
             box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,39,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
         }
-        .verso { transform: rotateY(180deg); }
+
+        .frente { transform: perspective(1400px) rotateY(0deg); }
+        .verso  { transform: perspective(1400px) rotateY(180deg); }
+
+        .carteirinha-wrapper.virada .frente { transform: perspective(1400px) rotateY(-180deg); }
+        .carteirinha-wrapper.virada .verso  { transform: perspective(1400px) rotateY(0deg); }
 
         /* ══ FRENTE ══ */
-        .frente { background: var(--preto); position: relative; }
+        .frente { background: var(--preto); }
 
         .frente-svg {
             position: absolute; top: 0; left: 0;
@@ -209,7 +208,6 @@
         /* ══ VERSO ══ */
         .verso {
             background: linear-gradient(160deg, #0a0f0b 0%, #0d3a20 60%, #063A24 100%);
-            position: relative;
         }
 
         .verso-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
@@ -218,13 +216,10 @@
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 28px 28px 24px;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
         }
 
         .verso-topo {
@@ -233,6 +228,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 28px;
+            flex-shrink: 0;
         }
         .verso-bateria-nome { font-size: 14px; font-weight: 700; color: var(--dourado); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; }
         .verso-escola-nome { font-size: 7px; color: rgba(255,255,255,0.25); letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
@@ -258,7 +254,7 @@
         }
         .qr-label { font-size: 7px; color: #555; letter-spacing: 1px; text-transform: uppercase; text-align: center; margin-top: 6px; }
 
-        .verso-linha { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent); margin-bottom: 18px; }
+        .verso-linha { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent); margin-bottom: 0; flex-shrink: 0; }
 
         .verso-rodape {
             display: flex;
