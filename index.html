@@ -93,6 +93,9 @@
             background: white;
         }
         input:focus, select:focus { outline: none; border-color: #1a1a2e; }
+        input.campo-invalido, select.campo-invalido { border-color: #dc3545; background: #fff5f5; }
+        .erro-campo { font-size: 12px; color: #dc3545; margin-top: 4px; display: none; }
+        .erro-campo.visivel { display: block; }
         .btn-cadastrar {
             width: 100%;
             padding: 14px;
@@ -351,8 +354,27 @@
         el.style.display = 'block';
     }
 
+    function validarCampos() {
+        const obrigatorios = document.querySelectorAll('input[required], select[required]');
+        let valido = true;
+        obrigatorios.forEach(campo => {
+            if (!campo.value.trim()) {
+                campo.classList.add('campo-invalido');
+                valido = false;
+                campo.addEventListener('input', () => campo.classList.remove('campo-invalido'), { once: true });
+            } else {
+                campo.classList.remove('campo-invalido');
+            }
+        });
+        return valido;
+    }
+
     document.getElementById('formCadastro').addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (!validarCampos()) {
+            mostrarMensagem('Preencha todos os campos obrigatórios destacados em vermelho.', 'erro');
+            return;
+        }
 
         const dados = {
             nome: document.getElementById('nome').value,
