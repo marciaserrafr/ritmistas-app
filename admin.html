@@ -280,7 +280,7 @@
             <button class="btn-filtro vermelho" onclick="filtrarStatus('rejeitado', this)">🚫 Rejeitados</button>
             <button class="btn-filtro laranja" onclick="filtrarStatus('suspenso', this)">⏸️ Suspensos</button>
             <button class="btn-filtro vermelho" onclick="filtrarStatus('desligado', this)">⛔ Desligados</button>
-            <button class="btn-filtro azul" onclick="filtrarStatus('menor', this)">⚠️ Menores</button>
+            <button class="btn-filtro azul" onclick="filtrarStatus('menor', this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="#e0a800" style="flex-shrink:0"><path d="M12 2L1 21h22L12 2z"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="17" width="2" height="2" rx="1" fill="white"/></svg> Menores</button>
         </div>
     </div>
 
@@ -479,7 +479,7 @@
                     <div class="card-topo">
                         <span class="card-nome">${r.nome}</span>
                         ${badgeStatus}
-                        ${menor ? `<span class="badge badge-menor">⚠️ Menor · ${idade} anos</span>` : ''}
+                        ${menor ? `<span class="badge badge-menor"><svg width="12" height="12" viewBox="0 0 24 24" fill="#e0a800" style="flex-shrink:0"><path d="M12 2L1 21h22L12 2z"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="17" width="2" height="2" rx="1" fill="white"/></svg> Menor · ${idade} anos</span>` : ''}
                     </div>
                     ${r.apelido ? `<div class="card-apelido">"${r.apelido}"</div>` : ''}
                     <div class="card-instrumento">🥁 ${r.instrumento || '—'}</div>
