@@ -326,7 +326,7 @@
     </div>
 
     <div class="contador" id="contador"></div>
-    <div class="cards" id="listaRitmistas" style="min-height:300px;">
+    <div class="cards" id="listaRitmistas" style="min-height:500px;">
         <div class="vazio">Carregando...</div>
     </div>
 
@@ -626,11 +626,18 @@
 
     function construirMultiSelect() {
         const dropdown = document.getElementById('multiSelectDropdown');
-        dropdown.innerHTML = instrumentosDiretor.map(inst => `
-            <label class="multi-select-option">
-                <input type="checkbox" value="${inst}" onchange="onCheckInstrumento()">
-                ${inst}
-            </label>`).join('');
+        dropdown.innerHTML = '';
+        instrumentosDiretor.forEach(inst => {
+            const label = document.createElement('label');
+            label.className = 'multi-select-option';
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.value = inst;
+            cb.addEventListener('change', onCheckInstrumento);
+            label.appendChild(cb);
+            label.appendChild(document.createTextNode(' ' + inst));
+            dropdown.appendChild(label);
+        });
     }
 
     function toggleMultiSelect() {
