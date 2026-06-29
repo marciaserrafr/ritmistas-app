@@ -517,7 +517,12 @@
     if (!ritmista) {
         window.location.href = 'login.html';
     } else {
-        document.getElementById('nomeRitmista').textContent = ritmista.nome;
+        const nomeEl = document.getElementById('nomeRitmista');
+        nomeEl.textContent = ritmista.nome;
+        const len = ritmista.nome.length;
+        if (len > 30) nomeEl.style.fontSize = '15px';
+        else if (len > 22) nomeEl.style.fontSize = '17px';
+        else if (len > 16) nomeEl.style.fontSize = '19px';
         document.getElementById('instrumentoRitmista').textContent = ritmista.instrumento || '—';
         if (ritmista.apelido) {
             document.getElementById('apelidoRitmista').textContent = '"' + ritmista.apelido + '"';
