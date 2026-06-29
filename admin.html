@@ -323,11 +323,11 @@
     <div style="font-size:11px;font-weight:bold;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Controle de Vagas</div>
     <div id="ocupacaoBar" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;"></div>
 
-    <div style="font-size:11px;font-weight:bold;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Filtrar por naipes</div>
+    <div style="font-size:11px;font-weight:bold;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Filtrar por instrumento</div>
     <div style="margin-bottom:16px;">
         <div class="multi-select" id="multiSelectWrap">
             <div class="multi-select-trigger" id="multiSelectTrigger" onclick="toggleMultiSelect()">
-                <span id="multiSelectLabel">Todos os naipes</span>
+                <span id="multiSelectLabel">Todos os instrumentos</span>
                 <span id="multiSelectArrow">▼</span>
             </div>
             <div class="multi-select-dropdown" id="multiSelectDropdown" style="display:none">
@@ -771,7 +771,7 @@
         filtroInstrumentosSelecionados = Array.from(checks).map(c => c.value);
         const label = document.getElementById('multiSelectLabel');
         label.textContent = filtroInstrumentosSelecionados.length === 0
-            ? 'Todos os naipes'
+            ? 'Todos os instrumentos'
             : filtroInstrumentosSelecionados.join(', ');
         document.getElementById('multiSelectTrigger').classList.toggle('ativo', filtroInstrumentosSelecionados.length > 0);
         aplicarFiltros();
