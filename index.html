@@ -229,40 +229,51 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Tamanho da Camisa <span class="obrigatorio">*</span></label>
-                <select id="tamanho_camisa" required>
+                <select id="tamanho_camisa" required onchange="mostrarOutro('tamanho_camisa')">
                     <option value="">Selecione</option>
                     <option>PP</option>
                     <option>P</option>
                     <option>M</option>
                     <option>G</option>
                     <option>GG</option>
-                    <option>XGG</option>
+                    <option>XG</option>
+                    <option>XXG</option>
+                    <option>XXXG</option>
+                    <option value="Outro">Outro</option>
                 </select>
+                <input type="text" id="tamanho_camisa_outro" placeholder="Informe o tamanho" style="display:none; margin-top:8px;">
             </div>
             <div class="form-group">
                 <label>Tamanho da Fantasia <span class="obrigatorio">*</span></label>
-                <select id="tamanho_fantasia" required>
+                <select id="tamanho_fantasia" required onchange="mostrarOutro('tamanho_fantasia')">
                     <option value="">Selecione</option>
                     <option>PP</option>
                     <option>P</option>
                     <option>M</option>
                     <option>G</option>
                     <option>GG</option>
-                    <option>XGG</option>
+                    <option>XG</option>
+                    <option>XXG</option>
+                    <option>XXXG</option>
+                    <option value="Outro">Outro</option>
                 </select>
+                <input type="text" id="tamanho_fantasia_outro" placeholder="Informe o tamanho" style="display:none; margin-top:8px;">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group">
                 <label>Tamanho do Sapato <span class="obrigatorio">*</span></label>
-                <select id="tamanho_sapato" required>
+                <select id="tamanho_sapato" required onchange="mostrarOutro('tamanho_sapato')">
                     <option value="">Selecione</option>
                     <option>33</option><option>34</option><option>35</option>
                     <option>36</option><option>37</option><option>38</option>
                     <option>39</option><option>40</option><option>41</option>
                     <option>42</option><option>43</option><option>44</option>
                     <option>45</option><option>46</option><option>47</option>
+                    <option>48</option>
+                    <option value="Outro">Outro</option>
                 </select>
+                <input type="text" id="tamanho_sapato_outro" placeholder="Informe o tamanho" style="display:none; margin-top:8px;">
             </div>
             <div class="form-group"></div>
         </div>
@@ -312,6 +323,27 @@
         input.value = v;
     }
 
+    function mostrarOutro(campo) {
+        const select = document.getElementById(campo);
+        const outro = document.getElementById(campo + '_outro');
+        if (select.value === 'Outro') {
+            outro.style.display = 'block';
+            outro.required = true;
+        } else {
+            outro.style.display = 'none';
+            outro.required = false;
+            outro.value = '';
+        }
+    }
+
+    function valorTamanho(campo) {
+        const select = document.getElementById(campo);
+        if (select.value === 'Outro') {
+            return document.getElementById(campo + '_outro').value;
+        }
+        return select.value;
+    }
+
     function mostrarMensagem(texto, tipo) {
         const el = document.getElementById('mensagem');
         el.textContent = texto;
@@ -336,9 +368,9 @@
             bairro: document.getElementById('bairro').value,
             cidade: document.getElementById('cidade').value,
             estado: document.getElementById('estado').value,
-            tamanho_camisa: document.getElementById('tamanho_camisa').value,
-            tamanho_fantasia: document.getElementById('tamanho_fantasia').value,
-            tamanho_sapato: document.getElementById('tamanho_sapato').value,
+            tamanho_camisa: valorTamanho('tamanho_camisa'),
+            tamanho_fantasia: valorTamanho('tamanho_fantasia'),
+            tamanho_sapato: valorTamanho('tamanho_sapato'),
             senha: document.getElementById('senha').value,
             status: 'pendente'
         };
