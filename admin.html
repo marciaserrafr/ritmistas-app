@@ -582,7 +582,7 @@
             const aniversarioHoje = nascDate && nascDate.getDate() === new Date().getDate() && aniverMes === mesAtual;
             const aniversarioMes = aniverMes === mesAtual;
             const nascFormatado = nascDate ? `${String(nascDate.getDate()).padStart(2,'0')}/${String(nascDate.getMonth()+1).padStart(2,'0')}` : '-';
-            const aniverEmoji = aniversarioHoje ? '🎂 ' : (aniversarioMes ? '🎂 ' : '');
+            const aniverEmoji = aniversarioMes ? '<span style="vertical-align:middle;line-height:1">🎂</span> ' : '';
 
             const badgeStatus = {
                 pendente:  `<span class="badge badge-pendente">${svgClock} PENDENTE</span>`,
