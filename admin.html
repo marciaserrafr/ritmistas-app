@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ritmistas - Painel Admin</title>
+    <title>Ritmistas - Painel do Diretor</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -21,6 +21,7 @@
         }
         .header h1 { font-size: 20px; }
         .header span { font-size: 13px; opacity: 0.7; }
+        .header-acoes { display: flex; gap: 10px; align-items: center; }
         .btn-sair {
             background: transparent;
             border: 1px solid white;
@@ -30,7 +31,17 @@
             cursor: pointer;
             font-size: 13px;
         }
-        .container { padding: 24px; max-width: 1000px; margin: 0 auto; }
+        .btn-cadastrar-novo {
+            background: #C9A227;
+            border: none;
+            color: #1a1a2e;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .container { padding: 24px; max-width: 1100px; margin: 0 auto; }
         .titulo-secao {
             font-size: 18px;
             font-weight: bold;
@@ -47,15 +58,23 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             gap: 16px;
+            border-left: 4px solid transparent;
         }
+        .card.menor { border-left-color: #fd7e14; }
         .card-info { flex: 1; }
+        .card-topo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+            flex-wrap: wrap;
+        }
         .card-nome {
             font-size: 16px;
             font-weight: bold;
             color: #1a1a2e;
-            margin-bottom: 4px;
         }
         .card-apelido {
             font-size: 13px;
@@ -67,13 +86,21 @@
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
+            margin-bottom: 10px;
         }
         .card-dado {
             font-size: 12px;
             color: #666;
         }
         .card-dado strong { color: #333; }
-        .card-acoes { display: flex; gap: 8px; flex-shrink: 0; }
+        .card-acoes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+            flex-shrink: 0;
+        }
+        .acoes-aprovacao { display: flex; gap: 8px; }
         .btn-aprovar {
             background: #28a745;
             color: white;
@@ -103,6 +130,28 @@
         .badge-aprovado { background: #d4edda; color: #155724; }
         .badge-rejeitado { background: #f8d7da; color: #721c24; }
         .badge-pendente { background: #fff3cd; color: #856404; }
+        .badge-menor { background: #ffe5d0; color: #c0440a; }
+        .declaracao-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff8f0;
+            border: 1px solid #fdc98a;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: #8a4a00;
+        }
+        .btn-declaracao {
+            border: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .btn-declaracao.pendente { background: #fd7e14; color: white; }
+        .btn-declaracao.entregue { background: #28a745; color: white; }
         .filtros {
             display: flex;
             gap: 8px;
@@ -119,10 +168,9 @@
             font-size: 13px;
             font-weight: bold;
         }
-        .btn-filtro.ativo {
-            background: #1a1a2e;
-            color: white;
-        }
+        .btn-filtro.ativo { background: #1a1a2e; color: white; }
+        .btn-filtro.menor-filtro { border-color: #fd7e14; color: #fd7e14; }
+        .btn-filtro.menor-filtro.ativo { background: #fd7e14; color: white; }
         .vazio {
             text-align: center;
             padding: 40px;
@@ -140,10 +188,13 @@
 
 <div class="header">
     <div>
-        <h1>🥁 Painel Administrativo</h1>
-        <span>Gestão de Ritmistas</span>
+        <h1>🥁 Painel do Diretor</h1>
+        <span>Gestão de Ritmistas — Swing da Leopoldina</span>
     </div>
-    <button class="btn-sair" onclick="sair()">Sair</button>
+    <div class="header-acoes">
+        <button class="btn-cadastrar-novo" onclick="window.location.href='index.html'">+ Cadastrar Ritmista</button>
+        <button class="btn-sair" onclick="sair()">Sair</button>
+    </div>
 </div>
 
 <div class="container">
@@ -153,6 +204,7 @@
         <button class="btn-filtro" onclick="filtrar('pendente', this)">⏳ Pendentes</button>
         <button class="btn-filtro" onclick="filtrar('aprovado', this)">✓ Aprovados</button>
         <button class="btn-filtro" onclick="filtrar('rejeitado', this)">✗ Rejeitados</button>
+        <button class="btn-filtro menor-filtro" onclick="filtrar('menor', this)">⚠️ Menores de Idade</button>
     </div>
 
     <div class="titulo-secao">Lista de Ritmistas</div>
@@ -170,6 +222,21 @@
     let todosRitmistas = [];
     let filtroAtual = 'todos';
 
+    function calcularIdade(nascimento) {
+        if (!nascimento) return null;
+        const hoje = new Date();
+        const nasc = new Date(nascimento);
+        let idade = hoje.getFullYear() - nasc.getFullYear();
+        const m = hoje.getMonth() - nasc.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        return idade;
+    }
+
+    function eMenor(r) {
+        const idade = calcularIdade(r.nascimento);
+        return idade !== null && idade < 18;
+    }
+
     async function carregarRitmistas() {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?select=*&order=created_at.desc`, {
             headers: {
@@ -185,7 +252,10 @@
         filtroAtual = status;
         document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('ativo'));
         btn.classList.add('ativo');
-        const filtrados = status === 'todos' ? todosRitmistas : todosRitmistas.filter(r => r.status === status);
+        let filtrados;
+        if (status === 'todos') filtrados = todosRitmistas;
+        else if (status === 'menor') filtrados = todosRitmistas.filter(r => eMenor(r));
+        else filtrados = todosRitmistas.filter(r => r.status === status);
         renderizar(filtrados);
     }
 
@@ -199,10 +269,18 @@
             return;
         }
 
-        container.innerHTML = lista.map(r => `
-            <div class="card">
+        container.innerHTML = lista.map(r => {
+            const idade = calcularIdade(r.nascimento);
+            const menor = idade !== null && idade < 18;
+            const declaracaoEntregue = r.declaracao_responsavel;
+
+            return `
+            <div class="card ${menor ? 'menor' : ''}">
                 <div class="card-info">
-                    <div class="card-nome">${r.nome}</div>
+                    <div class="card-topo">
+                        <span class="card-nome">${r.nome}</span>
+                        ${menor ? `<span class="badge badge-menor">⚠️ Menor · ${idade} anos</span>` : ''}
+                    </div>
                     ${r.apelido ? `<div class="card-apelido">"${r.apelido}"</div>` : ''}
                     <div class="card-dados">
                         <div class="card-dado"><strong>CPF:</strong> ${r.cpf || '-'}</div>
@@ -211,17 +289,29 @@
                         <div class="card-dado"><strong>Cidade:</strong> ${r.cidade || '-'} / ${r.estado || '-'}</div>
                         <div class="card-dado"><strong>Cadastro:</strong> ${new Date(r.created_at).toLocaleDateString('pt-BR')}</div>
                     </div>
+                    ${menor ? `
+                    <div class="declaracao-area">
+                        <span>📄 Declaração do responsável:</span>
+                        ${declaracaoEntregue
+                            ? `<span style="color:#28a745;font-weight:bold;">✓ Entregue</span>
+                               <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id}, false)">Desfazer</button>`
+                            : `<span style="color:#dc3545;font-weight:bold;">✗ Pendente</span>
+                               <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id}, true)">Marcar como entregue</button>`
+                        }
+                    </div>` : ''}
                 </div>
                 <div class="card-acoes">
                     ${r.status === 'pendente' ? `
-                        <button class="btn-aprovar" onclick="atualizarStatus(${r.id}, 'aprovado')">✓ Aprovar</button>
-                        <button class="btn-rejeitar" onclick="atualizarStatus(${r.id}, 'rejeitado')">✗ Rejeitar</button>
+                        <div class="acoes-aprovacao">
+                            <button class="btn-aprovar" onclick="atualizarStatus(${r.id}, 'aprovado')">✓ Aprovar</button>
+                            <button class="btn-rejeitar" onclick="atualizarStatus(${r.id}, 'rejeitado')">✗ Rejeitar</button>
+                        </div>
                     ` : `
                         <span class="badge badge-${r.status}">${r.status.toUpperCase()}</span>
                     `}
                 </div>
             </div>
-        `).join('');
+        `}).join('');
     }
 
     async function atualizarStatus(id, status) {
@@ -233,6 +323,19 @@
                 'Authorization': `Bearer ${SUPABASE_KEY}`
             },
             body: JSON.stringify({ status })
+        });
+        await carregarRitmistas();
+    }
+
+    async function alternarDeclaracao(id, entregue) {
+        await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_KEY,
+                'Authorization': `Bearer ${SUPABASE_KEY}`
+            },
+            body: JSON.stringify({ declaracao_responsavel: entregue })
         });
         await carregarRitmistas();
     }
