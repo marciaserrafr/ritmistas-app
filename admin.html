@@ -580,13 +580,10 @@
                     ${r.apelido ? `<div class="card-apelido">"${r.apelido}"</div>` : ''}
                     <div class="card-instrumento">🥁 ${r.instrumento || '—'}</div>
                     ${r.motivo_status ? `<div class="motivo-status">Motivo: ${r.motivo_status}</div>` : ''}
-                    <div class="card-dados" style="flex-wrap:nowrap; gap:0;">
+                    <div class="card-dados">
                         <div class="card-dado"><strong>CPF:</strong> ${r.cpf || '-'}</div>
-                        <span class="card-sep">·</span>
                         <div class="card-dado"><strong>Celular:</strong> ${r.celular || '-'}</div>
-                        <span class="card-sep">·</span>
                         <div class="card-dado"><strong>Cidade:</strong> ${r.cidade || '-'} / ${r.estado || '-'}</div>
-                        <span class="card-sep">·</span>
                         <div class="card-dado"><strong>Cadastro:</strong> ${new Date(r.created_at).toLocaleDateString('pt-BR')}</div>
                     </div>
                     ${menor ? `
