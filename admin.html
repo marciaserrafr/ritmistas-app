@@ -576,6 +576,14 @@
                 botoesAcao = `<button class="btn-acao btn-reativar" onclick="atualizarStatus(${r.id}, 'aprovado')">${svgReativar} Reativar</button>`;
             }
 
+            const mesAtual = new Date().getMonth() + 1;
+            const nascDate = r.nascimento ? new Date(r.nascimento + 'T00:00:00') : null;
+            const aniverMes = nascDate ? nascDate.getMonth() + 1 : null;
+            const aniversarioHoje = nascDate && nascDate.getDate() === new Date().getDate() && aniverMes === mesAtual;
+            const aniversarioMes = aniverMes === mesAtual;
+            const nascFormatado = nascDate ? `${String(nascDate.getDate()).padStart(2,'0')}/${String(nascDate.getMonth()+1).padStart(2,'0')}` : '-';
+            const aniverEmoji = aniversarioHoje ? '🎂 ' : (aniversarioMes ? '🎂 ' : '');
+
             const badgeStatus = {
                 pendente:  `<span class="badge badge-pendente">${svgClock} PENDENTE</span>`,
                 aprovado:  `<span class="badge badge-aprovado">${svgCheck} ATIVO</span>`,
@@ -599,7 +607,7 @@
                         <div class="card-dado"><strong>CPF:</strong> ${r.cpf || '-'}</div>
                         <div class="card-dado"><strong>Celular:</strong> ${r.celular || '-'}</div>
                         <div class="card-dado"><strong>Cidade:</strong> ${r.cidade || '-'} / ${r.estado || '-'}</div>
-                        <div class="card-dado"><strong>Cadastro:</strong> ${new Date(r.created_at).toLocaleDateString('pt-BR')}</div>
+                        <div class="card-dado"><strong>Aniversário:</strong> ${aniverEmoji}${nascFormatado}</div>
                     </div>
                     ${menor ? `
                     <div class="declaracao-area">
