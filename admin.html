@@ -159,9 +159,11 @@
             margin-bottom: 10px;
         }
 
-        .card-dados { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+        .card-dados { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin-bottom: 10px; }
         .card-dado { font-size: 14px; color: #666; }
         .card-dado strong { color: #333; }
+        .card-sep { color: #ccc; margin: 0 10px; font-size: 14px; }
+        .btn-cadastro-full { background: #1a1a2e; color: white; border: none; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; }
 
         .badge { padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; border: 1px solid; display: inline-flex; align-items: center; gap: 4px; line-height: 1; vertical-align: middle; }
         .badge-aprovado { background: #f0faf4; color: #2d7a4f; border-color: #b8ddc8; }
@@ -578,10 +580,13 @@
                     ${r.apelido ? `<div class="card-apelido">"${r.apelido}"</div>` : ''}
                     <div class="card-instrumento">🥁 ${r.instrumento || '—'}</div>
                     ${r.motivo_status ? `<div class="motivo-status">Motivo: ${r.motivo_status}</div>` : ''}
-                    <div class="card-dados">
+                    <div class="card-dados" style="flex-wrap:nowrap; gap:0;">
                         <div class="card-dado"><strong>CPF:</strong> ${r.cpf || '-'}</div>
+                        <span class="card-sep">·</span>
                         <div class="card-dado"><strong>Celular:</strong> ${r.celular || '-'}</div>
+                        <span class="card-sep">·</span>
                         <div class="card-dado"><strong>Cidade:</strong> ${r.cidade || '-'} / ${r.estado || '-'}</div>
+                        <span class="card-sep">·</span>
                         <div class="card-dado"><strong>Cadastro:</strong> ${new Date(r.created_at).toLocaleDateString('pt-BR')}</div>
                     </div>
                     ${menor ? `
@@ -598,7 +603,7 @@
                 <div class="card-acoes">
                     <div class="acoes-linha">
                         ${botoesAcao}
-                        <button class="btn-acao btn-editar-inst" onclick="abrirCadastro(${r.id})">📋 Cadastro</button>
+                        <button class="btn-cadastro-full" onclick="abrirCadastro(${r.id})">📋 Cadastro</button>
                     </div>
                 </div>
             </div>`;
