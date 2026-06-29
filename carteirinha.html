@@ -54,6 +54,7 @@
             width: 100%; height: 100%;
             transition: transform 1s cubic-bezier(0.4, 0.2, 0.2, 1);
             transform-style: preserve-3d;
+            will-change: transform;
         }
         .carteirinha-wrapper.virada .carteirinha-inner { transform: rotateY(180deg); }
 
@@ -86,7 +87,6 @@
             padding: 26px 24px 24px;
         }
 
-        /* Topo */
         .card-topo {
             display: flex;
             justify-content: space-between;
@@ -130,7 +130,6 @@
         }
         .status-txt { font-size: 8px; color: #4ade80; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
 
-        /* Foto + dados lado a lado */
         .foto-area {
             display: flex;
             align-items: center;
@@ -161,22 +160,18 @@
         .instrumento { font-size: 12px; color: var(--dourado-claro); letter-spacing: 1px; opacity: 0.85; }
         .apelido { font-size: 11px; color: rgba(255,255,255,0.45); letter-spacing: 1px; margin-top: 3px; font-style: italic; }
 
-        /* Linha dourada */
         .linha-dourada {
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--dourado), rgba(201,162,39,0.1));
             margin-bottom: 18px;
         }
 
-        /* CPF */
         .cpf-area { margin-bottom: 18px; }
         .dado-label { font-size: 7px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 3px; }
         .dado-valor { font-size: 12px; font-weight: 600; color: var(--cinza); letter-spacing: 1px; }
 
-        /* Linha fina */
         .linha-fina { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 18px; }
 
-        /* Rodapé */
         .card-rodape {
             display: flex;
             justify-content: space-between;
@@ -190,7 +185,6 @@
         .validade-valor { font-size: 15px; font-weight: 700; color: var(--dourado); letter-spacing: 1px; }
         .carnaval-ano { font-size: 9px; color: rgba(201,162,39,0.45); letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Logo rodapé frente — estilo São Clemente */
         .logo-rodape {
             margin-top: auto;
             display: flex;
@@ -229,6 +223,8 @@
             flex-direction: column;
             align-items: center;
             padding: 28px 28px 24px;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .verso-topo {
@@ -250,7 +246,6 @@
             flex-shrink: 0;
         }
 
-        /* QR */
         .qr-area {
             width: 150px; height: 150px;
             background: var(--branco);
@@ -265,19 +260,25 @@
 
         .verso-linha { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent); margin-bottom: 18px; }
 
-        .verso-rodape { width: 100%; display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; }
+        .verso-rodape {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: absolute;
+            bottom: 24px;
+            left: 28px;
+            right: 28px;
+        }
         .verso-link-item { font-size: 8px; color: rgba(255,255,255,0.2); letter-spacing: 1px; margin-bottom: 4px; }
         .validacao-label { font-size: 7px; color: rgba(201,162,39,0.4); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 2px; }
         .validacao-valor { font-size: 9px; color: rgba(255,255,255,0.2); text-align: right; }
 
-        /* Ornamentos */
         .canto { position: absolute; width: 18px; height: 18px; border-color: rgba(201,162,39,0.25); border-style: solid; z-index: 2; }
         .canto-tl { top: 14px; left: 14px; border-width: 1px 0 0 1px; }
         .canto-tr { top: 14px; right: 14px; border-width: 1px 1px 0 0; }
         .canto-bl { bottom: 14px; left: 14px; border-width: 0 0 1px 1px; }
         .canto-br { bottom: 14px; right: 14px; border-width: 0 1px 1px 0; }
 
-        /* Botão virar — ABAIXO da carteirinha */
         .btn-virar-externo {
             margin-top: 14px;
             width: 42px; height: 42px;
@@ -290,7 +291,6 @@
             cursor: pointer;
         }
 
-        /* Botões */
         .acoes { width: 320px; margin-top: 14px; display: flex; gap: 10px; }
         .btn-acao { flex: 1; padding: 13px; border-radius: 14px; font-size: 12px; font-weight: 600; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; }
         .btn-salvar { background: transparent; border: 1px solid rgba(201,162,39,0.4); color: var(--dourado); }
@@ -334,7 +334,6 @@
             </svg>
 
             <div class="frente-corpo">
-                <!-- Topo -->
                 <div class="card-topo">
                     <div class="card-topo-info">
                         <div class="card-escola">G.R.E.S. Imperatriz Leopoldinense</div>
@@ -346,7 +345,6 @@
                     </div>
                 </div>
 
-                <!-- Foto + Dados -->
                 <div class="foto-area">
                     <div class="foto-anel">
                         <div class="foto-interno" id="fotoRitmista">👤</div>
@@ -380,7 +378,6 @@
                     </div>
                 </div>
 
-                <!-- Logo rodapé — estilo São Clemente -->
                 <div class="logo-rodape">
                     <div class="logo-rodape-circulo">
                         <svg viewBox="0 0 44 44" width="38" height="38">
@@ -498,7 +495,6 @@
     </div>
 </div>
 
-<!-- Botão virar FORA da carteirinha -->
 <button class="btn-virar-externo" onclick="virarCarteirinha()">↺</button>
 
 <div class="acoes">
