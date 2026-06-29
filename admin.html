@@ -317,9 +317,9 @@
     <!-- VAGAS POR INSTRUMENTO -->
     <div class="vagas-section">
         <div class="filtros-label" style="cursor:pointer;user-select:none;" onclick="toggleVagas()">
-            Vagas por instrumento <span id="vagasToggleIcon">▼</span>
+            Vagas por instrumento <span id="vagasToggleIcon">▲</span>
         </div>
-        <div id="vagasContainer" style="display:none;">
+        <div id="vagasContainer">
             <div class="vagas-grid" id="vagasGrid"></div>
             <div style="font-size:11px;color:#aaa;margin-top:8px;">Clique no número de vagas para editar. 🔴 = acima do limite.</div>
         </div>
@@ -671,7 +671,7 @@
         const icon = document.getElementById('vagasToggleIcon');
         const aberto = c.style.display !== 'none';
         c.style.display = aberto ? 'none' : 'block';
-        icon.textContent = aberto ? '▼' : '▲';
+        icon.textContent = aberto ? '▲' : '▼';
     }
 
     function renderizarVagas() {
