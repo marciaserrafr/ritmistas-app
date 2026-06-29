@@ -42,6 +42,8 @@
         .btn-filtro.ativo { background: #1a1a2e; color: white; }
         .btn-filtro.laranja { border-color: #fd7e14; color: #fd7e14; }
         .btn-filtro.laranja.ativo { background: #fd7e14; color: white; }
+        .btn-filtro.azul { border-color: #0d6efd; color: #0d6efd; }
+        .btn-filtro.azul.ativo { background: #0d6efd; color: white; }
         .btn-filtro.verde { border-color: #28a745; color: #28a745; }
         .btn-filtro.verde.ativo { background: #28a745; color: white; }
         .btn-filtro.vermelho { border-color: #dc3545; color: #dc3545; }
@@ -70,7 +72,7 @@
         .card.suspenso { border-left-color: #fd7e14; }
         .card.desligado { border-left-color: #dc3545; }
         .card.rejeitado { border-left-color: #6c757d; }
-        .card.menor-flag { outline: 2px dashed #fd7e14; outline-offset: 2px; }
+        .card.menor-flag { outline: 2px dashed #0d6efd; outline-offset: 2px; }
 
         .card-info { flex: 1; min-width: 0; }
         .card-topo { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
@@ -95,7 +97,7 @@
         .badge-pendente { background: #fff3cd; color: #856404; }
         .badge-suspenso { background: #ffe5d0; color: #c0440a; }
         .badge-desligado { background: #f8d7da; color: #721c24; }
-        .badge-menor { background: #fff3e0; color: #e65100; }
+        .badge-menor { background: #dbeafe; color: #1d4ed8; }
 
         .motivo-status {
             font-size: 11px; color: #888; font-style: italic;
@@ -112,7 +114,7 @@
             font-size: 12px; color: #8a4a00; margin-top: 8px;
         }
         .btn-declaracao { border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; }
-        .btn-declaracao.pendente { background: #fd7e14; color: white; }
+        .btn-declaracao.pendente { background: #0d6efd; color: white; }
         .btn-declaracao.entregue { background: #28a745; color: white; }
 
         /* AÇÕES */
@@ -186,7 +188,7 @@
             <button class="btn-filtro vermelho" onclick="filtrarStatus('rejeitado', this)">✗ Rejeitados</button>
             <button class="btn-filtro laranja" onclick="filtrarStatus('suspenso', this)">⏸ Suspensos</button>
             <button class="btn-filtro vermelho" onclick="filtrarStatus('desligado', this)">⊘ Desligados</button>
-            <button class="btn-filtro laranja" onclick="filtrarStatus('menor', this)">⚠️ Menores</button>
+            <button class="btn-filtro azul" onclick="filtrarStatus('menor', this)">⚠️ Menores</button>
         </div>
     </div>
 
