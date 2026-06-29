@@ -51,9 +51,10 @@
         .btn-cadastrar-ritmista {
             display: inline-flex; align-items: center; gap: 6px;
             background: #F5C518; border: none; color: #1a1a2e;
-            padding: 10px 18px; border-radius: 8px; cursor: pointer;
-            font-size: 14px; font-weight: bold; margin-bottom: 20px;
+            padding: 7px 14px; border-radius: 8px; cursor: pointer;
+            font-size: 13px; font-weight: bold;
         }
+        .btn-cadastrar-texto { display: inline; }
         /* RODAPÉ */
         .rodape {
             margin-top: 40px; padding: 14px 24px;
@@ -259,6 +260,9 @@
         }
 
         @media (max-width: 600px) {
+            .btn-cadastrar-texto { display: none; }
+            .btn-cadastrar-ritmista { padding: 7px 10px; font-size: 16px; }
+
             .header { padding: 12px 16px; gap: 8px; }
             .header-bateria { font-size: 14px; }
             .header-escola { font-size: 10px; }
@@ -293,6 +297,7 @@
         </div>
     </div>
     <div class="header-acoes">
+        <button class="btn-cadastrar-ritmista" onclick="window.location.href='index.html'">+ <span class="btn-cadastrar-texto">Cadastrar Ritmista</span></button>
         <div class="header-usuario">
             <div class="header-avatar" id="headerAvatar">D</div>
             <div class="header-user-info">
@@ -305,8 +310,6 @@
 </div>
 
 <div class="container">
-
-    <button class="btn-cadastrar-ritmista" onclick="window.location.href='index.html'">+ Cadastrar Ritmista</button>
 
     <div class="filtros-grupo">
         <div class="filtros-label">Filtrar por status</div>
