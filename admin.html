@@ -89,11 +89,26 @@
         .btn-filtro.laranja, .btn-filtro.azul, .btn-filtro.verde, .btn-filtro.vermelho { border-color: #ccc; color: #444; }
         .btn-filtro.laranja.ativo, .btn-filtro.azul.ativo, .btn-filtro.verde.ativo, .btn-filtro.vermelho.ativo { background: #1a1a2e; color: white; border-color: #1a1a2e; }
 
-        select.filtro-instrumento {
+        /* Multi-select instrumento */
+        .multi-select { position: relative; display: inline-block; }
+        .multi-select-trigger {
             padding: 7px 14px; border-radius: 20px;
             border: 2px solid #1a1a2e; background: white;
             color: #1a1a2e; cursor: pointer; font-size: 12px; font-weight: bold;
+            display: inline-flex; align-items: center; gap: 8px; min-width: 180px;
+            justify-content: space-between; user-select: none;
         }
+        .multi-select-dropdown {
+            position: absolute; top: calc(100% + 4px); left: 0; z-index: 200;
+            background: white; border: 1px solid #ddd; border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12); min-width: 200px; overflow: hidden;
+        }
+        .multi-select-option {
+            display: flex; align-items: center; gap: 8px;
+            padding: 9px 14px; font-size: 13px; cursor: pointer; color: #333;
+        }
+        .multi-select-option:hover { background: #f5f5f5; }
+        .multi-select-option input[type=checkbox] { accent-color: #1a1a2e; width: 15px; height: 15px; cursor: pointer; }
 
         /* VAGAS */
         .vagas-section { margin-bottom: 20px; }
@@ -172,7 +187,7 @@
         }
         .btn-declaracao { border: 1.5px solid; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; background: transparent; }
         .btn-declaracao.pendente { border-color: #1a1a2e; color: #1a1a2e; }
-        .btn-declaracao.entregue { border-color: #2d7a4f; color: #2d7a4f; }
+        .btn-declaracao.entregue { border-color: #999; color: #666; }
 
         /* AÇÕES */
         .card-acoes { display: flex; flex-direction: column; gap: 8px; align-items: flex-end; flex-shrink: 0; }
@@ -287,17 +302,15 @@
     <div class="filtros-grupo">
         <div class="filtros-label">Filtrar por instrumento</div>
         <div class="filtros">
-            <select class="filtro-instrumento" id="filtroInstrumento" onchange="aplicarFiltros()">
-                <option value="">Todos os instrumentos</option>
-                <option>Caixa</option>
-                <option>Chocalho</option>
-                <option>Cuíca</option>
-                <option>Repique</option>
-                <option>Surdo de Primeira</option>
-                <option>Surdo de Segunda</option>
-                <option>Surdo de Terceira</option>
-                <option>Tamborim</option>
-            </select>
+            <div class="multi-select" id="multiSelectWrap">
+                <div class="multi-select-trigger" id="multiSelectTrigger" onclick="toggleMultiSelect()">
+                    <span id="multiSelectLabel">Todos os instrumentos</span>
+                    <span id="multiSelectArrow">▼</span>
+                </div>
+                <div class="multi-select-dropdown" id="multiSelectDropdown" style="display:none">
+                    <!-- preenchido por JS -->
+                </div>
+            </div>
         </div>
     </div>
 
@@ -313,7 +326,7 @@
     </div>
 
     <div class="contador" id="contador"></div>
-    <div class="cards" id="listaRitmistas">
+    <div class="cards" id="listaRitmistas" style="min-height:300px;">
         <div class="vazio">Carregando...</div>
     </div>
 
@@ -418,7 +431,6 @@
     }
 
     function aplicarFiltros() {
-        const instrumento = document.getElementById('filtroInstrumento').value;
         let lista = todosRitmistas;
 
         if (filtroStatusAtual === 'menor') {
@@ -427,7 +439,9 @@
             lista = lista.filter(r => r.status === filtroStatusAtual);
         }
 
-        if (instrumento) lista = lista.filter(r => r.instrumento === instrumento);
+        if (filtroInstrumentosSelecionados.length > 0) {
+            lista = lista.filter(r => filtroInstrumentosSelecionados.includes(r.instrumento));
+        }
 
         renderizar(lista);
     }
@@ -502,7 +516,7 @@
                     <div class="declaracao-area">
                         <span>📄 Declaração do responsável:</span>
                         ${declaracaoEntregue
-                            ? `<span style="color:#28a745;font-weight:bold;">✓ Entregue</span>
+                            ? `<span style="color:#28a745;font-weight:bold;display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> Entregue</span>
                                <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id}, false)">Desfazer</button>`
                             : `<span style="color:#dc3545;font-weight:bold;">✗ Pendente</span>
                                <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id}, true)">Marcar como entregue</button>`
@@ -593,15 +607,57 @@
 
     function sair() { window.location.href = 'login.html'; }
 
+    const INSTRUMENTOS = ['Caixa','Chocalho','Cuíca','Repique','Surdo de Primeira','Surdo de Segunda','Surdo de Terceira','Tamborim'];
+    let instrumentosDiretor = INSTRUMENTOS; // padrão: todos (mestre/admin)
+    let filtroInstrumentosSelecionados = [];
+
     function iniciarUsuario() {
         const diretor = JSON.parse(localStorage.getItem('diretor') || 'null');
         const nome = diretor?.nome || 'Diretor';
         const iniciais = nome.split(' ').map(p => p[0]).slice(0, 2).join('').toUpperCase();
         document.getElementById('headerNome').textContent = nome;
         document.getElementById('headerAvatar').textContent = iniciais;
+        // Se diretor tiver instrumentos definidos, restringe; caso contrário mostra todos
+        if (diretor?.instrumentos && diretor.instrumentos.length > 0) {
+            instrumentosDiretor = diretor.instrumentos;
+        }
+        construirMultiSelect();
     }
 
-    const INSTRUMENTOS = ['Caixa','Chocalho','Cuíca','Repique','Surdo de Primeira','Surdo de Segunda','Surdo de Terceira','Tamborim'];
+    function construirMultiSelect() {
+        const dropdown = document.getElementById('multiSelectDropdown');
+        dropdown.innerHTML = instrumentosDiretor.map(inst => `
+            <label class="multi-select-option">
+                <input type="checkbox" value="${inst}" onchange="onCheckInstrumento()">
+                ${inst}
+            </label>`).join('');
+    }
+
+    function toggleMultiSelect() {
+        const dd = document.getElementById('multiSelectDropdown');
+        const arrow = document.getElementById('multiSelectArrow');
+        const aberto = dd.style.display !== 'none';
+        dd.style.display = aberto ? 'none' : 'block';
+        arrow.textContent = aberto ? '▼' : '▲';
+    }
+
+    function onCheckInstrumento() {
+        const checks = document.querySelectorAll('#multiSelectDropdown input[type=checkbox]:checked');
+        filtroInstrumentosSelecionados = Array.from(checks).map(c => c.value);
+        const label = document.getElementById('multiSelectLabel');
+        label.textContent = filtroInstrumentosSelecionados.length === 0
+            ? 'Todos os instrumentos'
+            : filtroInstrumentosSelecionados.join(', ');
+        aplicarFiltros();
+    }
+
+    // Fecha dropdown ao clicar fora
+    document.addEventListener('click', function(e) {
+        if (!document.getElementById('multiSelectWrap')?.contains(e.target)) {
+            const dd = document.getElementById('multiSelectDropdown');
+            if (dd) { dd.style.display = 'none'; document.getElementById('multiSelectArrow').textContent = '▼'; }
+        }
+    });
 
     function toggleVagas() {
         const c = document.getElementById('vagasContainer');
@@ -614,12 +670,12 @@
     function renderizarVagas() {
         const vagas = JSON.parse(localStorage.getItem('vagasPorInstrumento') || '{}');
         const contagem = {};
-        INSTRUMENTOS.forEach(i => contagem[i] = 0);
+        instrumentosDiretor.forEach(i => contagem[i] = 0);
         todosRitmistas.filter(r => r.status === 'aprovado').forEach(r => {
             if (r.instrumento && contagem[r.instrumento] !== undefined) contagem[r.instrumento]++;
         });
 
-        document.getElementById('vagasGrid').innerHTML = INSTRUMENTOS.map(inst => {
+        document.getElementById('vagasGrid').innerHTML = instrumentosDiretor.map(inst => {
             const limite = vagas[inst] || 0;
             const atual = contagem[inst] || 0;
             const alerta = limite > 0 && atual > limite;
