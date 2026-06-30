@@ -68,7 +68,7 @@
 }
 .campo:focus {
   outline: none;
-  border-color: var(--cor-destaque);
+  border-color: #D4AF37;
 }
 
 /* ── Seção de formulário ── */
