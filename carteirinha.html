@@ -4,338 +4,520 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carteirinha - Swing da Leopoldina</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/tokens.css">
     <style>
-        :root {
-            --preto: #111111;
-            --verde-imperial: #0B5D3B;
-            --verde-escuro: #063A24;
-            --dourado: #C9A227;
-            --dourado-claro: #E3C96B;
-            --branco: #FFFFFF;
-            --cinza: #E8E8E8;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         button { font-family: inherit; }
 
         body {
-            font-family: 'Plus Jakarta Sans', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background: linear-gradient(145deg, #0a0a0a 0%, #111a14 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 24px 20px;
-            flex-direction: column;
         }
 
+        /* Topo com nome e botão sair */
         .topo {
-            width: 320px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            padding: 14px 20px;
+            z-index: 10;
         }
-        .topo-nome { font-size: 11px; color: var(--dourado); letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
+        .topo-nome {
+            font-size: 11px;
+            color: #D4AF37;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
         .btn-sair {
             background: transparent;
-            border: 1px solid rgba(201,162,39,0.3);
-            color: var(--dourado);
+            border: 1px solid rgba(212,175,55,0.3);
+            color: #D4AF37;
             padding: 5px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 11px;
             letter-spacing: 1px;
         }
+        .btn-sair:hover { background: rgba(212,175,55,0.08); }
 
-        /* FLIP */
-        .carteirinha-wrapper { width: 320px; height: 540px; position: relative; max-width: 320px; max-height: 540px; }
-        .carteirinha-inner { position: relative; width: 100%; height: 100%; }
-
-        .frente, .verso {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border-radius: 24px;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            overflow: hidden;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(201,162,39,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
-            transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-        }
-
-        .frente { transform: perspective(1400px) rotateY(0deg); background: var(--preto); }
-        .verso  { transform: perspective(1400px) rotateY(180deg); }
-
-        .carteirinha-wrapper.virada .frente { transform: perspective(1400px) rotateY(-180deg); }
-        .carteirinha-wrapper.virada .verso  { transform: perspective(1400px) rotateY(0deg); }
-
-        /* ══ FRENTE ══ */
-        .frente-svg {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%; z-index: 0;
-        }
-
-        .frente-corpo {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
+        /* ================================
+           CONTAINER GERAL
+           ================================ */
+        .carteirinha-scene {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 28px 24px 24px;
+            padding: 2rem 1rem;
+            gap: 1.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin-top: 40px;
         }
 
-        /* Topo */
-        .card-topo {
+        /* ================================
+           FLIP CARD
+           ================================ */
+        .carteirinha-wrap {
+            width: 300px;
+            height: 500px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .carteirinha-inner {
             width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-        .card-topo-info { flex: 1; }
-        .card-escola {
-            font-size: 7px;
-            color: rgba(255,255,255,0.3);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 7px;
-            white-space: nowrap;
-        }
-        .card-bateria {
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--dourado);
-            letter-spacing: 1px;
-            white-space: nowrap;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(.4, 0, .2, 1);
         }
 
-        .status-badge {
-            background: rgba(11,93,59,0.6);
-            border: 1px solid rgba(201,162,39,0.4);
+        .carteirinha-inner.virada {
+            transform: rotateY(180deg);
+        }
+
+        .carteirinha-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+        }
+
+        .carteirinha-verso {
+            transform: rotateY(180deg);
+        }
+
+        /* ================================
+           FRENTE
+           ================================ */
+        .c-frente {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(160deg, #1e3a20 0%, #0d1f10 60%, #081406 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .c-frente-acento1 {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 200px; height: 200px;
+            background: linear-gradient(135deg, #D4AF37 0%, #7a5c00 100%);
+            clip-path: polygon(0 100%, 100% 100%, 0 0);
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .c-frente-acento2 {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 120px; height: 120px;
+            background: linear-gradient(135deg, #D4AF37 0%, #9a7400 100%);
+            clip-path: polygon(0 100%, 100% 100%, 0 0);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .c-header {
+            padding: 16px 18px 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .c-escola {
+            font-size: 8px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            color: #6a8a6a;
+            text-transform: uppercase;
+        }
+
+        .c-bateria {
+            font-size: 14px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-top: 1px;
+        }
+
+        .c-status {
+            background: rgba(20, 44, 20, 0.9);
+            border: 1px solid #2d6b2d;
             border-radius: 20px;
-            padding: 5px 12px;
+            padding: 4px 10px;
             display: flex;
             align-items: center;
             gap: 5px;
-            backdrop-filter: blur(4px);
-            margin-left: 12px;
-            flex-shrink: 0;
+            font-size: 10px;
+            font-weight: 600;
+            color: #4ade80;
         }
-        .status-dot {
-            width: 5px; height: 5px;
+
+        .c-status-dot {
+            width: 6px; height: 6px;
             border-radius: 50%;
             background: #4ade80;
             box-shadow: 0 0 6px #4ade80;
         }
-        .status-txt { font-size: 8px; color: #4ade80; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
 
-        /* Foto centralizada */
-        .foto-anel {
-            width: 104px; height: 104px;
-            border-radius: 50%;
-            padding: 2.5px;
-            background: linear-gradient(135deg, #8B6914, #E3C96B, #C9A227, #8B6914);
-            box-shadow: 0 0 28px rgba(201,162,39,0.35), 0 8px 24px rgba(0,0,0,0.5);
-            margin-bottom: 14px;
-            flex-shrink: 0;
+        .c-foto-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 14px 0 6px;
+            position: relative;
+            z-index: 1;
         }
-        .foto-interno {
-            width: 100%; height: 100%;
+
+        .c-foto {
+            width: 114px; height: 114px;
             border-radius: 50%;
-            background: #1a1a1a;
-            display: flex; align-items: center; justify-content: center;
+            border: 2.5px solid #D4AF37;
+            background: linear-gradient(135deg, #243824, #162616);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
             overflow: hidden;
             font-size: 38px;
         }
-        .foto-interno img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Dados centralizados */
-        .funcao-tag {
-            font-size: 7px;
-            color: var(--dourado);
-            letter-spacing: 3px;
+        .c-foto img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .c-foto-anel {
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            pointer-events: none;
+        }
+
+        .c-role {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: #6a8a6a;
             text-transform: uppercase;
-            margin-bottom: 14px;
-            opacity: 0.8;
-            text-align: center;
-        }
-        .nome {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--branco);
-            line-height: 1.2;
-            margin-bottom: 8px;
-            text-align: center;
-            width: 100%;
+            margin-top: 10px;
         }
 
-        /* Apelido + Instrumento lado a lado */
-        .apelido-instrumento {
+        .c-identidade {
             display: flex;
-            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+            padding: 4px 20px 0;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .c-nome {
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.25;
+            margin-top: 2px;
+        }
+
+        .c-apelido {
+            font-size: 11px;
+            color: #D4AF37;
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        .c-instrumento {
+            font-size: 11px;
+            color: #86a886;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+
+        .c-divisor {
+            height: 0.5px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 14px 20px 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .c-cpf {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .c-label {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: #4a6a4a;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+        }
+
+        .c-valor {
+            font-size: 13px;
+            font-weight: 600;
+            color: #b8ccb8;
+        }
+
+        .c-membro-desde {
+            position: absolute;
+            bottom: 16px; left: 20px;
+            z-index: 2;
+            background: rgba(8, 20, 6, 0.75);
+            border: 0.5px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            padding: 6px 10px;
+        }
+
+        .c-membro-desde .c-label { color: #5a8a5a; }
+        .c-membro-desde .c-valor {
+            font-size: 13px;
+            font-weight: 700;
+            color: #D4AF37;
+        }
+
+        .c-logo {
+            position: absolute;
+            bottom: 14px; right: 20px;
+            z-index: 2;
+        }
+
+        .c-logo-circulo {
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 8px;
-            margin-bottom: 20px;
-        }
-        .apelido {
-            font-size: 11px;
-            color: rgba(255,255,255,0.45);
-            letter-spacing: 1px;
-            font-style: italic;
-        }
-        .separador {
-            width: 1px; height: 12px;
-            background: rgba(201,162,39,0.3);
-        }
-        .instrumento {
-            font-size: 11px;
-            color: var(--dourado-claro);
-            letter-spacing: 1px;
-            opacity: 0.85;
-        }
-
-        /* Linha dourada */
-        .linha-dourada {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--dourado), rgba(201,162,39,0.1));
-            margin-bottom: 18px;
-        }
-
-        /* CPF */
-        .cpf-area { width: 100%; margin-bottom: 18px; text-align: center; }
-        .dado-label { font-size: 7px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 3px; }
-        .dado-valor { font-size: 12px; font-weight: 600; color: var(--cinza); letter-spacing: 1px; }
-
-        .linha-fina { width: 82%; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), rgba(255,255,255,0.06)); margin-bottom: 16px; align-self: flex-end; }
-
-        /* Validade */
-        .validade-area { width: 100%; text-align: right; margin-bottom: 14px; }
-        .validade-label { font-size: 7px; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 2px; }
-        .validade-valor { font-size: 15px; font-weight: 700; color: var(--dourado); letter-spacing: 1px; }
-
-        /* Logo rodapé */
-        .logo-rodape {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-        .logo-rodape-circulo {
-            width: 66px; height: 66px;
-            border-radius: 50%;
-            border: 1.5px solid #C9A227;
-            background: transparent;
-            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #D4AF37;
             overflow: hidden;
         }
-        .logo-rodape-texto {
-            font-size: 7px;
-            color: rgba(201,162,39,0.5);
-            letter-spacing: 2px;
+
+        .c-logo-circulo img {
+            width: 108%; height: 108%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .c-logo-texto {
+            font-size: 11px;
+            font-weight: 800;
+            color: #1a3320;
+        }
+
+        /* ================================
+           VERSO
+           ================================ */
+        .c-verso {
+            width: 100%; height: 100%;
+            background: linear-gradient(160deg, #1e3a20 0%, #0d1f10 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 22px 20px;
+            box-sizing: border-box;
+        }
+
+        .c-verso-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .c-verso-titulo {
+            font-size: 13px;
+            font-weight: 700;
+            color: #D4AF37;
+        }
+
+        .c-verso-sub {
+            font-size: 8px;
+            color: #4a6a4a;
+            margin-top: 2px;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
         }
 
-        /* ══ VERSO ══ */
-        .verso {
-            background: linear-gradient(160deg, #0a0f0b 0%, #0d3a20 60%, #063A24 100%);
+        .c-logo-il {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid #D4AF37;
+            overflow: hidden;
         }
 
-        .verso-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-
-        .verso-corpo {
-            position: absolute; top: 0; left: 0;
+        .c-logo-il img {
             width: 100%; height: 100%;
-            z-index: 1;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .c-logo-il-texto {
+            font-size: 10px;
+            font-weight: 800;
+            color: #1a3320;
+        }
+
+        .c-qr-area {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 28px 28px 24px;
+            gap: 8px;
         }
 
-        .verso-topo {
-            width: 100%;
+        .c-qr {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 14px;
+            border: 1.5px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .c-qr svg { display: block; }
+
+        .c-qr-label {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: #4a6a4a;
+            text-transform: uppercase;
+        }
+
+        .c-mestre {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .c-mestre-label {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: #4a6a4a;
+            text-transform: uppercase;
+        }
+
+        .c-mestre-nome {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .c-validade {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .c-validade-label {
+            font-size: 8px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: #4a6a4a;
+            text-transform: uppercase;
+        }
+
+        .c-validade-valor {
+            font-size: 14px;
+            font-weight: 700;
+            color: #D4AF37;
+        }
+
+        .c-verso-rodape {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 36px;
-            flex-shrink: 0;
-        }
-        .verso-bateria-nome { font-size: 14px; font-weight: 700; color: var(--dourado); letter-spacing: 1.5px; text-transform: uppercase; white-space: nowrap; }
-        .verso-escola-nome { font-size: 7px; color: rgba(255,255,255,0.25); letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
-
-        .verso-logo {
-            width: 52px; height: 52px;
-            border-radius: 50%;
-            border: 1px solid rgba(201,162,39,0.35);
-            background: rgba(201,162,39,0.04);
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
         }
 
-        .qr-area {
-            width: 140px; height: 140px;
-            background: var(--branco);
-            border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
+        .c-rodape-item {
+            font-size: 10px;
+            color: #4a6a4a;
+            font-weight: 500;
         }
-        .qr-label { font-size: 7px; color: #555; letter-spacing: 1px; text-transform: uppercase; text-align: center; margin-top: 6px; }
 
-        .verso-mestre {
-            text-align: center;
-            margin-top: 16px;
-            margin-bottom: 24px;
-            flex-shrink: 0;
+        .c-rodape-item.dourado {
+            color: #D4AF37;
+            font-weight: 600;
         }
-        .verso-mestre-label { font-size: 7px; color: rgba(255,255,255,0.25); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
-        .verso-mestre-nome { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.65); letter-spacing: 1px; }
 
-        .verso-linha { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent); flex-shrink: 0; }
-
-        .verso-rodape {
+        /* ================================
+           BOTÕES
+           ================================ */
+        .c-hint {
+            font-size: 12px;
+            color: #888;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            position: absolute;
-            bottom: 24px;
-            left: 28px;
-            right: 28px;
+            align-items: center;
+            gap: 6px;
         }
-        .verso-link-item { font-size: 8px; color: rgba(255,255,255,0.2); letter-spacing: 1px; }
-        .verso-carnaval { font-size: 9px; color: rgba(201,162,39,0.4); letter-spacing: 2px; text-transform: uppercase; text-align: right; }
 
-        .canto { position: absolute; width: 18px; height: 18px; border-color: rgba(201,162,39,0.25); border-style: solid; z-index: 2; }
-        .canto-tl { top: 14px; left: 14px; border-width: 1px 0 0 1px; }
-        .canto-tr { top: 14px; right: 14px; border-width: 1px 1px 0 0; }
-        .canto-bl { bottom: 14px; left: 14px; border-width: 0 0 1px 1px; }
-        .canto-br { bottom: 14px; right: 14px; border-width: 0 1px 1px 0; }
+        .c-botoes {
+            display: flex;
+            gap: 10px;
+            width: 300px;
+        }
 
-        .btn-virar-externo {
-            margin-top: 14px;
-            width: 42px; height: 42px;
-            border-radius: 50%;
-            background: rgba(201,162,39,0.1);
-            border: 1px solid rgba(201,162,39,0.35);
-            color: var(--dourado);
-            font-size: 20px;
-            display: flex; align-items: center; justify-content: center;
+        .c-btn-salvar {
+            flex: 1;
+            padding: 13px;
+            border-radius: 12px;
+            border: 1.5px solid #D4AF37;
+            background: transparent;
+            color: #D4AF37;
+            font-size: 12px;
+            font-weight: 700;
             cursor: pointer;
+            letter-spacing: 0.08em;
         }
 
-        .acoes { width: 320px; margin-top: 14px; display: flex; gap: 10px; }
-        .btn-acao { flex: 1; padding: 13px; border-radius: 14px; font-size: 12px; font-weight: 600; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; }
-        .btn-salvar { background: transparent; border: 1px solid rgba(201,162,39,0.4); color: var(--dourado); }
-        .btn-compartilhar { background: var(--verde-imperial); border: 1px solid rgba(201,162,39,0.3); color: var(--dourado); }
+        .c-btn-salvar:hover { background: rgba(212, 175, 55, 0.08); }
+
+        .c-btn-compartilhar {
+            flex: 1;
+            padding: 13px;
+            border-radius: 12px;
+            border: none;
+            background: #D4AF37;
+            color: #0d1f10;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 0.08em;
+        }
+
+        .c-btn-compartilhar:hover { background: #c9a030; }
+
+        [data-tema="swing-da-leopoldina"] .c-frente {
+            background: linear-gradient(160deg, #1e3a20 0%, #0d1f10 60%, #081406 100%);
+        }
     </style>
 </head>
 <body>
@@ -345,198 +527,170 @@
     <button class="btn-sair" onclick="sair()">Sair</button>
 </div>
 
-<div class="carteirinha-wrapper" id="carteirinhaWrapper">
-    <div class="carteirinha-inner">
+<div class="carteirinha-scene">
 
-        <!-- ════ FRENTE ════ -->
-        <div class="frente">
-            <svg class="frente-svg" viewBox="0 0 320 540" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                <defs>
-                    <linearGradient id="fundoFusion" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#111111"/>
-                        <stop offset="100%" style="stop-color:#0d1f14"/>
-                    </linearGradient>
-                    <linearGradient id="planoVerde" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#063A24;stop-opacity:0.9"/>
-                        <stop offset="100%" style="stop-color:#0B5D3B;stop-opacity:0.6"/>
-                    </linearGradient>
-                    <filter id="noise" x="0%" y="0%" width="100%" height="100%">
-                        <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" stitchTiles="stitch" result="noiseOut"/>
-                        <feColorMatrix type="saturate" values="0" in="noiseOut" result="grayNoise"/>
-                        <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blended"/>
-                        <feComposite in="blended" in2="SourceGraphic" operator="in"/>
-                    </filter>
-                </defs>
-                <rect width="320" height="540" fill="url(#fundoFusion)"/>
-                <rect width="320" height="540" fill="url(#fundoFusion)" filter="url(#noise)" opacity="0.04"/>
-                <polygon points="0,540 0,308 222,540" fill="url(#planoVerde)"/>
-                <polygon points="0,540 0,390 144,540" fill="#0B5D3B" opacity="0.5"/>
-                <line x1="0" y1="308" x2="222" y2="540" stroke="#C9A227" stroke-width="1.5"/>
-                <line x1="0" y1="318" x2="212" y2="540" stroke="#E3C96B" stroke-width="0.6" opacity="0.5"/>
-                <ellipse cx="160" cy="0" rx="200" ry="80" fill="rgba(255,255,255,0.015)"/>
-                <rect x="8" y="8" width="304" height="524" rx="18" fill="none" stroke="#C9A227" stroke-width="0.5" opacity="0.2"/>
-            </svg>
+    <div class="c-hint">↺ toque para virar</div>
 
-            <div class="frente-corpo">
-                <div class="card-topo">
-                    <div class="card-topo-info">
-                        <div class="card-escola">G.R.E.S. Imperatriz Leopoldinense</div>
-                        <div class="card-bateria">Swing da Leopoldina</div>
+    <div class="carteirinha-wrap" onclick="virarCarteirinha()">
+        <div class="carteirinha-inner" id="carteirinhaInner">
+
+            <!-- ════ FRENTE ════ -->
+            <div class="carteirinha-face">
+                <div class="c-frente">
+                    <div class="c-frente-acento1"></div>
+                    <div class="c-frente-acento2"></div>
+
+                    <div class="c-header">
+                        <div>
+                            <div class="c-escola">G.R.E.S. Imperatriz Leopoldinense</div>
+                            <div class="c-bateria">Swing da Leopoldina</div>
+                        </div>
+                        <div class="c-status">
+                            <div class="c-status-dot"></div>
+                            Ativo
+                        </div>
                     </div>
-                    <div class="status-badge">
-                        <div class="status-dot"></div>
-                        <span class="status-txt">Ativo</span>
+
+                    <div class="c-foto-area">
+                        <div class="c-foto" id="fotoRitmista">
+                            <div class="c-foto-anel"></div>
+                            👤
+                        </div>
+                        <div class="c-role">Ritmista</div>
                     </div>
-                </div>
 
-                <!-- Foto centralizada -->
-                <div class="foto-anel">
-                    <div class="foto-interno" id="fotoRitmista">👤</div>
-                </div>
+                    <div class="c-identidade">
+                        <div class="c-nome" id="nomeRitmista">—</div>
+                        <div class="c-apelido" id="apelidoRitmista"></div>
+                        <div class="c-instrumento" id="instrumentoRitmista">—</div>
+                    </div>
 
-                <!-- Dados abaixo da foto -->
-                <div class="funcao-tag">Ritmista</div>
-                <div class="nome" id="nomeRitmista">—</div>
+                    <div class="c-divisor"></div>
 
-                <div class="apelido-instrumento">
-                    <span class="apelido" id="apelidoRitmista"></span>
-                    <div class="separador" id="separadorAI" style="display:none"></div>
-                    <span class="instrumento" id="instrumentoRitmista">—</span>
-                </div>
+                    <div class="c-cpf">
+                        <div class="c-label">CPF</div>
+                        <div class="c-valor" id="cpfRitmista">—</div>
+                    </div>
 
-                <div class="linha-dourada"></div>
+                    <!-- Membro desde — canto inferior esquerdo -->
+                    <div class="c-membro-desde" id="membroDesdeBox" style="display:none">
+                        <div class="c-label">Membro desde</div>
+                        <div class="c-valor" id="membroDesde">—</div>
+                    </div>
 
-                <div class="cpf-area">
-                    <div class="dado-label">CPF</div>
-                    <div class="dado-valor" id="cpfRitmista">—</div>
-                </div>
-
-                <div class="linha-fina"></div>
-
-                <div class="validade-area">
-                    <div class="validade-label">Válida até</div>
-                    <div class="validade-valor" id="validadeCarteirinha">31/07/2027</div>
-                </div>
-
-                <div class="logo-rodape">
-                    <div class="logo-rodape-circulo">
-                        <img src="logo-swing.png" style="width:108%; height:108%; object-fit:cover; object-position: center center;"/>
+                    <!-- Logo Swing — canto inferior direito -->
+                    <div class="c-logo">
+                        <div class="c-logo-circulo">
+                            <img src="logo-swing.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <span class="c-logo-texto" style="display:none">SL</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- ════ VERSO ════ -->
-        <div class="verso">
-            <svg class="verso-svg" viewBox="0 0 320 540" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-                <defs>
-                    <pattern id="ondasVerso" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M0,20 Q10,10 20,20 Q30,30 40,20" fill="none" stroke="rgba(201,162,39,0.03)" stroke-width="1"/>
-                    </pattern>
-                </defs>
-                <rect width="320" height="540" fill="transparent"/>
-                <rect width="320" height="540" fill="url(#ondasVerso)"/>
-                <polygon points="320,0 320,230 100,0" fill="rgba(201,162,39,0.03)"/>
-                <rect x="8" y="8" width="304" height="524" rx="18" fill="none" stroke="#C9A227" stroke-width="0.5" opacity="0.2"/>
-            </svg>
-
-            <div class="canto canto-tl"></div>
-            <div class="canto canto-tr"></div>
-            <div class="canto canto-bl"></div>
-            <div class="canto canto-br"></div>
-
-            <div class="verso-corpo">
-                <div class="verso-topo">
-                    <div>
-                        <div class="verso-bateria-nome">Swing da Leopoldina</div>
-                        <div class="verso-escola-nome">G.R.E.S. Imperatriz Leopoldinense</div>
+            <!-- ════ VERSO ════ -->
+            <div class="carteirinha-face carteirinha-verso">
+                <div class="c-verso">
+                    <div class="c-verso-header">
+                        <div>
+                            <div class="c-verso-titulo">Swing da Leopoldina</div>
+                            <div class="c-verso-sub">G.R.E.S. Imperatriz Leopoldinense</div>
+                        </div>
+                        <div class="c-logo-il">
+                            <img src="logo-imperatriz.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+                            <span class="c-logo-il-texto" style="display:none">IL</span>
+                        </div>
                     </div>
-                    <div class="verso-logo">
-                        <img src="logo-imperatriz.png" style="width:100%; height:100%; border-radius:50%; object-fit:cover;"/>
+
+                    <div class="c-qr-area">
+                        <div class="c-qr">
+                            <svg viewBox="0 0 110 110" width="110" height="110" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="110" height="110" fill="white"/>
+                                <rect x="5" y="5" width="35" height="35" rx="3" fill="none" stroke="#111" stroke-width="3"/>
+                                <rect x="11" y="11" width="23" height="23" rx="1" fill="#111"/>
+                                <rect x="70" y="5" width="35" height="35" rx="3" fill="none" stroke="#111" stroke-width="3"/>
+                                <rect x="76" y="11" width="23" height="23" rx="1" fill="#111"/>
+                                <rect x="5" y="70" width="35" height="35" rx="3" fill="none" stroke="#111" stroke-width="3"/>
+                                <rect x="11" y="76" width="23" height="23" rx="1" fill="#111"/>
+                                <rect x="45" y="5" width="6" height="6" fill="#111"/>
+                                <rect x="55" y="5" width="6" height="6" fill="#111"/>
+                                <rect x="45" y="15" width="6" height="6" fill="#111"/>
+                                <rect x="57" y="18" width="6" height="6" fill="#111"/>
+                                <rect x="48" y="28" width="6" height="6" fill="#111"/>
+                                <rect x="45" y="45" width="6" height="6" fill="#111"/>
+                                <rect x="55" y="45" width="6" height="6" fill="#111"/>
+                                <rect x="65" y="45" width="6" height="6" fill="#111"/>
+                                <rect x="48" y="55" width="6" height="6" fill="#111"/>
+                                <rect x="58" y="55" width="6" height="6" fill="#111"/>
+                                <rect x="45" y="65" width="6" height="6" fill="#111"/>
+                                <rect x="68" y="48" width="6" height="6" fill="#111"/>
+                                <rect x="75" y="58" width="6" height="6" fill="#111"/>
+                                <rect x="68" y="65" width="6" height="6" fill="#111"/>
+                                <rect x="80" y="70" width="6" height="6" fill="#111"/>
+                                <rect x="72" y="76" width="6" height="6" fill="#111"/>
+                                <rect x="85" y="80" width="6" height="6" fill="#111"/>
+                                <rect x="55" y="75" width="6" height="6" fill="#111"/>
+                                <rect x="48" y="88" width="6" height="6" fill="#111"/>
+                                <rect x="58" y="95" width="6" height="6" fill="#111"/>
+                            </svg>
+                        </div>
+                        <div class="c-qr-label">Validação Digital</div>
                     </div>
-                </div>
 
-                <div class="qr-area">
-                    <div style="width:100%;display:flex;flex-direction:column;align-items:center;">
-                        <svg viewBox="0 0 110 110" width="110" height="110" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="110" height="110" fill="white"/>
-                            <rect x="5" y="5" width="35" height="35" rx="3" fill="none" stroke="#111" stroke-width="3"/>
-                            <rect x="11" y="11" width="23" height="23" rx="1" fill="#111"/>
-                            <rect x="70" y="5" width="35" height="35" rx="3" fill="none" stroke="#111" stroke-width="3"/>
-                            <rect x="76" y="11" width="23" height="23" rx="1" fill="#111"/>
-                            <rect x="5" y="70" width="35" height="35" rx="3" fill="none" stroke="#111" stroke-width="3"/>
-                            <rect x="11" y="76" width="23" height="23" rx="1" fill="#111"/>
-                            <rect x="45" y="5" width="6" height="6" fill="#111"/>
-                            <rect x="55" y="5" width="6" height="6" fill="#111"/>
-                            <rect x="45" y="15" width="6" height="6" fill="#111"/>
-                            <rect x="57" y="18" width="6" height="6" fill="#111"/>
-                            <rect x="48" y="28" width="6" height="6" fill="#111"/>
-                            <rect x="45" y="45" width="6" height="6" fill="#111"/>
-                            <rect x="55" y="45" width="6" height="6" fill="#111"/>
-                            <rect x="65" y="45" width="6" height="6" fill="#111"/>
-                            <rect x="48" y="55" width="6" height="6" fill="#111"/>
-                            <rect x="58" y="55" width="6" height="6" fill="#111"/>
-                            <rect x="45" y="65" width="6" height="6" fill="#111"/>
-                            <rect x="68" y="48" width="6" height="6" fill="#111"/>
-                            <rect x="75" y="58" width="6" height="6" fill="#111"/>
-                            <rect x="68" y="65" width="6" height="6" fill="#111"/>
-                            <rect x="80" y="70" width="6" height="6" fill="#111"/>
-                            <rect x="72" y="76" width="6" height="6" fill="#111"/>
-                            <rect x="85" y="80" width="6" height="6" fill="#111"/>
-                            <rect x="55" y="75" width="6" height="6" fill="#111"/>
-                            <rect x="48" y="88" width="6" height="6" fill="#111"/>
-                            <rect x="58" y="95" width="6" height="6" fill="#111"/>
-                        </svg>
-                        <div class="qr-label">Validação Digital</div>
+                    <div class="c-mestre">
+                        <div class="c-mestre-label">Mestre de Bateria</div>
+                        <div class="c-mestre-nome">Lolo</div>
                     </div>
-                </div>
 
-                <div class="verso-mestre">
-                    <div class="verso-mestre-label">Mestre de Bateria</div>
-                    <div class="verso-mestre-nome">Lolo</div>
-                </div>
-
-                <div class="verso-linha"></div>
-
-                <div class="verso-rodape">
-                    <div class="verso-link-item">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="rgba(255,255,255,0.2)" style="vertical-align:middle; margin-right:4px;">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                        </svg>@swingdaleopoldina
+                    <div class="c-validade">
+                        <div class="c-validade-label">Válida até</div>
+                        <div class="c-validade-valor">31/07/2027</div>
                     </div>
-                    <div class="verso-carnaval">Carnaval 2027</div>
+
+                    <div class="c-verso-rodape">
+                        <div class="c-rodape-item">@swingdaleopoldina</div>
+                        <div class="c-rodape-item dourado">Carnaval 2027</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 
-<button class="btn-virar-externo" onclick="virarCarteirinha()">↺</button>
+    <div class="c-botoes">
+        <button class="c-btn-salvar" onclick="salvarImagem()">Salvar</button>
+        <button class="c-btn-compartilhar" onclick="compartilhar()">Compartilhar</button>
+    </div>
 
-<div class="acoes">
-    <button class="btn-acao btn-salvar" onclick="salvarImagem()">Salvar</button>
-    <button class="btn-acao btn-compartilhar" onclick="compartilhar()">Compartilhar</button>
 </div>
 
 <script>
+    const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+
     const ritmista = JSON.parse(localStorage.getItem('ritmista'));
     if (!ritmista) {
         window.location.href = 'login.html';
     } else {
+        // Nome
         const nomeEl = document.getElementById('nomeRitmista');
         nomeEl.textContent = ritmista.nome;
         const len = ritmista.nome.length;
-        if (len > 30) nomeEl.style.fontSize = '15px';
-        else if (len > 22) nomeEl.style.fontSize = '17px';
-        else if (len > 16) nomeEl.style.fontSize = '19px';
-        document.getElementById('instrumentoRitmista').textContent = ritmista.instrumento || '—';
+        if (len > 30) nomeEl.style.fontSize = '13px';
+        else if (len > 22) nomeEl.style.fontSize = '15px';
+        else if (len > 16) nomeEl.style.fontSize = '14px';
+
+        // Apelido
         if (ritmista.apelido) {
             document.getElementById('apelidoRitmista').textContent = '"' + ritmista.apelido + '"';
-            document.getElementById('separadorAI').style.display = 'block';
         }
+
+        // Instrumento
+        document.getElementById('instrumentoRitmista').textContent = ritmista.instrumento || '—';
+
+        // CPF
         document.getElementById('cpfRitmista').textContent = ritmista.cpf || '—';
-        document.getElementById('validadeCarteirinha').textContent = '31/07/2027';
+
+        // Foto
         if (ritmista.foto_url) {
             const img = document.createElement('img');
             img.src = ritmista.foto_url;
@@ -544,20 +698,44 @@
             box.innerHTML = '';
             box.appendChild(img);
         }
+
+        // Membro desde
+        if (ritmista.membro_desde) {
+            const partes = ritmista.membro_desde.split('-');
+            let texto = '';
+            if (partes.length === 2) {
+                const mesIdx = parseInt(partes[1], 10) - 1;
+                texto = MESES[mesIdx] + '/' + partes[0];
+            } else {
+                texto = partes[0];
+            }
+            document.getElementById('membroDesde').textContent = texto;
+            document.getElementById('membroDesdeBox').style.display = 'block';
+        }
     }
 
     function virarCarteirinha() {
-        document.getElementById('carteirinhaWrapper').classList.toggle('virada');
+        document.getElementById('carteirinhaInner').classList.toggle('virada');
     }
+
     function sair() {
         localStorage.removeItem('ritmista');
         window.location.href = 'login.html';
     }
-    function salvarImagem() { alert('Função de salvar imagem será ativada em breve!'); }
+
+    function salvarImagem() {
+        alert('Função de salvar imagem será ativada em breve!');
+    }
+
     function compartilhar() {
         if (navigator.share && ritmista) {
-            navigator.share({ title: 'Minha Carteirinha — Swing da Leopoldina', text: `${ritmista.nome} — Ritmista da Imperatriz Leopoldinense. Carnaval 2027!` });
-        } else { alert('Compartilhamento não disponível neste dispositivo.'); }
+            navigator.share({
+                title: 'Minha Carteirinha — Swing da Leopoldina',
+                text: `${ritmista.nome} — Ritmista da Imperatriz Leopoldinense. Carnaval 2027!`
+            });
+        } else {
+            alert('Compartilhamento não disponível neste dispositivo.');
+        }
     }
 </script>
 </body>
