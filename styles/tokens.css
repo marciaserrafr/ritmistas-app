@@ -7,6 +7,7 @@
   --cor-destaque:          #D4AF37;
   --cor-destaque-hover:    #B8922A;
   --cor-destaque-suave:    #fff8e6;
+  --cor-texto-destaque:    #12101a;
 
   --cor-texto-principal:   #12101a;
   --cor-texto-secundario:  #5a5770;
@@ -28,6 +29,7 @@
   --cor-destaque-suave:    #e8f5e9;
   --cor-borda:             #c8e6c8;
   --cor-borda-forte:       #a5d1a5;
+  --cor-texto-destaque:    #ffffff;
 }
 
 body {

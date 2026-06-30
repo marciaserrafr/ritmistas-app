@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-tema="swing-da-leopoldina">
+<html lang="pt-BR" data-tema="tutti">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel do Diretor — Swing da Leopoldina</title>
+    <title>Tutti — Painel do Diretor</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/tokens.css">
     <link rel="stylesheet" href="styles/components.css">
@@ -54,9 +54,29 @@
         .btn-sair { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; }
         .btn-cadastrar-ritmista {
             display: inline-flex; align-items: center; gap: 6px;
-            background: var(--cor-destaque); border: none; color: white;
-            padding: 7px 14px; border-radius: 20px; cursor: pointer;
-            font-size: 13px; font-weight: bold;
+            background: var(--cor-destaque); border: none; color: var(--cor-texto-destaque);
+            padding: 10px 20px; border-radius: 20px; cursor: pointer;
+            font-size: 14px; font-weight: bold;
+        }
+        .header-marca {
+            font-size: 20px; font-weight: 800; color: white; line-height: 1.1;
+            letter-spacing: -0.3px;
+        }
+        .header-marca .destaque-dourado { color: #D4AF37; }
+        /* TOTALIZADORES */
+        .totalizadores {
+            display: flex; gap: 12px; margin-bottom: 16px;
+        }
+        .total-card {
+            flex: 1; background: white; border-radius: 12px;
+            padding: 16px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .total-numero {
+            font-size: 36px; font-weight: 800; color: #0f172a; line-height: 1;
+        }
+        .total-numero.dourado { color: #D4AF37; }
+        .total-label {
+            font-size: 12px; color: #888; font-weight: 500; margin-top: 4px;
         }
         .btn-cadastrar-texto { display: inline; }
         /* RODAPÉ */
@@ -213,7 +233,7 @@
             cursor: pointer; font-size: 13px; font-weight: bold;
             background: transparent; width: 100%; justify-content: center;
         }
-        .btn-aprovar { background: var(--cor-destaque); border-color: var(--cor-destaque); color: white; }
+        .btn-aprovar { background: #2d6b2d; border-color: #2d6b2d; color: white; }
         .btn-rejeitar { border-color: #999; color: #666; }
         .btn-suspender { border-color: #d4720a; color: #d4720a; }
         .btn-desligar { border-color: #9a1f1f; color: #9a1f1f; }
@@ -247,7 +267,7 @@
         .modal-acoes { display: flex; gap: 10px; justify-content: flex-end; }
         .btn-modal-cancelar { background: #f0f0f0; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; }
         .btn-modal-confirmar { border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; color: white; }
-        .btn-modal-confirmar.verde { background: var(--cor-destaque); }
+        .btn-modal-confirmar.verde { background: #2d6b2d; }
         .btn-modal-confirmar.laranja { background: #fd7e14; }
         .btn-modal-confirmar.vermelho { background: #dc3545; }
         .btn-modal-confirmar.azul { background: #0f172a; }
@@ -302,15 +322,12 @@
 
 <div class="header">
     <div style="display:flex; align-items:center; gap:12px; min-width:0;">
-        <div class="header-logo">
-            <img src="logo-swing.png" onerror="this.parentNode.textContent='SL'"/>
-        </div>
         <div class="header-texto">
-            <div class="header-bateria">Swing da Leopoldina</div>
+            <div class="header-marca">Tu<span class="destaque-dourado">TT</span>i</div>
+            <div class="header-escola" id="headerBateria">Swing da Leopoldina</div>
         </div>
     </div>
     <div class="header-acoes">
-        <button class="btn-cadastrar-ritmista" onclick="window.location.href='index.html'">+ <span class="btn-cadastrar-texto">Cadastrar Ritmista</span></button>
         <div class="header-usuario">
             <div class="header-avatar" id="headerAvatar">D</div>
             <div class="header-user-info">
@@ -327,6 +344,21 @@
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
         <h1 style="font-size:22px;font-weight:bold;color:#0f172a;">Ritmistas</h1>
         <button onclick="abrirConfigurarVagas()" style="display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid #ccc;color:#666;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;">⚙ Configurar vagas</button>
+    </div>
+
+    <!-- TOTALIZADORES -->
+    <div class="totalizadores">
+        <div class="total-card">
+            <div class="total-numero dourado" id="totalAtivos">—</div>
+            <div class="total-label">Ritmistas ativos</div>
+        </div>
+        <div class="total-card">
+            <div class="total-numero" id="totalPendentes">—</div>
+            <div class="total-label">Pendentes</div>
+        </div>
+    </div>
+    <div style="margin-bottom:20px;">
+        <button class="btn-cadastrar-ritmista" onclick="window.location.href='index.html'">+ Cadastrar Ritmista</button>
     </div>
 
     <!-- BUSCA -->
@@ -519,6 +551,13 @@
         return idade;
     }
 
+    function atualizarTotalizadores() {
+        const ativos = todosRitmistas.filter(r => r.status === 'aprovado').length;
+        const pendentes = todosRitmistas.filter(r => r.status === 'pendente').length;
+        document.getElementById('totalAtivos').textContent = ativos;
+        document.getElementById('totalPendentes').textContent = pendentes;
+    }
+
     async function carregarRitmistas() {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?select=*&order=created_at.desc`, {
             headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
@@ -526,6 +565,7 @@
         todosRitmistas = await res.json();
         aplicarFiltros();
         renderizarOcupacao();
+        atualizarTotalizadores();
     }
 
     function filtrarStatus(status, btn) {
