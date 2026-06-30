@@ -1,0 +1,655 @@
+/* ================================
+   CARTEIRINHA DIGITAL — TEMA TUTTI
+   Paleta base do produto
+   ================================ */
+
+/* FONTE — adiciona no <head> do HTML */
+/* <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> */
+
+/* ================================
+   VARIÁVEIS DO TEMA TUTTI
+   ================================ */
+[data-tema="tutti"] {
+  --cor-fundo-escuro: #12101a;
+  --cor-fundo-medio: #1e1b2e;
+  --cor-destaque: #D4AF37;
+  --cor-destaque-hover: #B8922A;
+  --cor-texto-claro: #ffffff;
+  --cor-texto-secundario: #5a5770;
+  --cor-texto-muted: #7a7690;
+  --cor-borda: rgba(212, 175, 55, 0.3);
+  --cor-foto-placeholder: #5a5770;
+}
+
+/* ================================
+   VARIÁVEIS DO TEMA SWING DA LEOPOLDINA
+   (referência — já implementado)
+   ================================ */
+[data-tema="swing-da-leopoldina"] {
+  --cor-fundo-escuro: #1e3a20;
+  --cor-fundo-medio: #0d1f10;
+  --cor-destaque: #D4AF37;
+  --cor-destaque-hover: #B8922A;
+  --cor-texto-claro: #ffffff;
+  --cor-texto-secundario: #6a8a6a;
+  --cor-texto-muted: #4a6a4a;
+  --cor-borda: rgba(212, 175, 55, 0.25);
+  --cor-foto-placeholder: #4a7a4a;
+}
+
+/* ================================
+   ESTRUTURA — IGUAL PARA TODOS OS TEMAS
+   ================================ */
+.carteirinha-scene {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  gap: 1.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.carteirinha-wrap {
+  width: 300px;
+  height: 500px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.carteirinha-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(.4, 0, .2, 1);
+}
+
+.carteirinha-inner.virada {
+  transform: rotateY(180deg);
+}
+
+.carteirinha-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+}
+
+.carteirinha-verso {
+  transform: rotateY(180deg);
+}
+
+/* ================================
+   FRENTE
+   ================================ */
+.c-frente {
+  width: 100%;
+  height: 100%;
+  background: var(--cor-fundo-escuro);
+  /* Para temas com gradiente (ex: Swing), sobrescrever com: */
+  /* background: linear-gradient(160deg, var(--cor-fundo-escuro) 0%, var(--cor-fundo-medio) 60%, #081406 100%); */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Triângulos decorativos entrelaçados */
+.c-tri-esquerda-1 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 170px;
+  height: 170px;
+  background: linear-gradient(135deg, var(--cor-destaque) 0%, #7a5c00 100%);
+  clip-path: polygon(0 100%, 100% 100%, 0 0);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.c-tri-esquerda-2 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--cor-destaque) 0%, #9a7400 100%);
+  clip-path: polygon(0 100%, 100% 100%, 0 0);
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.c-tri-direita-1 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 170px;
+  height: 170px;
+  background: linear-gradient(225deg, var(--cor-destaque) 0%, #7a5c00 100%);
+  clip-path: polygon(100% 100%, 0 100%, 100% 0);
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.c-tri-direita-2 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 95px;
+  height: 95px;
+  background: linear-gradient(225deg, var(--cor-destaque) 0%, #9a7400 100%);
+  clip-path: polygon(100% 100%, 0 100%, 100% 0);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.c-tri-topo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(315deg, var(--cor-destaque) 0%, transparent 100%);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+/* Header */
+.c-header {
+  padding: 16px 18px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.c-escola {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+}
+
+.c-bateria {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cor-destaque);
+  margin-top: 1px;
+}
+
+.c-status {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--cor-borda);
+  border-radius: 20px;
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #4ade80;
+}
+
+.c-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px #4ade80;
+}
+
+/* Foto */
+.c-foto-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 0 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.c-foto {
+  width: 114px;
+  height: 114px;
+  border-radius: 50%;
+  border: 2.5px solid var(--cor-destaque);
+  background: var(--cor-fundo-medio);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.c-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Placeholder quando não há foto — usa cor neutra do tema, nunca roxo */
+.c-foto svg {
+  width: 58px;
+  height: 58px;
+  opacity: 0.4;
+  fill: var(--cor-foto-placeholder);
+}
+
+.c-foto-anel {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid var(--cor-borda);
+  pointer-events: none;
+}
+
+.c-role {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+/* Identidade */
+.c-identidade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 20px 0;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.c-nome {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--cor-texto-claro);
+  line-height: 1.25;
+  margin-top: 2px;
+}
+
+.c-apelido {
+  font-size: 11px;
+  color: var(--cor-destaque);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* O apelido leva aspas no conteúdo, ex: "D. Mariazinha" */
+
+.c-instrumento {
+  font-size: 11px;
+  color: var(--cor-texto-muted);
+  font-weight: 500;
+  margin-top: 3px;
+}
+
+/* Divisor */
+.c-divisor {
+  height: 0.5px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 14px 20px 10px;
+  position: relative;
+  z-index: 1;
+}
+
+/* CPF */
+.c-cpf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.c-label {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.c-valor {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-texto-claro);
+  opacity: 0.85;
+}
+
+/* Membro desde — pílula canto esquerdo */
+.c-membro-desde {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.04);
+  border: 0.5px solid var(--cor-borda);
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+.c-membro-desde .c-label {
+  color: var(--cor-texto-muted);
+}
+
+.c-membro-desde .c-valor {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cor-destaque);
+  opacity: 1;
+}
+
+/* Logo — canto direito */
+.c-logo {
+  position: absolute;
+  bottom: 14px;
+  right: 20px;
+  z-index: 2;
+}
+
+.c-logo-circulo {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--cor-destaque);
+}
+
+/* Logo texto Tutti — os dois T's centrais em destaque */
+.c-logo-texto {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--cor-fundo-escuro);
+  letter-spacing: -0.3px;
+}
+
+.c-logo-texto .destaque {
+  color: var(--cor-destaque);
+}
+
+/* Para escolas com logo própria (ex: SL da Swing), substitua o texto por <img> */
+
+/* ================================
+   VERSO
+   ================================ */
+.c-verso-bg {
+  width: 100%;
+  height: 100%;
+  background: var(--cor-fundo-escuro);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.c-verso-tri-esquerda {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--cor-destaque), #7a5c00);
+  clip-path: polygon(0 100%, 100% 100%, 0 0);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.c-verso-tri-direita {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(225deg, var(--cor-destaque), #7a5c00);
+  clip-path: polygon(100% 100%, 0 100%, 100% 0);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.c-verso-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.c-verso-titulo {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cor-destaque);
+}
+
+.c-verso-sub {
+  font-size: 8px;
+  color: var(--cor-texto-secundario);
+  margin-top: 2px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.c-logo-verso {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--cor-destaque);
+}
+
+.c-logo-verso-texto {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--cor-fundo-escuro);
+  letter-spacing: -0.2px;
+}
+
+.c-logo-verso-texto .destaque {
+  color: var(--cor-destaque);
+}
+
+/* QR Code */
+.c-qr-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+.c-qr {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1.5px solid var(--cor-borda);
+}
+
+.c-qr img {
+  width: 140px;
+  height: 140px;
+  display: block;
+}
+
+.c-qr-label {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+}
+
+/* Mestre de Bateria */
+.c-mestre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+.c-mestre-label {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--cor-texto-secundario);
+  text-transform: uppercase;
+}
+
+.c-mestre-nome {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-texto-claro);
+}
+
+/* Válida até + Temporada — lado a lado com linha divisória */
+.c-validade-temporada {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.c-validade,
+.c-temporada {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.c-divisor-vertical {
+  width: 0.5px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.c-validade-valor,
+.c-temporada-valor {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--cor-destaque);
+}
+
+/* Rodapé do verso */
+.c-verso-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.c-rodape-instagram {
+  font-size: 10px;
+  color: var(--cor-texto-secundario);
+  font-weight: 500;
+}
+
+/* Marca Tutti — sempre presente no rodapé, em qualquer tema */
+.c-rodape-tutti {
+  font-size: 9px;
+  color: var(--cor-texto-muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.c-rodape-tutti .destaque {
+  color: var(--cor-destaque);
+}
+
+/* ================================
+   BOTÕES
+   ================================ */
+.c-hint {
+  font-size: 12px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.c-botoes {
+  display: flex;
+  gap: 10px;
+  width: 300px;
+}
+
+.c-btn-salvar {
+  flex: 1;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1.5px solid var(--cor-destaque);
+  background: transparent;
+  color: var(--cor-destaque);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+}
+
+.c-btn-salvar:hover {
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.c-btn-compartilhar {
+  flex: 1;
+  padding: 13px;
+  border-radius: 12px;
+  border: none;
+  background: var(--cor-destaque);
+  color: var(--cor-fundo-escuro);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+}
+
+.c-btn-compartilhar:hover {
+  background: var(--cor-destaque-hover);
+}
+
+/* ================================
+   COMO ADICIONAR UMA NOVA ESCOLA NO FUTURO
+   ================================
+   Basta criar um novo bloco de variáveis, por exemplo:
+
+   [data-tema="nome-da-nova-escola"] {
+     --cor-fundo-escuro: #COR1;
+     --cor-fundo-medio: #COR2;
+     --cor-destaque: #COR3;
+     --cor-destaque-hover: #COR4;
+     --cor-texto-secundario: #COR5;
+     --cor-foto-placeholder: #COR6;
+   }
+
+   E trocar a logo via <img> dentro de .c-logo-circulo e .c-logo-verso.
+   Toda a estrutura de campos (HTML) permanece igual — nada precisa
+   ser duplicado, só esse bloco de cores novo.
+   ================================ */

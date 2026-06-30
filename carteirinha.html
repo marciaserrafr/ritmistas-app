@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-tema="swing-da-leopoldina">
+<html lang="pt-BR" data-tema="tutti">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carteirinha - Swing da Leopoldina</title>
+    <title>Carteirinha — Tutti</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="carteirinha-tutti.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         button { font-family: inherit; }
-
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(145deg, #0a0a0a 0%, #111a14 100%);
+            background: var(--cor-fundo-escuro);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 24px 20px;
         }
-
-        /* Topo com nome e botão sair */
         .topo {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -48,482 +46,13 @@
             letter-spacing: 1px;
         }
         .btn-sair:hover { background: rgba(212,175,55,0.08); }
-
-        /* ================================
-           CONTAINER GERAL
-           ================================ */
-        .carteirinha-scene {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 1rem;
-            gap: 1.5rem;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            margin-top: 40px;
-        }
-
-        /* ================================
-           FLIP CARD
-           ================================ */
-        .carteirinha-wrap {
-            width: 300px;
-            height: 500px;
-            perspective: 1000px;
-            cursor: pointer;
-        }
-
-        .carteirinha-inner {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.7s cubic-bezier(.4, 0, .2, 1);
-        }
-
-        .carteirinha-inner.virada {
-            transform: rotateY(180deg);
-        }
-
-        .carteirinha-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 22px;
-            overflow: hidden;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
-        }
-
-        .carteirinha-verso {
-            transform: rotateY(180deg);
-        }
-
-        /* ================================
-           FRENTE
-           ================================ */
-        .c-frente {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(160deg, #1e3a20 0%, #0d1f10 60%, #081406 100%);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-        }
-
-        .c-frente-acento1 {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 200px; height: 200px;
-            background: linear-gradient(135deg, #D4AF37 0%, #7a5c00 100%);
-            clip-path: polygon(0 100%, 100% 100%, 0 0);
-            opacity: 0.25;
-            pointer-events: none;
-        }
-
-        .c-frente-acento2 {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 120px; height: 120px;
-            background: linear-gradient(135deg, #D4AF37 0%, #9a7400 100%);
-            clip-path: polygon(0 100%, 100% 100%, 0 0);
-            opacity: 0.4;
-            pointer-events: none;
-        }
-
-        .c-header {
-            padding: 16px 18px 0;
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            position: relative;
-            z-index: 1;
-        }
-
-        .c-escola {
-            font-size: 8px;
-            font-weight: 500;
-            letter-spacing: 0.15em;
-            color: #6a8a6a;
-            text-transform: uppercase;
-        }
-
-        .c-bateria {
-            font-size: 14px;
-            font-weight: 700;
-            color: #D4AF37;
-            margin-top: 1px;
-        }
-
-        .c-status {
-            background: rgba(20, 44, 20, 0.9);
-            border: 1px solid #2d6b2d;
-            border-radius: 20px;
-            padding: 4px 10px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 10px;
-            font-weight: 600;
-            color: #4ade80;
-        }
-
-        .c-status-dot {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background: #4ade80;
-            box-shadow: 0 0 6px #4ade80;
-        }
-
-        .c-foto-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 14px 0 6px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .c-foto {
-            width: 114px; height: 114px;
-            border-radius: 50%;
-            border: 2.5px solid #D4AF37;
-            background: linear-gradient(135deg, #243824, #162616);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            font-size: 38px;
-        }
-
-        .c-foto img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .c-foto-anel {
-            position: absolute;
-            inset: -5px;
-            border-radius: 50%;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            pointer-events: none;
-        }
-
-        .c-role {
-            font-size: 8px;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            color: #6a8a6a;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
-
-        .c-identidade {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 4px 20px 0;
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .c-nome {
-            font-size: 16px;
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.25;
-            margin-top: 2px;
-        }
-
-        .c-apelido {
-            font-size: 11px;
-            color: #D4AF37;
-            font-style: italic;
-            margin-top: 4px;
-        }
-
-        .c-instrumento {
-            font-size: 11px;
-            color: #86a886;
-            font-weight: 500;
-            margin-top: 3px;
-        }
-
-        .c-divisor {
-            height: 0.5px;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 14px 20px 10px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .c-cpf {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .c-label {
-            font-size: 8px;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            color: #4a6a4a;
-            text-transform: uppercase;
-            margin-bottom: 3px;
-        }
-
-        .c-valor {
-            font-size: 13px;
-            font-weight: 600;
-            color: #b8ccb8;
-        }
-
-        .c-membro-desde {
-            position: absolute;
-            bottom: 16px; left: 20px;
-            z-index: 2;
-            background: rgba(8, 20, 6, 0.75);
-            border: 0.5px solid rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
-            padding: 6px 10px;
-        }
-
-        .c-membro-desde .c-label { color: #5a8a5a; }
-        .c-membro-desde .c-valor {
-            font-size: 13px;
-            font-weight: 700;
-            color: #D4AF37;
-        }
-
-        .c-logo {
-            position: absolute;
-            bottom: 14px; right: 20px;
-            z-index: 2;
-        }
-
-        .c-logo-circulo {
-            width: 46px; height: 46px;
-            border-radius: 50%;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #D4AF37;
-            overflow: hidden;
-        }
-
-        .c-logo-circulo img {
-            width: 108%; height: 108%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        .c-logo-texto {
-            font-size: 11px;
-            font-weight: 800;
-            color: #1a3320;
-        }
-
-        /* ================================
-           VERSO
-           ================================ */
-        .c-verso {
-            width: 100%; height: 100%;
-            background: linear-gradient(160deg, #1e3a20 0%, #0d1f10 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 22px 20px;
-            box-sizing: border-box;
-        }
-
-        .c-verso-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .c-verso-titulo {
-            font-size: 13px;
-            font-weight: 700;
-            color: #D4AF37;
-        }
-
-        .c-verso-sub {
-            font-size: 8px;
-            color: #4a6a4a;
-            margin-top: 2px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .c-logo-il {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1.5px solid #D4AF37;
-            overflow: hidden;
-        }
-
-        .c-logo-il img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .c-logo-il-texto {
-            font-size: 10px;
-            font-weight: 800;
-            color: #1a3320;
-        }
-
-        .c-qr-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .c-qr {
-            background: #ffffff;
-            border-radius: 10px;
-            padding: 14px;
-            border: 1.5px solid rgba(212, 175, 55, 0.25);
-        }
-
-        .c-qr svg { display: block; }
-
-        .c-qr-label {
-            font-size: 8px;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            color: #4a6a4a;
-            text-transform: uppercase;
-        }
-
-        .c-mestre {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .c-mestre-label {
-            font-size: 8px;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            color: #4a6a4a;
-            text-transform: uppercase;
-        }
-
-        .c-mestre-nome {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffffff;
-        }
-
-        .c-validade {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-        }
-
-        .c-validade-label {
-            font-size: 8px;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            color: #4a6a4a;
-            text-transform: uppercase;
-        }
-
-        .c-validade-valor {
-            font-size: 14px;
-            font-weight: 700;
-            color: #D4AF37;
-        }
-
-        .c-verso-rodape {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .c-rodape-item {
-            font-size: 10px;
-            color: #4a6a4a;
-            font-weight: 500;
-        }
-
-        .c-rodape-item.dourado {
-            color: #D4AF37;
-            font-weight: 600;
-        }
-
-        /* ================================
-           BOTÕES
-           ================================ */
-        .c-hint {
-            font-size: 12px;
-            color: #888;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .c-botoes {
-            display: flex;
-            gap: 10px;
-            width: 300px;
-        }
-
-        .c-btn-salvar {
-            flex: 1;
-            padding: 13px;
-            border-radius: 12px;
-            border: 1.5px solid #D4AF37;
-            background: transparent;
-            color: #D4AF37;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            letter-spacing: 0.08em;
-        }
-
-        .c-btn-salvar:hover { background: rgba(212, 175, 55, 0.08); }
-
-        .c-btn-compartilhar {
-            flex: 1;
-            padding: 13px;
-            border-radius: 12px;
-            border: none;
-            background: #D4AF37;
-            color: #0d1f10;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            letter-spacing: 0.08em;
-        }
-
-        .c-btn-compartilhar:hover { background: #c9a030; }
-
-        [data-tema="swing-da-leopoldina"] .c-frente {
-            background: linear-gradient(160deg, #1e3a20 0%, #0d1f10 60%, #081406 100%);
-        }
+        .carteirinha-scene { margin-top: 40px; }
     </style>
 </head>
 <body>
 
 <div class="topo">
-    <span class="topo-nome">Swing da Leopoldina</span>
+    <span class="topo-nome">Tutti</span>
     <button class="btn-sair" onclick="sair()">Sair</button>
 </div>
 
@@ -537,13 +66,16 @@
             <!-- ════ FRENTE ════ -->
             <div class="carteirinha-face">
                 <div class="c-frente">
-                    <div class="c-frente-acento1"></div>
-                    <div class="c-frente-acento2"></div>
+                    <div class="c-tri-esquerda-1"></div>
+                    <div class="c-tri-esquerda-2"></div>
+                    <div class="c-tri-direita-1"></div>
+                    <div class="c-tri-direita-2"></div>
+                    <div class="c-tri-topo"></div>
 
                     <div class="c-header">
                         <div>
-                            <div class="c-escola">G.R.E.S. Imperatriz Leopoldinense</div>
-                            <div class="c-bateria">Swing da Leopoldina</div>
+                            <div class="c-escola">Gestão de Baterias</div>
+                            <div class="c-bateria">Tutti</div>
                         </div>
                         <div class="c-status">
                             <div class="c-status-dot"></div>
@@ -554,9 +86,9 @@
                     <div class="c-foto-area">
                         <div class="c-foto" id="fotoRitmista">
                             <div class="c-foto-anel"></div>
-                            <svg width="54" height="54" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.45">
-                                <circle cx="12" cy="8" r="4" fill="#a8d5a8"/>
-                                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="#a8d5a8"/>
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="8" r="4"/>
+                                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
                             </svg>
                         </div>
                         <div class="c-role">Ritmista</div>
@@ -581,11 +113,10 @@
                         <div class="c-valor" id="membroDesde">—</div>
                     </div>
 
-                    <!-- Logo Swing — canto inferior direito -->
+                    <!-- Logo Tutti — canto inferior direito -->
                     <div class="c-logo">
                         <div class="c-logo-circulo">
-                            <img src="logo-swing.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                            <span class="c-logo-texto" style="display:none">SL</span>
+                            <span class="c-logo-texto">Tu<span class="destaque">TT</span>i</span>
                         </div>
                     </div>
                 </div>
@@ -593,15 +124,17 @@
 
             <!-- ════ VERSO ════ -->
             <div class="carteirinha-face carteirinha-verso">
-                <div class="c-verso">
+                <div class="c-verso-bg">
+                    <div class="c-verso-tri-esquerda"></div>
+                    <div class="c-verso-tri-direita"></div>
+
                     <div class="c-verso-header">
                         <div>
-                            <div class="c-verso-titulo">Swing da Leopoldina</div>
-                            <div class="c-verso-sub">G.R.E.S. Imperatriz Leopoldinense</div>
+                            <div class="c-verso-titulo">Tutti</div>
+                            <div class="c-verso-sub">Gestão de Baterias</div>
                         </div>
-                        <div class="c-logo-il">
-                            <img src="logo-imperatriz.png" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-                            <span class="c-logo-il-texto" style="display:none">IL</span>
+                        <div class="c-logo-verso">
+                            <span class="c-logo-verso-texto">Tu<span class="destaque">TT</span>i</span>
                         </div>
                     </div>
 
@@ -642,17 +175,25 @@
 
                     <div class="c-mestre">
                         <div class="c-mestre-label">Mestre de Bateria</div>
-                        <div class="c-mestre-nome">Lolo</div>
+                        <div class="c-mestre-nome">—</div>
                     </div>
 
-                    <div class="c-validade">
-                        <div class="c-validade-label">Válida até</div>
-                        <div class="c-validade-valor">31/07/2027</div>
+                    <!-- Válida até + Temporada — lado a lado com divisória vertical -->
+                    <div class="c-validade-temporada">
+                        <div class="c-validade">
+                            <div class="c-label">Válida até</div>
+                            <div class="c-validade-valor">31/07/2027</div>
+                        </div>
+                        <div class="c-divisor-vertical"></div>
+                        <div class="c-temporada">
+                            <div class="c-label">Temporada</div>
+                            <div class="c-temporada-valor">Carnaval 2027</div>
+                        </div>
                     </div>
 
                     <div class="c-verso-rodape">
-                        <div class="c-rodape-item">@swingdaleopoldina</div>
-                        <div class="c-rodape-item dourado">Carnaval 2027</div>
+                        <div class="c-rodape-instagram">@tutti</div>
+                        <div class="c-rodape-tutti">por <span class="destaque">Tu<span style="font-weight:900">TT</span>i</span></div>
                     </div>
                 </div>
             </div>
@@ -733,8 +274,8 @@
     function compartilhar() {
         if (navigator.share && ritmista) {
             navigator.share({
-                title: 'Minha Carteirinha — Swing da Leopoldina',
-                text: `${ritmista.nome} — Ritmista da Imperatriz Leopoldinense. Carnaval 2027!`
+                title: 'Minha Carteirinha — Tutti',
+                text: `${ritmista.nome} — Ritmista. Carnaval 2027!`
             });
         } else {
             alert('Compartilhamento não disponível neste dispositivo.');
