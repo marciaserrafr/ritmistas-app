@@ -520,7 +520,11 @@
             <div class="form-grid">
                 <div class="campo campo-full">
                     <label>Nome Completo *</label>
-                    <input type="text" id="acesso-nome" placeholder="Nome do Mestre ou Diretor">
+                    <input type="text" id="acesso-nome" placeholder="Nome completo">
+                </div>
+                <div class="campo campo-full">
+                    <label>Apelido</label>
+                    <input type="text" id="acesso-apelido" placeholder="Como aparece na carteirinha e no sistema">
                 </div>
                 <div class="campo">
                     <label>CPF *</label>
@@ -977,6 +981,7 @@
 
     function abrirFormAcesso() {
         document.getElementById('acesso-nome').value = '';
+        document.getElementById('acesso-apelido').value = '';
         document.getElementById('acesso-cpf').value = '';
         document.getElementById('acesso-senha').value = '';
         document.getElementById('acesso-perfil').value = '';
@@ -1015,6 +1020,7 @@
 
         const payload = {
             nome,
+            apelido: document.getElementById('acesso-apelido').value.trim() || null,
             cpf,
             senha,
             perfil,
