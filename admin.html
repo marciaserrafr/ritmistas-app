@@ -464,7 +464,10 @@
 <!-- MODAL CADASTRO COMPLETO -->
 <div class="modal-overlay" id="modalCadastroOverlay">
     <div class="modal modal-cadastro">
-        <h2 id="modalCadastroNome"></h2>
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:4px;">
+            <h2 id="modalCadastroNome" style="margin:0;"></h2>
+            <span id="fc-status-badge"></span>
+        </div>
         <div class="subtitulo" id="modalCadastroSubtitulo"></div>
 
         <div class="ficha-secao">
@@ -508,7 +511,7 @@
                         <option>Tamborim</option>
                     </select>
                 </div>
-                <div class="ficha-campo"><span>Status</span><strong id="fc-status"></strong></div>
+
                 <div class="ficha-campo"><span>Membro desde</span><strong id="fc-tempo"></strong><input id="fc-tempo-edit" class="fc-input" type="text" placeholder="Ex: 2020" style="display:none"></div>
                 <div class="ficha-campo"><span>Tipo sanguíneo</span><strong id="fc-tipo-sanguineo"></strong>
                     <select id="fc-tipo-sanguineo-edit" class="fc-input" style="display:none">
@@ -852,7 +855,7 @@
             desligado: `<span class="badge badge-desligado">Desligado</span>`,
             rejeitado: `<span class="badge badge-rejeitado">Rejeitado</span>`,
         };
-        document.getElementById('fc-status').innerHTML = statusBadgeHTML[status] || '—';
+        document.getElementById('fc-status-badge').innerHTML = statusBadgeHTML[status] || '';
         document.getElementById('fc-tempo').textContent = r.membro_desde || '—';
         document.getElementById('fc-tipo-sanguineo').textContent = r.tipo_sanguineo || '—';
         document.getElementById('fc-camisa').textContent = r.tamanho_camisa || '—';
