@@ -171,7 +171,7 @@
         .card-chevron { color: #ccc; font-size: 20px; font-weight: 300; line-height: 1; }
 
         /* BADGES */
-        .badge { padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: 700; border: 1px solid; display: inline-flex; align-items: center; gap: 4px; line-height: 1; }
+        .badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; border: 1px solid; display: inline-flex; align-items: center; gap: 4px; line-height: 1; }
         .badge-aprovado  { background: #f0faf4; color: #2d7a4f; border-color: #b8ddc8; }
         .badge-rejeitado { background: #f5f5f5; color: #666;    border-color: #ddd; }
         .badge-pendente  { background: #fffbf0; color: #8a6800; border-color: #ffe69c; }
@@ -722,17 +722,18 @@
             const aniversarioMes = nascDate && (nascDate.getMonth() + 1) === (new Date().getMonth() + 1);
 
             const badgeStatus = {
-                pendente:  `<span class="badge badge-pendente">${svgClock} Pendente</span>`,
-                aprovado:  `<span class="badge badge-aprovado">${svgCheck} Ativo</span>`,
-                suspenso:  `<span class="badge badge-suspenso">${svgPause} Suspenso</span>`,
-                desligado: `<span class="badge badge-desligado">${svgSlash} Desligado</span>`,
-                rejeitado: `<span class="badge badge-rejeitado">${svgX} Rejeitado</span>`,
+                pendente:  `<span class="badge badge-pendente">Pendente</span>`,
+                aprovado:  `<span class="badge badge-aprovado">Ativo</span>`,
+                suspenso:  `<span class="badge badge-suspenso">Suspenso</span>`,
+                desligado: `<span class="badge badge-desligado">Desligado</span>`,
+                rejeitado: `<span class="badge badge-rejeitado">Rejeitado</span>`,
             }[status] || '';
 
             const direita = status === 'pendente'
-                ? `<button class="btn-card-acao btn-card-ativar" onclick="event.stopPropagation();atualizarStatus(${r.id},'aprovado')">Ativar</button>
+                ? `${badgeStatus}
+                   <button class="btn-card-acao btn-card-ativar" onclick="event.stopPropagation();atualizarStatus(${r.id},'aprovado')">Ativar</button>
                    <button class="btn-card-acao btn-card-rejeitar" onclick="event.stopPropagation();atualizarStatus(${r.id},'rejeitado')">Rejeitar</button>`
-                : `<span class="card-chevron">›</span>`;
+                : `${badgeStatus}<span class="card-chevron">›</span>`;
 
             return `
             <div class="card-ritmista ${status}" onclick="abrirCadastro(${r.id})">
@@ -740,13 +741,12 @@
                     <div class="card-linha1">
                         <span class="card-nome">${r.nome}</span>
                         ${r.apelido ? `<span class="card-apelido-inline">"${r.apelido}"</span>` : ''}
-                        ${menor ? `<span class="badge badge-menor">${svgTriang} Menor · ${idade} anos</span>` : ''}
+                        ${menor ? `<span class="badge badge-menor">Menor · ${idade} anos</span>` : ''}
                         ${r.nacionalidade && r.nacionalidade !== 'Brasileira' ? `<span title="${r.nacionalidade}" style="font-size:14px;">🌍</span>` : ''}
                         ${aniversarioMes ? '<span title="Aniversário este mês">🎂</span>' : ''}
                     </div>
                     <div class="card-linha2">
                         <span class="pill-instrumento">🥁 ${r.instrumento || '—'}</span>
-                        ${badgeStatus}
                     </div>
                 </div>
                 <div class="card-direita">${direita}</div>
