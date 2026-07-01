@@ -772,7 +772,7 @@
         await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
-            body: JSON.stringify({ declaracao_menor: entregue })
+            body: JSON.stringify({ declaracao_responsavel: entregue })
         });
         await carregarRitmistas();
         abrirCadastro(id);
@@ -887,7 +887,7 @@
         const secaoMenor = document.getElementById('fc-secao-menor');
         if (menor) {
             secaoMenor.style.display = 'block';
-            renderToggleDeclaracao(r.id, r.declaracao_menor);
+            renderToggleDeclaracao(r.id, r.declaracao_responsavel);
         } else {
             secaoMenor.style.display = 'none';
         }
