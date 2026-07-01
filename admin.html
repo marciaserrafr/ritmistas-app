@@ -182,7 +182,8 @@
         .badge-pendente  { background: #fffbf0; color: #8a6800; border-color: #ffe69c; }
         .badge-suspenso  { background: #fff8f0; color: #9a4e00; border-color: #ffd0a0; }
         .badge-desligado { background: #fff5f5; color: #9a1f1f; border-color: #f5c0c0; }
-        .badge-menor     { background: #eef3ff; color: #3a5bbf; border-color: #c5d0f0; }
+        .badge-menor        { background: #eef3ff; color: #3a5bbf; border-color: #c5d0f0; }
+        .badge-estrangeiro  { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
 
         /* BOTÕES PADRÃO (igual super-admin) */
         .btn-cancelar {
@@ -469,7 +470,6 @@
             <div class="ficha-grid">
                 <div class="ficha-campo full"><span>Nome</span><strong id="fc-nome"></strong></div>
                 <div class="ficha-campo"><span>Apelido</span><strong id="fc-apelido"></strong></div>
-                <div class="ficha-campo"><span>Nacionalidade</span><strong id="fc-nacionalidade"></strong></div>
                 <div class="ficha-campo"><span>CPF</span><strong id="fc-cpf"></strong></div>
                 <div class="ficha-campo"><span>Data de nascimento</span><strong id="fc-nascimento"></strong></div>
                 <div class="ficha-campo"><span>Celular</span><strong id="fc-celular"></strong></div>
@@ -734,6 +734,7 @@
                         <span class="card-nome">${r.nome}</span>
                         ${r.apelido ? `<span class="card-apelido-inline">"${r.apelido}"</span>` : ''}
                         ${menor ? `<span class="badge badge-menor">${svgTriang} Menor · ${idade} anos</span>` : ''}
+                        ${r.estrangeiro ? `<span class="badge badge-estrangeiro">🌍 Estrangeiro</span>` : ''}
                         ${aniversarioMes ? '<span title="Aniversário este mês">🎂</span>' : ''}
                     </div>
                     <div class="card-linha2">
@@ -813,7 +814,6 @@
 
         document.getElementById('fc-nome').textContent = r.nome || '—';
         document.getElementById('fc-apelido').textContent = r.apelido || '—';
-        document.getElementById('fc-nacionalidade').textContent = r.nacionalidade || '—';
         document.getElementById('fc-cpf').textContent = r.cpf || '—';
         document.getElementById('fc-nascimento').textContent = r.nascimento ? new Date(r.nascimento + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
         document.getElementById('fc-celular').textContent = r.celular || '—';
