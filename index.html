@@ -150,7 +150,11 @@
             </div>
             <div class="form-group">
                 <label>Nacionalidade</label>
-                <input type="text" id="nacionalidade" placeholder="Ex: Brasileira, Italiana...">
+                <select id="nacionalidade_tipo" onchange="toggleNacionalidade()">
+                    <option value="Brasileira">Brasileira</option>
+                    <option value="Estrangeira">Estrangeira</option>
+                </select>
+                <input type="text" id="nacionalidade" placeholder="Qual é a sua nacionalidade?" style="display:none; margin-top:8px;">
             </div>
         </div>
         <div class="form-row">
@@ -414,6 +418,14 @@
 
     function valorTamanho(campo) { return valorCampo(campo); }
 
+    function toggleNacionalidade() {
+        const tipo = document.getElementById('nacionalidade_tipo').value;
+        const input = document.getElementById('nacionalidade');
+        input.style.display = tipo === 'Estrangeira' ? 'block' : 'none';
+        input.required = tipo === 'Estrangeira';
+        if (tipo === 'Brasileira') input.value = '';
+    }
+
     function atualizarObrigatoriedadeCpfEmail() {
         const cpf = document.getElementById('cpf').value.trim();
         const email = document.getElementById('email').value.trim();
@@ -494,7 +506,9 @@
         const dados = {
             nome: document.getElementById('nome').value.trim(),
             apelido: document.getElementById('apelido').value.trim() || null,
-            nacionalidade: document.getElementById('nacionalidade').value.trim() || null,
+            nacionalidade: document.getElementById('nacionalidade_tipo').value === 'Estrangeira'
+                ? (document.getElementById('nacionalidade').value.trim() || 'Estrangeira')
+                : 'Brasileira',
             cpf: cpf || null,
             nascimento: document.getElementById('nascimento').value,
             celular: document.getElementById('celular').value,
