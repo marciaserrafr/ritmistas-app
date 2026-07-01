@@ -399,8 +399,8 @@
                 <label class="multi-select-option"><input type="checkbox" value="pendente" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ffc107;margin:0 4px;"></span>Pendentes</label>
                 <label class="multi-select-option"><input type="checkbox" value="rejeitado" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6c757d;margin:0 4px;"></span>Rejeitados</label>
                 <label class="multi-select-option"><input type="checkbox" value="suspenso" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fd7e14;margin:0 4px;"></span>Suspensos</label>
-                <div style="border-top:1px solid #eee;margin-top:4px;padding-top:4px;text-align:right;">
-                    <span onclick="limparFiltroStatus()" style="font-size:12px;color:#D4AF37;cursor:pointer;font-weight:600;padding:2px 4px;">Limpar filtro</span>
+                <div style="border-top:1px solid #eee;margin-top:6px;padding:6px 8px 2px;text-align:right;">
+                    <span onclick="limparFiltroStatus()" style="font-size:12px;color:#888;cursor:pointer;font-weight:500;">Limpar filtro</span>
                 </div>
             </div>
         </div>
@@ -1052,6 +1052,19 @@
             label.appendChild(document.createTextNode(' ' + inst));
             dropdown.appendChild(label);
         });
+        const rodape = document.createElement('div');
+        rodape.style.cssText = 'border-top:1px solid #eee;margin-top:6px;padding:6px 8px 2px;text-align:right;';
+        const link = document.createElement('span');
+        link.textContent = 'Limpar filtro';
+        link.style.cssText = 'font-size:12px;color:#888;cursor:pointer;font-weight:500;';
+        link.onclick = limparFiltroInstrumento;
+        rodape.appendChild(link);
+        dropdown.appendChild(rodape);
+    }
+
+    function limparFiltroInstrumento() {
+        document.querySelectorAll('#multiSelectDropdown input[type=checkbox]').forEach(c => c.checked = false);
+        onCheckInstrumento();
     }
 
     function toggleMultiSelect() {
