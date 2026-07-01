@@ -647,7 +647,8 @@
 
     function renderizar(lista) {
         const container = document.getElementById('listaRitmistas');
-        document.getElementById('contador').textContent = `${lista.length} ritmista(s) encontrado(s)`;
+        const contadorEl = document.getElementById('contador');
+        if (contadorEl) contadorEl.textContent = `${lista.length} ritmista(s) encontrado(s)`;
 
         if (lista.length === 0) {
             container.innerHTML = '<div class="vazio">Nenhum ritmista encontrado.</div>';
