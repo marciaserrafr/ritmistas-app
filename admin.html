@@ -470,6 +470,7 @@
             <div class="ficha-grid">
                 <div class="ficha-campo full"><span>Nome</span><strong id="fc-nome"></strong></div>
                 <div class="ficha-campo"><span>Apelido</span><strong id="fc-apelido"></strong></div>
+                <div class="ficha-campo"><span>Nacionalidade</span><strong id="fc-nacionalidade"></strong></div>
                 <div class="ficha-campo"><span>CPF</span><strong id="fc-cpf"></strong></div>
                 <div class="ficha-campo"><span>Data de nascimento</span><strong id="fc-nascimento"></strong></div>
                 <div class="ficha-campo"><span>Celular</span><strong id="fc-celular"></strong></div>
@@ -734,7 +735,7 @@
                         <span class="card-nome">${r.nome}</span>
                         ${r.apelido ? `<span class="card-apelido-inline">"${r.apelido}"</span>` : ''}
                         ${menor ? `<span class="badge badge-menor">${svgTriang} Menor · ${idade} anos</span>` : ''}
-                        ${r.estrangeiro ? `<span class="badge badge-estrangeiro">🌍 Estrangeiro</span>` : ''}
+                        ${r.nacionalidade && !['brasileira','brasileiro','brasil'].includes(r.nacionalidade.toLowerCase()) ? `<span class="badge badge-estrangeiro">🌍 ${r.nacionalidade}</span>` : ''}
                         ${aniversarioMes ? '<span title="Aniversário este mês">🎂</span>' : ''}
                     </div>
                     <div class="card-linha2">
@@ -814,6 +815,7 @@
 
         document.getElementById('fc-nome').textContent = r.nome || '—';
         document.getElementById('fc-apelido').textContent = r.apelido || '—';
+        document.getElementById('fc-nacionalidade').textContent = r.nacionalidade || '—';
         document.getElementById('fc-cpf').textContent = r.cpf || '—';
         document.getElementById('fc-nascimento').textContent = r.nascimento ? new Date(r.nascimento + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
         document.getElementById('fc-celular').textContent = r.celular || '—';
