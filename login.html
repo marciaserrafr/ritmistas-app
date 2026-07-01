@@ -146,7 +146,15 @@
         }
 
         localStorage.setItem('ritmista', JSON.stringify(ritmista));
-        window.location.href = 'carteirinha.html';
+
+        const perfil = ritmista.perfil || 'ritmista';
+        if (perfil === 'mestre' || perfil === 'diretor') {
+            window.location.href = 'admin.html';
+        } else if (perfil === 'super_admin') {
+            window.location.href = 'super-admin.html';
+        } else {
+            window.location.href = 'carteirinha.html';
+        }
     });
 </script>
 </body>
