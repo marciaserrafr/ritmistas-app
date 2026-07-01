@@ -91,7 +91,10 @@
         </div>
         <div class="form-group">
             <label>Senha</label>
-            <input type="password" id="senha" placeholder="Sua senha" autocomplete="current-password" required>
+            <div style="position:relative;">
+                <input type="password" id="senha" placeholder="Sua senha" autocomplete="current-password" required style="padding-right:40px;">
+                <span onclick="toggleSenha('senha',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#aaa;font-size:18px;user-select:none;">👁</span>
+            </div>
         </div>
         <button type="submit" class="btn-entrar btn-primario">Entrar</button>
     </form>
@@ -104,6 +107,13 @@
 <script>
     const SUPABASE_URL = 'https://pkvzsgrkylrkyzligeim.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrdnpzZ3JreWxya3l6bGlnZWltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2Mjg0NjAsImV4cCI6MjA5ODIwNDQ2MH0.jASGzRUdZWzUwOHDww3XSDPtzw8_JU_OfTCoCpJEWBM';
+
+    function toggleSenha(id, el) {
+        const input = document.getElementById(id);
+        const visivel = input.type === 'text';
+        input.type = visivel ? 'password' : 'text';
+        el.style.opacity = visivel ? '1' : '0.4';
+    }
 
     function mascaraIdentificador(input) {
         const v = input.value;

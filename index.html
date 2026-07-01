@@ -360,11 +360,17 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Senha <span class="obrigatorio">*</span></label>
-                <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required minlength="6">
+                <div style="position:relative;">
+                    <input type="password" id="senha" placeholder="Mínimo 6 caracteres" required minlength="6" style="padding-right:40px;">
+                    <span onclick="toggleSenha('senha',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#aaa;font-size:18px;user-select:none;">👁</span>
+                </div>
             </div>
             <div class="form-group">
                 <label>Confirmar senha <span class="obrigatorio">*</span></label>
-                <input type="password" id="confirmar_senha" placeholder="Digite novamente" required>
+                <div style="position:relative;">
+                    <input type="password" id="confirmar_senha" placeholder="Digite novamente" required style="padding-right:40px;">
+                    <span onclick="toggleSenha('confirmar_senha',this)" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:#aaa;font-size:18px;user-select:none;">👁</span>
+                </div>
             </div>
         </div>
 
@@ -389,6 +395,13 @@
             };
             reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    function toggleSenha(id, el) {
+        const input = document.getElementById(id);
+        const visivel = input.type === 'text';
+        input.type = visivel ? 'password' : 'text';
+        el.style.opacity = visivel ? '1' : '0.4';
     }
 
     function mascaraCPF(input) {
