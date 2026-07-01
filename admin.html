@@ -98,21 +98,20 @@
         .multi-select-option:hover { background: #f5f5f5; }
         .multi-select-option input[type=checkbox] { accent-color: var(--cor-destaque); width: 15px; height: 15px; cursor: pointer; }
 
-        /* VAGAS */
-        .vagas-section { margin-bottom: 20px; }
-        .vagas-lista { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
-        .vaga-linha {
-            display: flex; align-items: center; gap: 10px;
-            padding: 5px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px;
+        /* VAGAS COLAPSÁVEL */
+        .vagas-toggle {
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; padding: 8px 0; margin-bottom: 4px;
+            border-bottom: 1px solid #f0f0f0;
         }
-        .vaga-linha:last-child { border-bottom: none; }
-        .vaga-nome { color: #444; width: 160px; flex-shrink: 0; }
+        .vagas-toggle:hover .vagas-toggle-label { color: #555; }
+        .vagas-toggle-label { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 1px; transition: color 0.15s; }
+        .vagas-toggle-arrow { font-size: 10px; color: #bbb; transition: transform 0.2s; }
+        .vagas-toggle-arrow.aberto { transform: rotate(180deg); }
+        .vagas-conteudo { padding: 10px 0 4px; }
         .vaga-num { font-weight: bold; color: #0f172a; min-width: 20px; }
         .vaga-sep { color: #ccc; }
-        .vaga-input {
-            width: 44px; border: 1px solid #ddd; border-radius: 4px;
-            padding: 2px 6px; font-size: 12px; text-align: center; color: #666;
-        }
+        .vaga-input { width: 44px; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-size: 12px; text-align: center; color: #666; }
         .vaga-alerta { color: #c0392b; font-size: 11px; font-weight: bold; }
 
         /* CONTADOR */
@@ -169,22 +168,51 @@
         .badge-desligado { background: #fff5f5; color: #9a1f1f; border-color: #f5c0c0; }
         .badge-menor     { background: #eef3ff; color: #3a5bbf; border-color: #c5d0f0; }
 
+        /* BOTÕES PADRÃO (igual super-admin) */
+        .btn-cancelar {
+            padding: 9px 20px; border: 1px solid #e0e0e0; background: white;
+            color: #0f172a; border-radius: 10px; cursor: pointer;
+            font-size: 13px; font-weight: 600;
+        }
+        .btn-cancelar:hover { background: #f8f8f8; }
+        .btn-primario {
+            padding: 9px 22px; background: #D4AF37; color: #12101a;
+            border: none; border-radius: 10px; cursor: pointer;
+            font-size: 13px; font-weight: 700;
+        }
+        .btn-primario:hover { background: #B8922A; }
+
+        /* MODAL — BOTÕES */
+        .btn-modal-cancelar { padding: 9px 20px; border: 1px solid #e0e0e0; background: white; color: #0f172a; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600; }
+        .btn-modal-cancelar:hover { background: #f8f8f8; }
+        .btn-modal-confirmar { padding: 9px 20px; border: none; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 700; color: white; }
+        .btn-modal-confirmar.verde  { background: #D4AF37; color: #12101a; }
+        .btn-modal-confirmar.laranja { background: #d4720a; }
+        .btn-modal-confirmar.vermelho { background: #c62828; }
+        .btn-modal-confirmar.azul { background: #0f172a; }
+
         /* MODAL — AÇÕES DO CADASTRO */
         .modal-acoes-ficha {
             display: flex; gap: 8px; flex-wrap: wrap;
-            padding-top: 16px; border-top: 1px solid #f0f0f0; margin-top: 16px;
+            padding-top: 14px; border-top: 1px solid #f0f0f0; margin-top: 16px;
         }
         .btn-ficha {
-            border: 1.5px solid; padding: 8px 16px; border-radius: 8px;
-            cursor: pointer; font-size: 13px; font-weight: 700;
-            background: transparent; display: inline-flex; align-items: center; gap: 5px;
+            padding: 7px 16px; border-radius: 8px; cursor: pointer;
+            font-size: 13px; font-weight: 600; border: 1px solid #e0e0e0;
+            background: white; color: #0f172a;
         }
-        .btn-ficha-ativar   { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
-        .btn-ficha-rejeitar { border-color: #ccc; color: #888; }
+        .btn-ficha:hover { background: #f8f8f8; }
+        .btn-ficha-ativar    { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
+        .btn-ficha-ativar:hover { background: #B8922A; }
+        .btn-ficha-rejeitar  { border-color: #ccc; color: #888; }
         .btn-ficha-suspender { border-color: #d4720a; color: #d4720a; }
-        .btn-ficha-desligar  { border-color: #9a1f1f; color: #9a1f1f; }
+        .btn-ficha-suspender:hover { background: #fff8f0; }
+        .btn-ficha-desligar  { border-color: #c62828; color: #c62828; }
+        .btn-ficha-desligar:hover  { background: #fff5f5; }
         .btn-ficha-reativar  { border-color: #0f172a; color: #0f172a; }
-        .btn-ficha-instrumento { border-color: #0f172a; color: #0f172a; }
+        .btn-ficha-reativar:hover  { background: #f0f0f0; }
+        .btn-ficha-salvar    { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
+        .btn-ficha-salvar:hover { background: #B8922A; }
 
         /* DECLARAÇÃO MENOR NO MODAL */
         .declaracao-area {
@@ -323,9 +351,16 @@
             style="width:100%;box-sizing:border-box;padding:10px 14px 10px 38px;border-radius:8px;border:1px solid #e0e0e0;font-size:14px;outline:none;background:white url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23aaa%22 stroke-width=%222.5%22 stroke-linecap=%22round%22><circle cx=%2211%22 cy=%2211%22 r=%228%22/><line x1=%2221%22 y1=%2221%22 x2=%2216.65%22 y2=%2216.65%22/></svg>') no-repeat 12px center;">
     </div>
 
-    <!-- CONTROLE DE VAGAS -->
-    <div style="font-size:11px;font-weight:bold;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;margin-top:20px;">Controle de Vagas</div>
-    <div id="ocupacaoBar" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;"></div>
+    <!-- CONTROLE DE VAGAS COLAPSÁVEL -->
+    <div style="margin-bottom:20px;margin-top:4px;">
+        <div class="vagas-toggle" onclick="toggleVagas()">
+            <span class="vagas-toggle-label">Controle de Vagas</span>
+            <span class="vagas-toggle-arrow" id="vagasArrow">▼</span>
+        </div>
+        <div class="vagas-conteudo" id="vagasConteudo" style="display:none;">
+            <div id="ocupacaoBar" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+        </div>
+    </div>
 
     <div style="font-size:11px;font-weight:bold;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Filtrar por instrumento</div>
     <div style="margin-bottom:20px;">
@@ -344,12 +379,12 @@
         <div class="filtros-label">Filtrar por status</div>
         <div class="filtros">
             <button class="btn-filtro ativo" onclick="filtrarStatus('todos', this)">Todos</button>
-            <button class="btn-filtro" onclick="filtrarStatus('pendente', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e0a800" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pendentes</button>
-            <button class="btn-filtro verde" onclick="filtrarStatus('aprovado', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d7a4f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> Ativos</button>
-            <button class="btn-filtro vermelho" onclick="filtrarStatus('rejeitado', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Rejeitados</button>
-            <button class="btn-filtro laranja" onclick="filtrarStatus('suspenso', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="#d4720a" style="flex-shrink:0"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg> Suspensos</button>
-            <button class="btn-filtro vermelho" onclick="filtrarStatus('desligado', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a1f1f" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> Desligados</button>
-            <button class="btn-filtro azul" onclick="filtrarStatus('menor', this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3a5bbf" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Menores</button>
+            <button class="btn-filtro" onclick="filtrarStatus('pendente', this)">Pendentes</button>
+            <button class="btn-filtro" onclick="filtrarStatus('aprovado', this)">Ativos</button>
+            <button class="btn-filtro" onclick="filtrarStatus('rejeitado', this)">Rejeitados</button>
+            <button class="btn-filtro" onclick="filtrarStatus('suspenso', this)">Suspensos</button>
+            <button class="btn-filtro" onclick="filtrarStatus('desligado', this)">Desligados</button>
+            <button class="btn-filtro" onclick="filtrarStatus('menor', this)">Menores</button>
         </div>
     </div>
 
@@ -391,10 +426,28 @@
         <div class="ficha-secao">
             <div class="ficha-secao-titulo">Bateria</div>
             <div class="ficha-grid">
-                <div class="ficha-campo"><span>Instrumento</span><strong id="fc-instrumento"></strong></div>
+                <div class="ficha-campo" id="fc-instrumento-leitura"><span>Instrumento</span><strong id="fc-instrumento"></strong></div>
                 <div class="ficha-campo"><span>Status</span><strong id="fc-status"></strong></div>
                 <div class="ficha-campo"><span>Membro desde</span><strong id="fc-tempo"></strong></div>
                 <div class="ficha-campo"><span>Tipo sanguíneo</span><strong id="fc-tipo-sanguineo"></strong></div>
+            </div>
+            <div id="fc-instrumento-edicao" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid #f0f0f0;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                    <div class="ficha-campo">
+                        <span>Novo instrumento</span>
+                        <select id="fc-instrumento-select" style="margin-top:4px;width:100%;padding:9px 10px;border:1px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;">
+                            <option value="">Selecione</option>
+                            <option>Caixa</option><option>Chocalho</option><option>Cuíca</option>
+                            <option>Repique</option><option>Surdo de Primeira</option>
+                            <option>Surdo de Segunda</option><option>Surdo de Terceira</option>
+                            <option>Tamborim</option>
+                        </select>
+                    </div>
+                    <div class="ficha-campo">
+                        <span>Motivo (opcional)</span>
+                        <textarea id="fc-instrumento-motivo" rows="2" placeholder="Ex: remanejamento de naipe..." style="margin-top:4px;width:100%;padding:9px 10px;border:1px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;resize:none;"></textarea>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -423,7 +476,12 @@
 
         <div id="modalCadastroAcoes" class="modal-acoes-ficha"></div>
 
-        <div class="modal-acoes" style="margin-top:12px;">
+        <div class="modal-acoes" style="margin-top:12px; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; gap:8px;">
+                <button id="btn-editar-ficha" class="btn-ficha" style="display:none" onclick="ativarEdicaoFicha()">Editar instrumento</button>
+                <button id="btn-salvar-ficha" class="btn-ficha btn-ficha-salvar" style="display:none" onclick="salvarEdicaoFicha()">Salvar</button>
+                <button id="btn-cancelar-ficha" class="btn-ficha" style="display:none" onclick="cancelarEdicaoFicha()">Cancelar</button>
+            </div>
             <button class="btn-modal-cancelar" onclick="fecharModal('modalCadastroOverlay')">Fechar</button>
         </div>
     </div>
@@ -432,7 +490,7 @@
 <!-- MODAL SUSPENDER -->
 <div class="modal-overlay" id="modalSuspender">
     <div class="modal">
-        <h2>⏸ Suspender Ritmista</h2>
+        <h2>Suspender Ritmista</h2>
         <p id="modalSuspenderNome"></p>
         <label>Motivo (opcional)</label>
         <textarea id="motivoSuspensao" rows="3" placeholder="Ex: lesão, problemas pessoais..."></textarea>
@@ -446,7 +504,7 @@
 <!-- MODAL DESLIGAR -->
 <div class="modal-overlay" id="modalDesligar">
     <div class="modal">
-        <h2>⊘ Desligar Ritmista</h2>
+        <h2>Desligar Ritmista</h2>
         <p id="modalDesligarNome"></p>
         <label>Motivo (opcional)</label>
         <textarea id="motivoDesligamento" rows="3" placeholder="Ex: comportamento inadequado, desistência..."></textarea>
@@ -460,7 +518,7 @@
 <!-- MODAL CONFIGURAR VAGAS -->
 <div class="modal-overlay" id="modalConfigurarVagas">
     <div class="modal" style="max-width:420px;">
-        <h2 style="margin-bottom:6px;">⚙ Configurar vagas</h2>
+        <h2 style="margin-bottom:6px;">Configurar vagas</h2>
         <p style="margin-bottom:16px;">Defina o limite de ritmistas por instrumento. Use 0 para sem limite.</p>
         <div id="vagasFormGrid" style="display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center;margin-bottom:20px;"></div>
         <div class="modal-acoes">
@@ -470,31 +528,6 @@
     </div>
 </div>
 
-<!-- MODAL EDITAR INSTRUMENTO -->
-<div class="modal-overlay" id="modalInstrumento">
-    <div class="modal">
-        <h2>🥁 Editar Instrumento</h2>
-        <p id="modalInstrumentoNome"></p>
-        <label>Novo instrumento <span style="color:red">*</span></label>
-        <select id="novoInstrumento">
-            <option value="">Selecione</option>
-            <option>Caixa</option>
-            <option>Chocalho</option>
-            <option>Cuíca</option>
-            <option>Repique</option>
-            <option>Surdo de Primeira</option>
-            <option>Surdo de Segunda</option>
-            <option>Surdo de Terceira</option>
-            <option>Tamborim</option>
-        </select>
-        <label>Motivo da mudança (opcional)</label>
-        <textarea id="motivoInstrumento" rows="2" placeholder="Ex: remanejamento de naipe, pedido do ritmista..."></textarea>
-        <div class="modal-acoes">
-            <button class="btn-modal-cancelar" onclick="fecharModal('modalInstrumento')">Cancelar</button>
-            <button class="btn-modal-confirmar azul" onclick="confirmarInstrumento()">Salvar</button>
-        </div>
-    </div>
-</div>
 
 <script src="config-escola.js"></script>
 <script>
@@ -599,8 +632,8 @@
             }[status] || '';
 
             const direita = status === 'pendente'
-                ? `<button class="btn-card-acao btn-card-ativar" onclick="event.stopPropagation(); atualizarStatus(${r.id},'aprovado')">✓ Ativar</button>
-                   <button class="btn-card-acao btn-card-rejeitar" onclick="event.stopPropagation(); atualizarStatus(${r.id},'rejeitado')">✕ Rejeitar</button>`
+                ? `<button class="btn-card-acao btn-card-ativar" onclick="event.stopPropagation();atualizarStatus(${r.id},'aprovado')">Ativar</button>
+                   <button class="btn-card-acao btn-card-rejeitar" onclick="event.stopPropagation();atualizarStatus(${r.id},'rejeitado')">Rejeitar</button>`
                 : `<span class="card-chevron">›</span>`;
 
             return `
@@ -668,33 +701,18 @@
         atualizarStatus(acaoAtualId, 'desligado', motivo);
     }
 
-    function abrirModalInstrumento(id, nome, instrumentoAtual) {
-        acaoAtualId = id;
-        document.getElementById('modalInstrumentoNome').textContent = `Ritmista: ${nome} · Instrumento atual: ${instrumentoAtual || '—'}`;
-        document.getElementById('novoInstrumento').value = '';
-        document.getElementById('motivoInstrumento').value = '';
-        document.getElementById('modalInstrumento').classList.add('aberto');
-    }
-    async function confirmarInstrumento() {
-        const novo = document.getElementById('novoInstrumento').value;
-        if (!novo) { alert('Selecione o novo instrumento.'); return; }
-        const motivo = document.getElementById('motivoInstrumento').value.trim() || null;
-        fecharModal('modalInstrumento');
-        await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${acaoAtualId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
-            body: JSON.stringify({ instrumento: novo, motivo_instrumento: motivo })
-        });
-        await carregarRitmistas();
-    }
-
     function fecharModal(id) {
         document.getElementById(id).classList.remove('aberto');
     }
 
+    let fichaAtualId = null;
+
     function abrirCadastro(id) {
         const r = todosRitmistas.find(x => x.id === id);
         if (!r) return;
+        fichaAtualId = id;
+        cancelarEdicaoFicha();
+
         const idade = calcularIdade(r.nascimento);
         const status = r.status || 'pendente';
         const statusLabels = { pendente: 'Pendente', aprovado: 'Ativo', suspenso: 'Suspenso', desligado: 'Desligado', rejeitado: 'Rejeitado' };
@@ -722,43 +740,83 @@
         document.getElementById('fc-emergencia-parentesco').textContent = r.emergencia_parentesco || '—';
         document.getElementById('fc-emergencia-celular').textContent = r.emergencia_celular || '—';
 
-        // Menor de idade — declaração
+        // Menor — declaração
         const menor = idade !== null && idade < 18;
         const secaoMenor = document.getElementById('fc-secao-menor');
         if (menor) {
             secaoMenor.style.display = 'block';
-            const decArea = document.getElementById('fc-declaracao-area');
-            decArea.innerHTML = r.declaracao_responsavel
-                ? `<span>📄 Declaração do responsável:</span>
-                   <span style="color:#28a745;font-weight:bold;">✓ Entregue</span>
-                   <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id}, false); fecharModal('modalCadastroOverlay');">Desfazer</button>`
-                : `<span>📄 Declaração do responsável:</span>
-                   <span style="color:#dc3545;font-weight:bold;">✗ Pendente</span>
-                   <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id}, true); fecharModal('modalCadastroOverlay');">Marcar como entregue</button>`;
+            document.getElementById('fc-declaracao-area').innerHTML = r.declaracao_responsavel
+                ? `<span>Declaração do responsável:</span>
+                   <span style="color:#28a745;font-weight:bold;">Entregue</span>
+                   <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id},false);fecharModal('modalCadastroOverlay')">Desfazer</button>`
+                : `<span>Declaração do responsável:</span>
+                   <span style="color:#dc3545;font-weight:bold;">Pendente</span>
+                   <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id},true);fecharModal('modalCadastroOverlay')">Marcar como entregue</button>`;
         } else {
             secaoMenor.style.display = 'none';
         }
 
-        // Botões de ação
+        // Botões de ação (sem ícones)
         const acoesDiv = document.getElementById('modalCadastroAcoes');
         let btns = '';
         if (status === 'pendente') {
-            btns = `<button class="btn-ficha btn-ficha-ativar" onclick="fecharModal('modalCadastroOverlay'); atualizarStatus(${r.id},'aprovado')">✓ Ativar</button>
-                    <button class="btn-ficha btn-ficha-rejeitar" onclick="fecharModal('modalCadastroOverlay'); atualizarStatus(${r.id},'rejeitado')">✕ Rejeitar</button>`;
+            btns = `<button class="btn-ficha btn-ficha-ativar" onclick="fecharModal('modalCadastroOverlay');atualizarStatus(${r.id},'aprovado')">Ativar</button>
+                    <button class="btn-ficha btn-ficha-rejeitar" onclick="fecharModal('modalCadastroOverlay');atualizarStatus(${r.id},'rejeitado')">Rejeitar</button>`;
         } else if (status === 'aprovado') {
-            btns = `<button class="btn-ficha btn-ficha-instrumento" onclick="fecharModal('modalCadastroOverlay'); abrirModalInstrumento(${r.id},'${r.nome.replace(/'/g,"\\'")}','${(r.instrumento||'').replace(/'/g,"\\'")}')">✏ Instrumento</button>
-                    <button class="btn-ficha btn-ficha-suspender" onclick="fecharModal('modalCadastroOverlay'); abrirModalSuspender(${r.id},'${r.nome.replace(/'/g,"\\'")}')">⏸ Suspender</button>
-                    <button class="btn-ficha btn-ficha-desligar" onclick="fecharModal('modalCadastroOverlay'); abrirModalDesligar(${r.id},'${r.nome.replace(/'/g,"\\'")}')">⊘ Desligar</button>`;
+            btns = `<button class="btn-ficha btn-ficha-suspender" onclick="fecharModal('modalCadastroOverlay');abrirModalSuspender(${r.id},'${r.nome.replace(/'/g,"\\'")}')">Suspender</button>
+                    <button class="btn-ficha btn-ficha-desligar" onclick="fecharModal('modalCadastroOverlay');abrirModalDesligar(${r.id},'${r.nome.replace(/'/g,"\\'")}')">Desligar</button>`;
         } else if (status === 'suspenso') {
-            btns = `<button class="btn-ficha btn-ficha-reativar" onclick="fecharModal('modalCadastroOverlay'); atualizarStatus(${r.id},'aprovado')">↩ Reativar</button>
-                    <button class="btn-ficha btn-ficha-instrumento" onclick="fecharModal('modalCadastroOverlay'); abrirModalInstrumento(${r.id},'${r.nome.replace(/'/g,"\\'")}','${(r.instrumento||'').replace(/'/g,"\\'")}')">✏ Instrumento</button>
-                    <button class="btn-ficha btn-ficha-desligar" onclick="fecharModal('modalCadastroOverlay'); abrirModalDesligar(${r.id},'${r.nome.replace(/'/g,"\\'")}')">⊘ Desligar</button>`;
+            btns = `<button class="btn-ficha btn-ficha-reativar" onclick="fecharModal('modalCadastroOverlay');atualizarStatus(${r.id},'aprovado')">Reativar</button>
+                    <button class="btn-ficha btn-ficha-desligar" onclick="fecharModal('modalCadastroOverlay');abrirModalDesligar(${r.id},'${r.nome.replace(/'/g,"\\'")}')">Desligar</button>`;
         } else {
-            btns = `<button class="btn-ficha btn-ficha-reativar" onclick="fecharModal('modalCadastroOverlay'); atualizarStatus(${r.id},'aprovado')">↩ Reativar</button>`;
+            btns = `<button class="btn-ficha btn-ficha-reativar" onclick="fecharModal('modalCadastroOverlay');atualizarStatus(${r.id},'aprovado')">Reativar</button>`;
         }
         acoesDiv.innerHTML = btns;
 
+        // Botão Editar instrumento — só para ativo/suspenso
+        const btnEditar = document.getElementById('btn-editar-ficha');
+        btnEditar.style.display = (status === 'aprovado' || status === 'suspenso') ? 'inline-flex' : 'none';
+
         document.getElementById('modalCadastroOverlay').classList.add('aberto');
+    }
+
+    function ativarEdicaoFicha() {
+        const r = todosRitmistas.find(x => x.id === fichaAtualId);
+        document.getElementById('fc-instrumento-leitura').style.display = 'none';
+        document.getElementById('fc-instrumento-edicao').style.display = 'block';
+        if (r) document.getElementById('fc-instrumento-select').value = r.instrumento || '';
+        document.getElementById('fc-instrumento-motivo').value = '';
+        document.getElementById('btn-editar-ficha').style.display = 'none';
+        document.getElementById('btn-salvar-ficha').style.display = 'inline-flex';
+        document.getElementById('btn-cancelar-ficha').style.display = 'inline-flex';
+    }
+
+    function cancelarEdicaoFicha() {
+        document.getElementById('fc-instrumento-leitura').style.display = '';
+        document.getElementById('fc-instrumento-edicao').style.display = 'none';
+        document.getElementById('btn-salvar-ficha').style.display = 'none';
+        document.getElementById('btn-cancelar-ficha').style.display = 'none';
+    }
+
+    async function salvarEdicaoFicha() {
+        const novo = document.getElementById('fc-instrumento-select').value;
+        if (!novo) { alert('Selecione o novo instrumento.'); return; }
+        const motivo = document.getElementById('fc-instrumento-motivo').value.trim() || null;
+        await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${fichaAtualId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
+            body: JSON.stringify({ instrumento: novo, motivo_instrumento: motivo })
+        });
+        fecharModal('modalCadastroOverlay');
+        await carregarRitmistas();
+    }
+
+    function toggleVagas() {
+        const conteudo = document.getElementById('vagasConteudo');
+        const arrow = document.getElementById('vagasArrow');
+        const aberto = conteudo.style.display !== 'none';
+        conteudo.style.display = aberto ? 'none' : 'block';
+        arrow.classList.toggle('aberto', !aberto);
     }
 
     // Fechar modal clicando fora
