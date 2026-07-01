@@ -320,6 +320,20 @@
         .btn-editar { background: #D4AF37; border-color: #D4AF37; color: #12101a; font-weight: 700; }
         .btn-editar:hover { background: #B8922A; border-color: #B8922A; }
 
+        /* ── FICHA VISUALIZAÇÃO NO MODAL ── */
+        .ficha-sa-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px;
+        }
+        .ficha-sa-full { grid-column: 1 / -1; }
+        .ficha-sa-campo span {
+            display: block; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            color: #999; margin-bottom: 3px;
+        }
+        .ficha-sa-campo strong {
+            font-size: 14px; font-weight: 600; color: #0f172a;
+        }
+
         /* ── MODAL OVERLAY ── */
         .modal-overlay {
             display: none; position: fixed; inset: 0;
@@ -498,50 +512,63 @@
 
 <!-- MODAL ESCOLA -->
 <div class="modal-overlay" id="modal-escola-overlay" onclick="fecharSeForaModal(event,'modal-escola-overlay','fecharFormEscola')">
-    <div class="modal-sa" id="form-escola">
+    <div class="modal-sa">
         <div class="modal-sa-header">
             <div class="modal-sa-titulo" id="form-escola-titulo">Nova Escola</div>
             <button class="modal-sa-fechar" onclick="fecharFormEscola()">✕</button>
         </div>
         <div class="modal-sa-body">
-            <input type="hidden" id="escola-id">
-            <div class="form-grid">
-                <div class="campo campo-full">
-                    <label>Nome Completo *</label>
-                    <input type="text" id="escola-nome" placeholder="Ex: Grêmio Recreativo Escola de Samba Imperatriz Leopoldinense">
+            <!-- VISUALIZAÇÃO -->
+            <div id="escola-view" style="display:none">
+                <div class="ficha-sa-grid">
+                    <div class="ficha-sa-campo"><span>Nome completo</span><strong id="vw-escola-nome"></strong></div>
+                    <div class="ficha-sa-campo"><span>Sigla</span><strong id="vw-escola-sigla"></strong></div>
+                    <div class="ficha-sa-campo"><span>Temporada</span><strong id="vw-escola-temporada"></strong></div>
+                    <div class="ficha-sa-campo"><span>Cor primária</span><strong id="vw-escola-cor-primaria"></strong></div>
+                    <div class="ficha-sa-campo"><span>Cor destaque</span><strong id="vw-escola-cor-destaque"></strong></div>
                 </div>
-                <div class="campo campo-full">
-                    <label>Sigla *</label>
-                    <input type="text" id="escola-sigla" placeholder="Ex: Imperatriz">
-                </div>
-                <div class="campo campo-full">
-                    <label>URL do Logo</label>
-                    <input type="url" id="escola-logo" placeholder="https://..." oninput="atualizarPreviewEscola()">
-                </div>
-                <div class="campo campo-full">
-                    <label>Temporada Atual</label>
-                    <input type="text" id="escola-temporada" placeholder="Ex: Carnaval 2027">
-                </div>
-                <div class="campo">
-                    <label>Cor Primária</label>
-                    <div class="campo-cor">
-                        <input type="color" id="escola-cor-primaria-picker" value="#12101a" oninput="sincronizarCor('escola-cor-primaria', this.value); atualizarPreviewEscola()">
-                        <input type="text" id="escola-cor-primaria" placeholder="#12101a" value="#12101a" oninput="sincronizarCorText('escola-cor-primaria-picker', this.value); atualizarPreviewEscola()">
+            </div>
+            <!-- FORMULÁRIO -->
+            <div id="escola-form" style="display:none">
+                <input type="hidden" id="escola-id">
+                <div class="form-grid">
+                    <div class="campo campo-full">
+                        <label>Nome Completo *</label>
+                        <input type="text" id="escola-nome" placeholder="Ex: Grêmio Recreativo Escola de Samba Imperatriz Leopoldinense">
                     </div>
-                </div>
-                <div class="campo">
-                    <label>Cor Destaque</label>
-                    <div class="campo-cor">
-                        <input type="color" id="escola-cor-destaque-picker" value="#D4AF37" oninput="sincronizarCor('escola-cor-destaque', this.value); atualizarPreviewEscola()">
-                        <input type="text" id="escola-cor-destaque" placeholder="#D4AF37" value="#D4AF37" oninput="sincronizarCorText('escola-cor-destaque-picker', this.value); atualizarPreviewEscola()">
+                    <div class="campo campo-full">
+                        <label>Sigla *</label>
+                        <input type="text" id="escola-sigla" placeholder="Ex: Imperatriz">
                     </div>
-                </div>
-                <div class="campo campo-full">
-                    <label>Preview da Paleta</label>
-                    <div class="preview-cores" id="preview-escola">
-                        <div class="preview-circulo" id="preview-escola-circulo" style="background:#12101a"></div>
-                        <span class="preview-texto">Cores da escola</span>
-                        <button class="preview-botao" id="preview-escola-botao" style="background:#D4AF37;color:#12101a">Destaque</button>
+                    <div class="campo campo-full">
+                        <label>URL do Logo</label>
+                        <input type="url" id="escola-logo" placeholder="https://..." oninput="atualizarPreviewEscola()">
+                    </div>
+                    <div class="campo campo-full">
+                        <label>Temporada Atual</label>
+                        <input type="text" id="escola-temporada" placeholder="Ex: Carnaval 2027">
+                    </div>
+                    <div class="campo">
+                        <label>Cor Primária</label>
+                        <div class="campo-cor">
+                            <input type="color" id="escola-cor-primaria-picker" value="#12101a" oninput="sincronizarCor('escola-cor-primaria', this.value); atualizarPreviewEscola()">
+                            <input type="text" id="escola-cor-primaria" placeholder="#12101a" value="#12101a" oninput="sincronizarCorText('escola-cor-primaria-picker', this.value); atualizarPreviewEscola()">
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label>Cor Destaque</label>
+                        <div class="campo-cor">
+                            <input type="color" id="escola-cor-destaque-picker" value="#D4AF37" oninput="sincronizarCor('escola-cor-destaque', this.value); atualizarPreviewEscola()">
+                            <input type="text" id="escola-cor-destaque" placeholder="#D4AF37" value="#D4AF37" oninput="sincronizarCorText('escola-cor-destaque-picker', this.value); atualizarPreviewEscola()">
+                        </div>
+                    </div>
+                    <div class="campo campo-full">
+                        <label>Preview da Paleta</label>
+                        <div class="preview-cores" id="preview-escola">
+                            <div class="preview-circulo" id="preview-escola-circulo" style="background:#12101a"></div>
+                            <span class="preview-texto">Cores da escola</span>
+                            <button class="preview-botao" id="preview-escola-botao" style="background:#D4AF37;color:#12101a">Destaque</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -557,35 +584,47 @@
 
 <!-- MODAL BATERIA -->
 <div class="modal-overlay" id="modal-bateria-overlay" onclick="fecharSeForaModal(event,'modal-bateria-overlay','fecharFormBateria')">
-    <div class="modal-sa" id="form-bateria">
+    <div class="modal-sa">
         <div class="modal-sa-header">
             <div class="modal-sa-titulo" id="form-bateria-titulo">Nova Bateria</div>
             <button class="modal-sa-fechar" onclick="fecharFormBateria()">✕</button>
         </div>
         <div class="modal-sa-body">
-            <input type="hidden" id="bateria-id">
-            <div class="form-grid">
-                <div class="campo campo-full">
-                    <label>Nome da Bateria *</label>
-                    <input type="text" id="bateria-nome" placeholder="Ex: Swing da Leopoldina">
+            <!-- VISUALIZAÇÃO -->
+            <div id="bateria-view" style="display:none">
+                <div class="ficha-sa-grid">
+                    <div class="ficha-sa-campo ficha-sa-full"><span>Nome</span><strong id="vw-bateria-nome"></strong></div>
+                    <div class="ficha-sa-campo"><span>Escola</span><strong id="vw-bateria-escola"></strong></div>
+                    <div class="ficha-sa-campo"><span>Mestre</span><strong id="vw-bateria-mestre"></strong></div>
+                    <div class="ficha-sa-campo"><span>Instagram</span><strong id="vw-bateria-instagram"></strong></div>
                 </div>
-                <div class="campo campo-full">
-                    <label>Escola Vinculada *</label>
-                    <select id="bateria-escola-id">
-                        <option value="">Selecione uma escola...</option>
-                    </select>
-                </div>
-                <div class="campo campo-full">
-                    <label>URL do Logo da Bateria</label>
-                    <input type="url" id="bateria-logo" placeholder="https://...">
-                </div>
-                <div class="campo campo-full">
-                    <label>Instagram</label>
-                    <input type="text" id="bateria-instagram" placeholder="@swingdaleopoldina">
-                </div>
-                <div class="campo campo-full">
-                    <label>Mestre de Bateria</label>
-                    <input type="text" id="bateria-mestre" placeholder="Nome do mestre">
+            </div>
+            <!-- FORMULÁRIO -->
+            <div id="bateria-form" style="display:none">
+                <input type="hidden" id="bateria-id">
+                <div class="form-grid">
+                    <div class="campo campo-full">
+                        <label>Nome da Bateria *</label>
+                        <input type="text" id="bateria-nome" placeholder="Ex: Swing da Leopoldina">
+                    </div>
+                    <div class="campo campo-full">
+                        <label>Escola Vinculada *</label>
+                        <select id="bateria-escola-id">
+                            <option value="">Selecione uma escola...</option>
+                        </select>
+                    </div>
+                    <div class="campo campo-full">
+                        <label>URL do Logo da Bateria</label>
+                        <input type="url" id="bateria-logo" placeholder="https://...">
+                    </div>
+                    <div class="campo campo-full">
+                        <label>Instagram</label>
+                        <input type="text" id="bateria-instagram" placeholder="@swingdaleopoldina">
+                    </div>
+                    <div class="campo campo-full">
+                        <label>Mestre de Bateria</label>
+                        <input type="text" id="bateria-mestre" placeholder="Nome do mestre">
+                    </div>
                 </div>
             </div>
         </div>
@@ -600,43 +639,56 @@
 
 <!-- MODAL ACESSO -->
 <div class="modal-overlay" id="modal-acesso-overlay" onclick="fecharSeForaModal(event,'modal-acesso-overlay','fecharFormAcesso')">
-    <div class="modal-sa" id="form-acesso">
+    <div class="modal-sa">
         <div class="modal-sa-header">
             <div class="modal-sa-titulo" id="form-acesso-titulo">Novo Acesso</div>
             <button class="modal-sa-fechar" onclick="fecharFormAcesso()">✕</button>
         </div>
         <div class="modal-sa-body">
-            <input type="hidden" id="acesso-id">
-            <div class="form-grid">
-                <div class="campo campo-full">
-                    <label>Nome Completo *</label>
-                    <input type="text" id="acesso-nome" placeholder="Nome completo">
+            <!-- VISUALIZAÇÃO -->
+            <div id="acesso-view" style="display:none">
+                <div class="ficha-sa-grid">
+                    <div class="ficha-sa-campo ficha-sa-full"><span>Nome</span><strong id="vw-acesso-nome"></strong></div>
+                    <div class="ficha-sa-campo"><span>Apelido</span><strong id="vw-acesso-apelido"></strong></div>
+                    <div class="ficha-sa-campo"><span>CPF</span><strong id="vw-acesso-cpf"></strong></div>
+                    <div class="ficha-sa-campo"><span>Perfil</span><strong id="vw-acesso-perfil"></strong></div>
+                    <div class="ficha-sa-campo ficha-sa-full"><span>Bateria</span><strong id="vw-acesso-bateria"></strong></div>
                 </div>
-                <div class="campo campo-full">
-                    <label>Apelido *</label>
-                    <input type="text" id="acesso-apelido" placeholder="Como aparece na carteirinha e no sistema">
-                </div>
-                <div class="campo">
-                    <label>CPF *</label>
-                    <input type="text" id="acesso-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
-                </div>
-                <div class="campo">
-                    <label>Senha *</label>
-                    <input type="password" id="acesso-senha" placeholder="Mínimo 6 caracteres">
-                </div>
-                <div class="campo">
-                    <label>Perfil *</label>
-                    <select id="acesso-perfil">
-                        <option value="">Selecione...</option>
-                        <option value="mestre">Mestre de Bateria</option>
-                        <option value="diretor">Diretor</option>
-                    </select>
-                </div>
-                <div class="campo">
-                    <label>Bateria Vinculada *</label>
-                    <select id="acesso-bateria-id">
-                        <option value="">Selecione uma bateria...</option>
-                    </select>
+            </div>
+            <!-- FORMULÁRIO -->
+            <div id="acesso-form" style="display:none">
+                <input type="hidden" id="acesso-id">
+                <div class="form-grid">
+                    <div class="campo campo-full">
+                        <label>Nome Completo *</label>
+                        <input type="text" id="acesso-nome" placeholder="Nome completo">
+                    </div>
+                    <div class="campo campo-full">
+                        <label>Apelido *</label>
+                        <input type="text" id="acesso-apelido" placeholder="Como aparece na carteirinha e no sistema">
+                    </div>
+                    <div class="campo">
+                        <label>CPF *</label>
+                        <input type="text" id="acesso-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
+                    </div>
+                    <div class="campo">
+                        <label>Senha *</label>
+                        <input type="password" id="acesso-senha" placeholder="Mínimo 6 caracteres">
+                    </div>
+                    <div class="campo">
+                        <label>Perfil *</label>
+                        <select id="acesso-perfil">
+                            <option value="">Selecione...</option>
+                            <option value="mestre">Mestre de Bateria</option>
+                            <option value="diretor">Diretor</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label>Bateria Vinculada *</label>
+                        <select id="acesso-bateria-id">
+                            <option value="">Selecione uma bateria...</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -763,19 +815,28 @@
     }
 
     function habilitarEdicaoEscola() {
-        setModoLeitura('form-escola', 'btn-editar-escola', 'btn-salvar-escola', false);
-        document.getElementById('btn-salvar-escola').style.display = 'inline-flex';
+        document.getElementById('escola-view').style.display = 'none';
+        document.getElementById('escola-form').style.display = 'block';
+        document.getElementById('form-escola-titulo').textContent = 'Editar Escola';
+        document.getElementById('btn-editar-escola').style.display = 'none';
         document.getElementById('btn-toggle-escola').style.display = 'none';
+        document.getElementById('btn-salvar-escola').style.display = 'inline-flex';
     }
     function habilitarEdicaoBateria() {
-        setModoLeitura('form-bateria', 'btn-editar-bateria', 'btn-salvar-bateria', false);
-        document.getElementById('btn-salvar-bateria').style.display = 'inline-flex';
+        document.getElementById('bateria-view').style.display = 'none';
+        document.getElementById('bateria-form').style.display = 'block';
+        document.getElementById('form-bateria-titulo').textContent = 'Editar Bateria';
+        document.getElementById('btn-editar-bateria').style.display = 'none';
         document.getElementById('btn-toggle-bateria').style.display = 'none';
+        document.getElementById('btn-salvar-bateria').style.display = 'inline-flex';
     }
     function habilitarEdicaoAcesso() {
-        setModoLeitura('form-acesso', 'btn-editar-acesso', 'btn-salvar-acesso', false);
-        document.getElementById('btn-salvar-acesso').style.display = 'inline-flex';
+        document.getElementById('acesso-view').style.display = 'none';
+        document.getElementById('acesso-form').style.display = 'block';
+        document.getElementById('form-acesso-titulo').textContent = 'Editar Acesso';
+        document.getElementById('btn-editar-acesso').style.display = 'none';
         document.getElementById('btn-toggle-acesso').style.display = 'none';
+        document.getElementById('btn-salvar-acesso').style.display = 'inline-flex';
     }
 
     function abrirFormEscola() {
@@ -790,10 +851,12 @@
         document.getElementById('escola-cor-destaque-picker').value = '#D4AF37';
         document.getElementById('form-escola-titulo').textContent = 'Nova Escola';
         document.getElementById('btn-salvar-escola').textContent = 'Salvar Escola';
-        document.getElementById('btn-salvar-escola').style.display = 'inline-flex';
+        document.getElementById('escola-view').style.display = 'none';
+        document.getElementById('escola-form').style.display = 'block';
+        document.getElementById('btn-editar-escola').style.display = 'none';
         document.getElementById('btn-toggle-escola').style.display = 'none';
+        document.getElementById('btn-salvar-escola').style.display = 'inline-flex';
         atualizarPreviewEscola();
-        setModoLeitura('form-escola', 'btn-editar-escola', 'btn-salvar-escola', false);
         document.getElementById('modal-escola-overlay').classList.add('aberto');
     }
 
@@ -808,6 +871,7 @@
         if (!dados.length) return;
         const e = dados[0];
         const ativa = e.ativa !== false;
+        // preenche form
         document.getElementById('escola-id').value = e.id;
         document.getElementById('escola-nome').value = e.nome || '';
         document.getElementById('escola-sigla').value = e.sigla || '';
@@ -817,15 +881,25 @@
         document.getElementById('escola-cor-primaria-picker').value = e.cor_primaria || '#12101a';
         document.getElementById('escola-cor-destaque').value = e.cor_destaque || '#D4AF37';
         document.getElementById('escola-cor-destaque-picker').value = e.cor_destaque || '#D4AF37';
-        document.getElementById('form-escola-titulo').textContent = leitura ? (e.sigla || e.nome) : 'Editar Escola';
-        document.getElementById('btn-salvar-escola').textContent = 'Atualizar Escola';
         atualizarPreviewEscola();
-        setModoLeitura('form-escola', 'btn-editar-escola', 'btn-salvar-escola', leitura);
+        // preenche visualização
+        document.getElementById('vw-escola-nome').textContent = e.nome || '—';
+        document.getElementById('vw-escola-sigla').textContent = e.sigla || '—';
+        document.getElementById('vw-escola-temporada').textContent = e.temporada_atual || '—';
+        document.getElementById('vw-escola-cor-primaria').innerHTML = e.cor_primaria ? `<span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${e.cor_primaria};vertical-align:middle;margin-right:6px;border:1px solid rgba(0,0,0,0.1)"></span>${e.cor_primaria}` : '—';
+        document.getElementById('vw-escola-cor-destaque').innerHTML = e.cor_destaque ? `<span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${e.cor_destaque};vertical-align:middle;margin-right:6px;border:1px solid rgba(0,0,0,0.1)"></span>${e.cor_destaque}` : '—';
+        document.getElementById('form-escola-titulo').textContent = e.sigla || e.nome;
+        document.getElementById('btn-salvar-escola').textContent = 'Atualizar Escola';
+        // alterna view/form
+        document.getElementById('escola-view').style.display = leitura ? 'block' : 'none';
+        document.getElementById('escola-form').style.display = leitura ? 'none' : 'block';
+        // botões rodapé
         const btnToggle = document.getElementById('btn-toggle-escola');
         btnToggle.textContent = ativa ? 'Desativar' : 'Ativar';
         btnToggle.className = ativa ? 'btn-acao danger' : 'btn-acao';
         btnToggle.onclick = () => { fecharFormEscola(); toggleEscolaAtiva(e.id, ativa); };
         btnToggle.style.display = leitura ? 'inline-flex' : 'none';
+        document.getElementById('btn-editar-escola').style.display = leitura ? 'inline-flex' : 'none';
         document.getElementById('btn-salvar-escola').style.display = leitura ? 'none' : 'inline-flex';
         document.getElementById('modal-escola-overlay').classList.add('aberto');
     }
@@ -961,9 +1035,11 @@
         document.getElementById('bateria-mestre').value = '';
         document.getElementById('form-bateria-titulo').textContent = 'Nova Bateria';
         document.getElementById('btn-salvar-bateria').textContent = 'Salvar Bateria';
-        document.getElementById('btn-salvar-bateria').style.display = 'inline-flex';
+        document.getElementById('bateria-view').style.display = 'none';
+        document.getElementById('bateria-form').style.display = 'block';
+        document.getElementById('btn-editar-bateria').style.display = 'none';
         document.getElementById('btn-toggle-bateria').style.display = 'none';
-        setModoLeitura('form-bateria', 'btn-editar-bateria', 'btn-salvar-bateria', false);
+        document.getElementById('btn-salvar-bateria').style.display = 'inline-flex';
         document.getElementById('modal-bateria-overlay').classList.add('aberto');
     }
 
@@ -978,20 +1054,30 @@
         if (!dados.length) return;
         const b = dados[0];
         const ativa = b.ativa !== false;
+        // preenche form
         document.getElementById('bateria-id').value = b.id;
         document.getElementById('bateria-nome').value = b.nome || '';
         document.getElementById('bateria-escola-id').value = b.escola_id || '';
         document.getElementById('bateria-logo').value = b.logo_url || '';
         document.getElementById('bateria-instagram').value = b.instagram || '';
         document.getElementById('bateria-mestre').value = b.mestre_de_bateria || '';
-        document.getElementById('form-bateria-titulo').textContent = leitura ? b.nome : 'Editar Bateria';
+        // preenche visualização
+        document.getElementById('vw-bateria-nome').textContent = b.nome || '—';
+        document.getElementById('vw-bateria-escola').textContent = nomeEscola(b.escola_id);
+        document.getElementById('vw-bateria-mestre').textContent = b.mestre_de_bateria || '—';
+        document.getElementById('vw-bateria-instagram').textContent = b.instagram || '—';
+        document.getElementById('form-bateria-titulo').textContent = b.nome;
         document.getElementById('btn-salvar-bateria').textContent = 'Atualizar Bateria';
-        setModoLeitura('form-bateria', 'btn-editar-bateria', 'btn-salvar-bateria', leitura);
+        // alterna view/form
+        document.getElementById('bateria-view').style.display = leitura ? 'block' : 'none';
+        document.getElementById('bateria-form').style.display = leitura ? 'none' : 'block';
+        // botões rodapé
         const btnToggle = document.getElementById('btn-toggle-bateria');
         btnToggle.textContent = ativa ? 'Desativar' : 'Ativar';
         btnToggle.className = ativa ? 'btn-acao danger' : 'btn-acao';
         btnToggle.onclick = () => { fecharFormBateria(); toggleBateriaAtiva(b.id, ativa); };
         btnToggle.style.display = leitura ? 'inline-flex' : 'none';
+        document.getElementById('btn-editar-bateria').style.display = leitura ? 'inline-flex' : 'none';
         document.getElementById('btn-salvar-bateria').style.display = leitura ? 'none' : 'inline-flex';
         document.getElementById('modal-bateria-overlay').classList.add('aberto');
     }
@@ -1133,6 +1219,7 @@
         if (!dados.length) return;
         const u = dados[0];
         const ativo = u.status !== 'inativo';
+        // preenche form
         document.getElementById('acesso-id').value = u.id;
         document.getElementById('acesso-nome').value = u.nome || '';
         document.getElementById('acesso-apelido').value = u.apelido || '';
@@ -1140,14 +1227,24 @@
         document.getElementById('acesso-senha').value = '';
         document.getElementById('acesso-perfil').value = u.perfil || '';
         document.getElementById('acesso-bateria-id').value = u.bateria_id || '';
-        document.getElementById('form-acesso-titulo').textContent = leitura ? (u.apelido || u.nome) : 'Editar Acesso';
+        // preenche visualização
+        document.getElementById('vw-acesso-nome').textContent = u.nome || '—';
+        document.getElementById('vw-acesso-apelido').textContent = u.apelido || '—';
+        document.getElementById('vw-acesso-cpf').textContent = u.cpf || '—';
+        document.getElementById('vw-acesso-perfil').textContent = labelPerfil(u.perfil);
+        document.getElementById('vw-acesso-bateria').textContent = nomeBateria(u.bateria_id);
+        document.getElementById('form-acesso-titulo').textContent = u.apelido || u.nome;
         document.getElementById('btn-salvar-acesso').textContent = 'Atualizar Acesso';
-        setModoLeitura('form-acesso', 'btn-editar-acesso', 'btn-salvar-acesso', leitura);
+        // alterna view/form
+        document.getElementById('acesso-view').style.display = leitura ? 'block' : 'none';
+        document.getElementById('acesso-form').style.display = leitura ? 'none' : 'block';
+        // botões rodapé
         const btnToggle = document.getElementById('btn-toggle-acesso');
         btnToggle.textContent = ativo ? 'Desativar' : 'Ativar';
         btnToggle.className = ativo ? 'btn-acao danger' : 'btn-acao';
         btnToggle.onclick = () => { fecharFormAcesso(); toggleAcessoAtivo(u.id, u.status); };
         btnToggle.style.display = leitura ? 'inline-flex' : 'none';
+        document.getElementById('btn-editar-acesso').style.display = leitura ? 'inline-flex' : 'none';
         document.getElementById('btn-salvar-acesso').style.display = leitura ? 'none' : 'inline-flex';
         document.getElementById('modal-acesso-overlay').classList.add('aberto');
     }
@@ -1182,9 +1279,11 @@
         document.getElementById('acesso-bateria-id').value = '';
         document.getElementById('form-acesso-titulo').textContent = 'Novo Acesso';
         document.getElementById('btn-salvar-acesso').textContent = 'Criar Acesso';
-        document.getElementById('btn-salvar-acesso').style.display = 'inline-flex';
+        document.getElementById('acesso-view').style.display = 'none';
+        document.getElementById('acesso-form').style.display = 'block';
+        document.getElementById('btn-editar-acesso').style.display = 'none';
         document.getElementById('btn-toggle-acesso').style.display = 'none';
-        setModoLeitura('form-acesso', 'btn-editar-acesso', 'btn-salvar-acesso', false);
+        document.getElementById('btn-salvar-acesso').style.display = 'inline-flex';
         document.getElementById('modal-acesso-overlay').classList.add('aberto');
     }
 
