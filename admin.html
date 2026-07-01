@@ -138,7 +138,6 @@
         .card-ritmista {
             background: white;
             border: 1px solid #e8e6f0;
-            border-left: 4px solid #e8e6f0;
             border-radius: 14px;
             padding: 14px 18px;
             display: flex; align-items: center;
@@ -147,11 +146,7 @@
             transition: box-shadow 0.15s, transform 0.1s;
         }
         .card-ritmista:hover { box-shadow: 0 4px 16px rgba(15,23,42,0.10); transform: translateY(-1px); }
-        .card-ritmista.pendente  { border-left-color: #ffc107; }
-        .card-ritmista.aprovado  { border-left-color: #28a745; }
-        .card-ritmista.suspenso  { border-left-color: #fd7e14; }
-        .card-ritmista.desligado { border-left-color: #dc3545; }
-        .card-ritmista.rejeitado { border-left-color: #6c757d; }
+
 
         .card-esquerda { flex: 1; min-width: 0; }
         .card-linha1 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
@@ -404,6 +399,9 @@
                 <label class="multi-select-option"><input type="checkbox" value="pendente" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ffc107;margin:0 4px;"></span>Pendentes</label>
                 <label class="multi-select-option"><input type="checkbox" value="rejeitado" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6c757d;margin:0 4px;"></span>Rejeitados</label>
                 <label class="multi-select-option"><input type="checkbox" value="suspenso" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fd7e14;margin:0 4px;"></span>Suspensos</label>
+                <div style="border-top:1px solid #eee;margin-top:4px;padding-top:4px;text-align:right;">
+                    <span onclick="limparFiltroStatus()" style="font-size:12px;color:#D4AF37;cursor:pointer;font-weight:600;padding:2px 4px;">Limpar filtro</span>
+                </div>
             </div>
         </div>
     </div>
@@ -641,6 +639,11 @@
         const aberto = dd.style.display !== 'none';
         dd.style.display = aberto ? 'none' : 'block';
         arrow.textContent = aberto ? '▼' : '▲';
+    }
+
+    function limparFiltroStatus() {
+        document.querySelectorAll('#statusSelectDropdown input[type=checkbox]').forEach(c => c.checked = false);
+        onChangeStatus();
     }
 
     function onChangeStatus() {
