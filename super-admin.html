@@ -746,9 +746,20 @@
     }
 
     async function toggleEscolaAtiva(id, ativaAtual) {
+        let payload = { ativa: !ativaAtual };
+
+        if (ativaAtual) {
+            const motivo = prompt('Informe o motivo da desativação:');
+            if (motivo === null) return; // cancelou
+            if (!motivo.trim()) { mostrarToast('Informe um motivo para desativar.', 'erro'); return; }
+            payload.motivo_inativacao = motivo.trim();
+        } else {
+            payload.motivo_inativacao = null;
+        }
+
         const res = await fetch(`${SUPABASE_URL}/rest/v1/escolas?id=eq.${id}`, {
             method: 'PATCH', headers,
-            body: JSON.stringify({ ativa: !ativaAtual })
+            body: JSON.stringify(payload)
         });
         if (res.ok) {
             mostrarToast(ativaAtual ? 'Escola desativada.' : 'Escola ativada!');
