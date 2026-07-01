@@ -37,20 +37,23 @@
         .btn-sair:hover { background: rgba(255,255,255,0.08); }
         /* NAV ABAS */
         .nav-abas {
-            display: flex; gap: 0; border-bottom: 2px solid #e8e6f0;
-            margin-bottom: 0; padding: 0 24px;
-            background: white; position: sticky; top: 56px; z-index: 90;
+            display: flex; gap: 4px; padding: 0 24px;
+            background: var(--cor-fundo-escuro); position: sticky; top: 56px; z-index: 90;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .aba-btn {
-            padding: 14px 20px; background: none; border: none; cursor: pointer;
-            font-size: 13px; font-weight: 600; color: #888;
-            border-bottom: 2px solid transparent; margin-bottom: -2px;
-            transition: color 0.15s; white-space: nowrap;
+            padding: 12px 18px; background: none; border: none; cursor: pointer;
+            font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.45);
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s; white-space: nowrap;
         }
-        .aba-btn:hover { color: #0f172a; }
-        .aba-btn.ativa { color: #0f172a; border-bottom-color: #D4AF37; }
+        .aba-btn:hover { color: rgba(255,255,255,0.75); }
+        .aba-btn.ativa { color: #D4AF37; border-bottom-color: #D4AF37; }
         .painel { display: none; }
         .painel.ativo { display: block; }
+
+        /* TÍTULO DE PAINEL (padrão super-admin) */
+        .painel-titulo { font-size: 20px; font-weight: 800; color: var(--cor-texto-principal); margin-bottom: 20px; }
 
         /* BOTÃO NOVO (padrão super-admin) */
         .btn-novo {
@@ -347,17 +350,19 @@
 <div class="container painel ativo" id="painel-ritmistas">
 
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
-        <div class="totalizadores" style="margin-bottom:0;flex:1;">
-            <div class="total-card">
-                <div class="total-numero dourado" id="totalAtivos">—</div>
-                <div class="total-label">Ritmistas ativos</div>
-            </div>
-            <div class="total-card">
-                <div class="total-numero" id="totalPendentes">—</div>
-                <div class="total-label">Pendentes</div>
-            </div>
-        </div>
+        <div class="painel-titulo" style="margin-bottom:0;">Ritmistas</div>
         <button class="btn-novo" onclick="window.location.href='index.html'">+ Cadastrar Ritmista</button>
+    </div>
+
+    <div class="totalizadores">
+        <div class="total-card">
+            <div class="total-numero dourado" id="totalAtivos">—</div>
+            <div class="total-label">Ritmistas ativos</div>
+        </div>
+        <div class="total-card">
+            <div class="total-numero" id="totalPendentes">—</div>
+            <div class="total-label">Pendentes</div>
+        </div>
     </div>
 
     <!-- BUSCA -->
@@ -392,7 +397,6 @@
         </div>
     </div>
 
-    <div class="contador" id="contador"></div>
     <div class="cards" id="listaRitmistas" style="min-height:300px;">
         <div class="vazio">Carregando...</div>
     </div>
@@ -402,10 +406,11 @@
 <!-- PAINEL VAGAS -->
 <div class="container painel" id="painel-vagas">
 
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
-        <h2 style="font-size:18px;font-weight:800;color:#0f172a;">Controle de Vagas</h2>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <div class="painel-titulo" style="margin-bottom:0;">Vagas</div>
         <button onclick="abrirConfigurarVagas()" style="display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid #ccc;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">⚙ Configurar vagas</button>
     </div>
+    <div style="margin-bottom:20px;"></div>
     <div id="ocupacaoBar" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
 
 </div>
@@ -413,7 +418,7 @@
 <!-- PAINEL VISÃO GERAL -->
 <div class="container painel" id="painel-visao">
 
-    <h2 style="font-size:18px;font-weight:800;color:#0f172a;margin-bottom:20px;">Visão Geral</h2>
+    <div class="painel-titulo">Visão Geral</div>
 
     <div class="vg-card">
         <div class="vg-secao-titulo">🎂 Aniversariantes do mês</div>
