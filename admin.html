@@ -293,7 +293,7 @@
         .modal-cadastro h2 { font-size: 20px; margin-bottom: 4px; }
         .modal-cadastro .subtitulo { font-size: 13px; color: #888; margin-bottom: 20px; }
         .ficha-secao { margin-bottom: 18px; }
-        .ficha-secao-titulo { font-size: 10px; font-weight: bold; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
+        .ficha-secao-titulo { font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; border-bottom: 2px solid #D4AF37; padding-bottom: 6px; }
         .ficha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
         .ficha-campo { font-size: 13px; color: #333; }
         .ficha-campo span { display: block; font-size: 11px; color: #999; margin-bottom: 1px; }
@@ -499,8 +499,8 @@
             </div>
         </div>
 
-        <div class="ficha-secao">
-            <div class="ficha-secao-titulo">Bateria</div>
+        <div class="ficha-secao" id="fc-secao-vestimenta">
+            <div class="ficha-secao-titulo">Medidas</div>
             <div class="ficha-grid">
                 <div class="ficha-campo"><span>Instrumento</span><strong id="fc-instrumento"></strong>
                     <select id="fc-instrumento-edit" class="fc-input" style="display:none">
@@ -511,8 +511,17 @@
                         <option>Tamborim</option>
                     </select>
                 </div>
-
                 <div class="ficha-campo"><span>Membro desde</span><strong id="fc-tempo"></strong><input id="fc-tempo-edit" class="fc-input" type="text" placeholder="Ex: 2020" style="display:none"></div>
+                <div class="ficha-campo"><span>Camisa</span><strong id="fc-camisa"></strong><input id="fc-camisa-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Fantasia</span><strong id="fc-fantasia"></strong><input id="fc-fantasia-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Calça</span><strong id="fc-calca"></strong><input id="fc-calca-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Sapato</span><strong id="fc-sapato"></strong><input id="fc-sapato-edit" class="fc-input" type="text" style="display:none"></div>
+            </div>
+        </div>
+
+        <div class="ficha-secao">
+            <div class="ficha-secao-titulo">Saúde</div>
+            <div class="ficha-grid">
                 <div class="ficha-campo"><span>Tipo sanguíneo</span><strong id="fc-tipo-sanguineo"></strong>
                     <select id="fc-tipo-sanguineo-edit" class="fc-input" style="display:none">
                         <option value="">Não informado</option>
@@ -520,16 +529,6 @@
                         <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
                     </select>
                 </div>
-            </div>
-        </div>
-
-        <div class="ficha-secao" id="fc-secao-vestimenta">
-            <div class="ficha-secao-titulo">Vestimenta</div>
-            <div class="ficha-grid">
-                <div class="ficha-campo"><span>Camisa</span><strong id="fc-camisa"></strong><input id="fc-camisa-edit" class="fc-input" type="text" style="display:none"></div>
-                <div class="ficha-campo"><span>Fantasia</span><strong id="fc-fantasia"></strong><input id="fc-fantasia-edit" class="fc-input" type="text" style="display:none"></div>
-                <div class="ficha-campo"><span>Calça</span><strong id="fc-calca"></strong><input id="fc-calca-edit" class="fc-input" type="text" style="display:none"></div>
-                <div class="ficha-campo"><span>Sapato</span><strong id="fc-sapato"></strong><input id="fc-sapato-edit" class="fc-input" type="text" style="display:none"></div>
             </div>
         </div>
 
