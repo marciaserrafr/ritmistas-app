@@ -547,13 +547,13 @@
         </div>
 
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:14px; border-top:1px solid #f0f0f0; margin-top:16px;">
-            <div style="display:flex; gap:8px; flex-wrap:wrap;" id="modalCadastroAcoes"></div>
-            <div style="display:flex; gap:8px; align-items:center;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
                 <button id="btn-editar-ficha" class="btn-ficha" style="display:none" onclick="ativarEdicaoFicha()">Editar</button>
                 <button id="btn-salvar-ficha" class="btn-ficha btn-ficha-salvar" style="display:none" onclick="salvarEdicaoFicha()">Salvar</button>
                 <button id="btn-cancelar-ficha" class="btn-ficha" style="display:none" onclick="cancelarEdicaoFicha()">Cancelar</button>
-                <button class="btn-modal-cancelar" onclick="fecharModal('modalCadastroOverlay')">Fechar</button>
+                <div id="modalCadastroAcoes" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
             </div>
+            <button class="btn-modal-cancelar" onclick="fecharModal('modalCadastroOverlay')">Fechar</button>
         </div>
     </div>
 </div>
