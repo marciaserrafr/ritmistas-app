@@ -230,6 +230,21 @@
         .btn-ficha-salvar    { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
         .btn-ficha-salvar:hover { background: #B8922A; }
 
+        /* INPUTS DE EDIÇÃO NO MODAL */
+        .fc-input {
+            display: none;
+            width: 100%;
+            padding: 7px 10px;
+            border: 1.5px solid #D4AF37;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #fffdf4;
+            color: #0f172a;
+            margin-top: 2px;
+        }
+        .fc-input:focus { outline: none; border-color: #b8922a; }
+
         /* DECLARAÇÃO MENOR NO MODAL */
         .declaracao-area {
             display: flex; align-items: center; gap: 8px;
@@ -452,6 +467,8 @@
         <div class="ficha-secao">
             <div class="ficha-secao-titulo">Dados pessoais</div>
             <div class="ficha-grid">
+                <div class="ficha-campo full"><span>Nome</span><strong id="fc-nome"></strong></div>
+                <div class="ficha-campo full"><span>Apelido</span><strong id="fc-apelido"></strong></div>
                 <div class="ficha-campo"><span>CPF</span><strong id="fc-cpf"></strong></div>
                 <div class="ficha-campo"><span>Data de nascimento</span><strong id="fc-nascimento"></strong></div>
                 <div class="ficha-campo"><span>Celular</span><strong id="fc-celular"></strong></div>
@@ -462,38 +479,35 @@
         <div class="ficha-secao">
             <div class="ficha-secao-titulo">Endereço</div>
             <div class="ficha-grid">
-                <div class="ficha-campo full"><span>Rua / Logradouro</span><strong id="fc-endereco"></strong></div>
-                <div class="ficha-campo"><span>Número</span><strong id="fc-numero"></strong></div>
-                <div class="ficha-campo"><span>Complemento</span><strong id="fc-complemento"></strong></div>
-                <div class="ficha-campo"><span>Bairro</span><strong id="fc-bairro"></strong></div>
-                <div class="ficha-campo"><span>Cidade / Estado</span><strong id="fc-cidade"></strong></div>
+                <div class="ficha-campo full"><span>Rua / Logradouro</span><strong id="fc-endereco"></strong><input id="fc-endereco-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Número</span><strong id="fc-numero"></strong><input id="fc-numero-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Complemento</span><strong id="fc-complemento"></strong><input id="fc-complemento-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Bairro</span><strong id="fc-bairro"></strong><input id="fc-bairro-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Cidade</span><strong id="fc-cidade"></strong><input id="fc-cidade-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Estado</span><strong id="fc-estado"></strong><input id="fc-estado-edit" class="fc-input" type="text" maxlength="2" style="display:none"></div>
             </div>
         </div>
 
         <div class="ficha-secao">
             <div class="ficha-secao-titulo">Bateria</div>
             <div class="ficha-grid">
-                <div class="ficha-campo" id="fc-instrumento-leitura"><span>Instrumento</span><strong id="fc-instrumento"></strong></div>
+                <div class="ficha-campo"><span>Instrumento</span><strong id="fc-instrumento"></strong>
+                    <select id="fc-instrumento-edit" class="fc-input" style="display:none">
+                        <option value="">Selecione</option>
+                        <option>Caixa</option><option>Chocalho</option><option>Cuíca</option>
+                        <option>Repique</option><option>Surdo de Primeira</option>
+                        <option>Surdo de Segunda</option><option>Surdo de Terceira</option>
+                        <option>Tamborim</option>
+                    </select>
+                </div>
                 <div class="ficha-campo"><span>Status</span><strong id="fc-status"></strong></div>
-                <div class="ficha-campo"><span>Membro desde</span><strong id="fc-tempo"></strong></div>
-                <div class="ficha-campo"><span>Tipo sanguíneo</span><strong id="fc-tipo-sanguineo"></strong></div>
-            </div>
-            <div id="fc-instrumento-edicao" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid #f0f0f0;">
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-                    <div class="ficha-campo">
-                        <span>Novo instrumento</span>
-                        <select id="fc-instrumento-select" style="margin-top:4px;width:100%;padding:9px 10px;border:1px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;">
-                            <option value="">Selecione</option>
-                            <option>Caixa</option><option>Chocalho</option><option>Cuíca</option>
-                            <option>Repique</option><option>Surdo de Primeira</option>
-                            <option>Surdo de Segunda</option><option>Surdo de Terceira</option>
-                            <option>Tamborim</option>
-                        </select>
-                    </div>
-                    <div class="ficha-campo">
-                        <span>Motivo (opcional)</span>
-                        <textarea id="fc-instrumento-motivo" rows="2" placeholder="Ex: remanejamento de naipe..." style="margin-top:4px;width:100%;padding:9px 10px;border:1px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;resize:none;"></textarea>
-                    </div>
+                <div class="ficha-campo"><span>Membro desde</span><strong id="fc-tempo"></strong><input id="fc-tempo-edit" class="fc-input" type="text" placeholder="Ex: 2020" style="display:none"></div>
+                <div class="ficha-campo"><span>Tipo sanguíneo</span><strong id="fc-tipo-sanguineo"></strong>
+                    <select id="fc-tipo-sanguineo-edit" class="fc-input" style="display:none">
+                        <option value="">Não informado</option>
+                        <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                        <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -501,18 +515,18 @@
         <div class="ficha-secao" id="fc-secao-vestimenta">
             <div class="ficha-secao-titulo">Vestimenta</div>
             <div class="ficha-grid">
-                <div class="ficha-campo"><span>Camisa</span><strong id="fc-camisa"></strong></div>
-                <div class="ficha-campo"><span>Fantasia</span><strong id="fc-fantasia"></strong></div>
-                <div class="ficha-campo"><span>Sapato</span><strong id="fc-sapato"></strong></div>
+                <div class="ficha-campo"><span>Camisa</span><strong id="fc-camisa"></strong><input id="fc-camisa-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Fantasia</span><strong id="fc-fantasia"></strong><input id="fc-fantasia-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Sapato</span><strong id="fc-sapato"></strong><input id="fc-sapato-edit" class="fc-input" type="text" style="display:none"></div>
             </div>
         </div>
 
         <div class="ficha-secao" id="fc-secao-emergencia">
             <div class="ficha-secao-titulo">Contato de emergência</div>
             <div class="ficha-grid">
-                <div class="ficha-campo"><span>Nome</span><strong id="fc-emergencia-nome"></strong></div>
-                <div class="ficha-campo"><span>Parentesco</span><strong id="fc-emergencia-parentesco"></strong></div>
-                <div class="ficha-campo full"><span>Celular</span><strong id="fc-emergencia-celular"></strong></div>
+                <div class="ficha-campo"><span>Nome</span><strong id="fc-emergencia-nome"></strong><input id="fc-emergencia-nome-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo"><span>Parentesco</span><strong id="fc-emergencia-parentesco"></strong><input id="fc-emergencia-parentesco-edit" class="fc-input" type="text" style="display:none"></div>
+                <div class="ficha-campo full"><span>Celular</span><strong id="fc-emergencia-celular"></strong><input id="fc-emergencia-celular-edit" class="fc-input" type="text" style="display:none"></div>
             </div>
         </div>
 
@@ -525,7 +539,7 @@
 
         <div class="modal-acoes" style="margin-top:12px; justify-content:space-between; flex-wrap:wrap; gap:8px;">
             <div style="display:flex; gap:8px;">
-                <button id="btn-editar-ficha" class="btn-ficha" style="display:none" onclick="ativarEdicaoFicha()">Editar instrumento</button>
+                <button id="btn-editar-ficha" class="btn-ficha" style="display:none" onclick="ativarEdicaoFicha()">Editar</button>
                 <button id="btn-salvar-ficha" class="btn-ficha btn-ficha-salvar" style="display:none" onclick="salvarEdicaoFicha()">Salvar</button>
                 <button id="btn-cancelar-ficha" class="btn-ficha" style="display:none" onclick="cancelarEdicaoFicha()">Cancelar</button>
             </div>
@@ -794,6 +808,8 @@
         document.getElementById('modalCadastroNome').textContent = r.nome;
         document.getElementById('modalCadastroSubtitulo').textContent = [r.apelido ? `"${r.apelido}"` : '', r.instrumento || '', idade !== null ? `${idade} anos` : ''].filter(Boolean).join(' · ');
 
+        document.getElementById('fc-nome').textContent = r.nome || '—';
+        document.getElementById('fc-apelido').textContent = r.apelido || '—';
         document.getElementById('fc-cpf').textContent = r.cpf || '—';
         document.getElementById('fc-nascimento').textContent = r.nascimento ? new Date(r.nascimento + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
         document.getElementById('fc-celular').textContent = r.celular || '—';
@@ -802,7 +818,8 @@
         document.getElementById('fc-numero').textContent = r.numero || '—';
         document.getElementById('fc-complemento').textContent = r.complemento || '—';
         document.getElementById('fc-bairro').textContent = r.bairro || '—';
-        document.getElementById('fc-cidade').textContent = [r.cidade, r.estado].filter(Boolean).join(' / ') || '—';
+        document.getElementById('fc-cidade').textContent = r.cidade || '—';
+        document.getElementById('fc-estado').textContent = r.estado || '—';
         document.getElementById('fc-instrumento').textContent = r.instrumento || '—';
         document.getElementById('fc-status').textContent = statusLabels[status] || '—';
         document.getElementById('fc-tempo').textContent = r.membro_desde || '—';
@@ -854,32 +871,63 @@
         document.getElementById('modalCadastroOverlay').classList.add('aberto');
     }
 
+    const CAMPOS_EDITAVEIS = [
+        { id: 'fc-endereco',           editId: 'fc-endereco-edit',           col: 'endereco' },
+        { id: 'fc-numero',             editId: 'fc-numero-edit',             col: 'numero' },
+        { id: 'fc-complemento',        editId: 'fc-complemento-edit',        col: 'complemento' },
+        { id: 'fc-bairro',             editId: 'fc-bairro-edit',             col: 'bairro' },
+        { id: 'fc-cidade',             editId: 'fc-cidade-edit',             col: 'cidade' },
+        { id: 'fc-estado',             editId: 'fc-estado-edit',             col: 'estado' },
+        { id: 'fc-instrumento',        editId: 'fc-instrumento-edit',        col: 'instrumento' },
+        { id: 'fc-tempo',              editId: 'fc-tempo-edit',              col: 'membro_desde' },
+        { id: 'fc-tipo-sanguineo',     editId: 'fc-tipo-sanguineo-edit',     col: 'tipo_sanguineo' },
+        { id: 'fc-camisa',             editId: 'fc-camisa-edit',             col: 'tamanho_camisa' },
+        { id: 'fc-fantasia',           editId: 'fc-fantasia-edit',           col: 'tamanho_fantasia' },
+        { id: 'fc-sapato',             editId: 'fc-sapato-edit',             col: 'tamanho_sapato' },
+        { id: 'fc-emergencia-nome',    editId: 'fc-emergencia-nome-edit',    col: 'emergencia_nome' },
+        { id: 'fc-emergencia-parentesco', editId: 'fc-emergencia-parentesco-edit', col: 'emergencia_parentesco' },
+        { id: 'fc-emergencia-celular', editId: 'fc-emergencia-celular-edit', col: 'emergencia_celular' },
+    ];
+
     function ativarEdicaoFicha() {
         const r = todosRitmistas.find(x => x.id === fichaAtualId);
-        document.getElementById('fc-instrumento-leitura').style.display = 'none';
-        document.getElementById('fc-instrumento-edicao').style.display = 'block';
-        if (r) document.getElementById('fc-instrumento-select').value = r.instrumento || '';
-        document.getElementById('fc-instrumento-motivo').value = '';
+        if (!r) return;
+        CAMPOS_EDITAVEIS.forEach(({ id, editId, col }) => {
+            const strong = document.getElementById(id);
+            const input = document.getElementById(editId);
+            if (!strong || !input) return;
+            input.value = r[col] || '';
+            strong.style.display = 'none';
+            input.style.display = '';
+        });
         document.getElementById('btn-editar-ficha').style.display = 'none';
         document.getElementById('btn-salvar-ficha').style.display = 'inline-flex';
         document.getElementById('btn-cancelar-ficha').style.display = 'inline-flex';
     }
 
     function cancelarEdicaoFicha() {
-        document.getElementById('fc-instrumento-leitura').style.display = '';
-        document.getElementById('fc-instrumento-edicao').style.display = 'none';
+        CAMPOS_EDITAVEIS.forEach(({ id, editId }) => {
+            const strong = document.getElementById(id);
+            const input = document.getElementById(editId);
+            if (!strong || !input) return;
+            strong.style.display = '';
+            input.style.display = 'none';
+        });
+        document.getElementById('btn-editar-ficha').style.display = 'inline-flex';
         document.getElementById('btn-salvar-ficha').style.display = 'none';
         document.getElementById('btn-cancelar-ficha').style.display = 'none';
     }
 
     async function salvarEdicaoFicha() {
-        const novo = document.getElementById('fc-instrumento-select').value;
-        if (!novo) { alert('Selecione o novo instrumento.'); return; }
-        const motivo = document.getElementById('fc-instrumento-motivo').value.trim() || null;
+        const payload = {};
+        CAMPOS_EDITAVEIS.forEach(({ editId, col }) => {
+            const input = document.getElementById(editId);
+            if (input) payload[col] = input.value.trim() || null;
+        });
         await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${fichaAtualId}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
-            body: JSON.stringify({ instrumento: novo, motivo_instrumento: motivo })
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Prefer': 'return=minimal' },
+            body: JSON.stringify(payload)
         });
         fecharModal('modalCadastroOverlay');
         await carregarRitmistas();
