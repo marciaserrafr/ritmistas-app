@@ -523,7 +523,7 @@
                     <input type="text" id="acesso-nome" placeholder="Nome completo">
                 </div>
                 <div class="campo campo-full">
-                    <label>Apelido</label>
+                    <label>Apelido *</label>
                     <input type="text" id="acesso-apelido" placeholder="Como aparece na carteirinha e no sistema">
                 </div>
                 <div class="campo">
@@ -1001,7 +1001,9 @@
         const perfil = document.getElementById('acesso-perfil').value;
         const bateriaId = document.getElementById('acesso-bateria-id').value;
 
+        const apelido = document.getElementById('acesso-apelido').value.trim();
         if (!nome) { mostrarToast('Informe o nome.', 'erro'); return; }
+        if (!apelido) { mostrarToast('Informe o apelido.', 'erro'); return; }
         if (!cpf) { mostrarToast('Informe o CPF.', 'erro'); return; }
         if (!senha || senha.length < 6) { mostrarToast('Senha deve ter no mínimo 6 caracteres.', 'erro'); return; }
         if (!perfil) { mostrarToast('Selecione o perfil.', 'erro'); return; }
@@ -1020,7 +1022,7 @@
 
         const payload = {
             nome,
-            apelido: document.getElementById('acesso-apelido').value.trim() || null,
+            apelido,
             cpf,
             senha,
             perfil,
