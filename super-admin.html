@@ -401,9 +401,13 @@
             <input type="hidden" id="escola-id">
 
             <div class="form-grid">
-                <div class="campo campo-full">
-                    <label>Nome da Escola *</label>
-                    <input type="text" id="escola-nome" placeholder="Ex: Imperatriz Leopoldinense">
+                <div class="campo">
+                    <label>Nome Completo *</label>
+                    <input type="text" id="escola-nome" placeholder="Ex: Grêmio Recreativo Escola de Samba Imperatriz Leopoldinense">
+                </div>
+                <div class="campo">
+                    <label>Sigla *</label>
+                    <input type="text" id="escola-sigla" placeholder="Ex: Imperatriz">
                 </div>
                 <div class="campo campo-full">
                     <label>URL do Logo</label>
@@ -643,11 +647,8 @@
         div.innerHTML = lista.map(e => `
             <div class="item-card">
                 <div class="item-info">
-                    <div class="item-nome">${e.nome}</div>
-                    <div class="item-detalhe">
-                        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${e.cor_destaque||'#D4AF37'};margin-right:5px;vertical-align:middle;border:1px solid rgba(0,0,0,0.1)"></span>
-                        ${e.cor_destaque || '#D4AF37'}
-                    </div>
+                    <div class="item-nome">${e.sigla || e.nome}</div>
+                    <div class="item-detalhe">${e.nome}${e.cor_destaque ? ' · <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:' + e.cor_destaque + ';margin-right:4px;vertical-align:middle;border:1px solid rgba(0,0,0,0.1)"></span>' + e.cor_destaque : ''}</div>
                 </div>
                 <div class="item-acoes">
                     <span class="${e.ativa !== false ? 'badge-ativo' : 'badge-inativo'}">${e.ativa !== false ? 'Ativa' : 'Inativa'}</span>
@@ -661,6 +662,7 @@
     function abrirFormEscola() {
         document.getElementById('escola-id').value = '';
         document.getElementById('escola-nome').value = '';
+        document.getElementById('escola-sigla').value = '';
         document.getElementById('escola-logo').value = '';
         document.getElementById('escola-temporada').value = '';
         document.getElementById('escola-cor-primaria').value = '#12101a';
@@ -685,6 +687,7 @@
         const e = dados[0];
         document.getElementById('escola-id').value = e.id;
         document.getElementById('escola-nome').value = e.nome || '';
+        document.getElementById('escola-sigla').value = e.sigla || '';
         document.getElementById('escola-logo').value = e.logo_url || '';
         document.getElementById('escola-temporada').value = e.temporada_atual || '';
         document.getElementById('escola-cor-primaria').value = e.cor_primaria || '#12101a';
@@ -706,8 +709,12 @@
         btn.disabled = true;
 
         const id = document.getElementById('escola-id').value;
+        const sigla = document.getElementById('escola-sigla').value.trim();
+        if (!sigla) { mostrarToast('Informe a sigla da escola.', 'erro'); btn.disabled = false; return; }
+
         const payload = {
             nome,
+            sigla,
             logo_url: document.getElementById('escola-logo').value.trim() || null,
             cor_primaria: document.getElementById('escola-cor-primaria').value || '#12101a',
             cor_destaque: document.getElementById('escola-cor-destaque').value || '#D4AF37',
