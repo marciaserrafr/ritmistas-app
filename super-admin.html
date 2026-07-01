@@ -980,9 +980,9 @@
                 <div class="item-info">
                     <div class="item-nome">${u.nome}</div>
                     ${u.apelido ? `<div style="font-size:13px;font-weight:700;color:#D4AF37;margin-top:2px">"${u.apelido}"</div>` : ''}
-                    <div class="item-detalhe" style="margin-top:4px">
-                        <strong style="color:var(--cor-texto-principal)">${labelPerfil(u.perfil)}</strong>
-                        · CPF ${u.cpf || '—'}${u.bateria_id ? ' · ' + nomeBateria(u.bateria_id) : ''}
+                    <div class="item-detalhe" style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                        <span style="background:#12101a;color:#D4AF37;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:0.3px">${labelPerfil(u.perfil)}</span>
+                        <span style="font-size:12px;color:var(--cor-texto-muted)">CPF ${u.cpf || '—'}${u.bateria_id ? ' · ' + nomeBateria(u.bateria_id) : ''}</span>
                     </div>
                 </div>
                 <div class="item-acoes">
