@@ -119,86 +119,83 @@
         .contador { font-size: 13px; color: #666; margin-bottom: 20px; }
 
         /* CARDS */
-        .cards { display: flex; flex-direction: column; gap: 12px; }
-        .card {
-            background: white; border-radius: 14px; padding: 20px;
-            box-shadow: 0 1px 6px rgba(15,23,42,0.06), 0 4px 16px rgba(15,23,42,0.04);
-            display: flex; justify-content: space-between;
-            align-items: flex-start; gap: 16px;
-            border-left: 5px solid #e2e8f0; position: relative;
+        .cards { display: flex; flex-direction: column; gap: 10px; }
+        .card-ritmista {
+            background: white;
+            border: 1px solid #e8e6f0;
+            border-left: 4px solid #e8e6f0;
+            border-radius: 14px;
+            padding: 14px 18px;
+            display: flex; align-items: center;
+            justify-content: space-between; gap: 16px;
+            cursor: pointer;
+            transition: box-shadow 0.15s, transform 0.1s;
         }
-        .card.pendente { border-left-color: #ffc107; }
-        .card.aprovado { border-left-color: #28a745; }
-        .card.suspenso { border-left-color: #fd7e14; }
-        .card.desligado { border-left-color: #dc3545; }
-        .card.rejeitado { border-left-color: #6c757d; }
-        .card.menor-flag { outline: none; }
+        .card-ritmista:hover { box-shadow: 0 4px 16px rgba(15,23,42,0.10); transform: translateY(-1px); }
+        .card-ritmista.pendente  { border-left-color: #ffc107; }
+        .card-ritmista.aprovado  { border-left-color: #28a745; }
+        .card-ritmista.suspenso  { border-left-color: #fd7e14; }
+        .card-ritmista.desligado { border-left-color: #dc3545; }
+        .card-ritmista.rejeitado { border-left-color: #6c757d; }
 
-        .card-info { flex: 1; min-width: 0; }
-        .card-topo { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
-        .card-nome { font-size: 15px; font-weight: bold; color: #0f172a; }
-        .card-apelido { font-size: 12px; color: #999; font-style: italic; margin-bottom: 10px; }
-
-        .card-instrumento {
-            display: inline-flex; align-items: center; gap: 6px;
+        .card-esquerda { flex: 1; min-width: 0; }
+        .card-linha1 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+        .card-nome { font-size: 15px; font-weight: 700; color: #0f172a; }
+        .card-apelido-inline { font-size: 13px; color: #D4AF37; font-style: italic; }
+        .card-linha2 { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+        .pill-instrumento {
+            display: inline-flex; align-items: center; gap: 5px;
             background: #e8e6f0; color: #5a5770;
-            padding: 4px 12px; border-radius: 20px;
-            font-size: 13px; font-weight: 600;
-            margin-bottom: 10px;
+            padding: 3px 10px; border-radius: 20px;
+            font-size: 12px; font-weight: 600;
         }
+        .card-direita { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+        .btn-card-acao {
+            border: 1.5px solid; padding: 7px 14px; border-radius: 20px;
+            cursor: pointer; font-size: 12px; font-weight: 700;
+            background: transparent; display: inline-flex; align-items: center; gap: 5px;
+            white-space: nowrap;
+        }
+        .btn-card-ativar  { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
+        .btn-card-rejeitar { border-color: #ccc; color: #888; }
+        .card-chevron { color: #ccc; font-size: 20px; font-weight: 300; line-height: 1; }
 
-        .card-dados { display: flex; gap: 16px; flex-wrap: nowrap; margin-bottom: 10px; }
-        .card-dado { font-size: 13px; color: #666; white-space: nowrap; }
-        .card-dado strong { color: #333; }
-        .card-sep { color: #ccc; margin: 0 10px; font-size: 14px; }
-        .btn-cadastro-full { background: #0f172a; color: white; border: none; padding: 9px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; }
-
-        .badge { padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; border: 1px solid; display: inline-flex; align-items: center; gap: 4px; line-height: 1; vertical-align: middle; }
-        .badge-aprovado { background: #f0faf4; color: #2d7a4f; border-color: #b8ddc8; }
-        .badge-rejeitado { background: #f5f5f5; color: #666; border-color: #ddd; }
-        .badge-pendente { background: #fffbf0; color: #8a6800; border-color: #ffe69c; }
-        .badge-suspenso { background: #fff8f0; color: #9a4e00; border-color: #ffd0a0; }
+        /* BADGES */
+        .badge { padding: 3px 9px; border-radius: 4px; font-size: 11px; font-weight: 700; border: 1px solid; display: inline-flex; align-items: center; gap: 4px; line-height: 1; }
+        .badge-aprovado  { background: #f0faf4; color: #2d7a4f; border-color: #b8ddc8; }
+        .badge-rejeitado { background: #f5f5f5; color: #666;    border-color: #ddd; }
+        .badge-pendente  { background: #fffbf0; color: #8a6800; border-color: #ffe69c; }
+        .badge-suspenso  { background: #fff8f0; color: #9a4e00; border-color: #ffd0a0; }
         .badge-desligado { background: #fff5f5; color: #9a1f1f; border-color: #f5c0c0; }
-        .badge-menor { background: #eef3ff; color: #3a5bbf; border-color: #c5d0f0; }
+        .badge-menor     { background: #eef3ff; color: #3a5bbf; border-color: #c5d0f0; }
 
-        .motivo-status {
-            font-size: 11px; color: #888; font-style: italic;
-            margin-top: 4px;
-            background: #f8f8f8; padding: 4px 8px; border-radius: 6px;
-            display: inline-block;
+        /* MODAL — AÇÕES DO CADASTRO */
+        .modal-acoes-ficha {
+            display: flex; gap: 8px; flex-wrap: wrap;
+            padding-top: 16px; border-top: 1px solid #f0f0f0; margin-top: 16px;
         }
+        .btn-ficha {
+            border: 1.5px solid; padding: 8px 16px; border-radius: 8px;
+            cursor: pointer; font-size: 13px; font-weight: 700;
+            background: transparent; display: inline-flex; align-items: center; gap: 5px;
+        }
+        .btn-ficha-ativar   { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
+        .btn-ficha-rejeitar { border-color: #ccc; color: #888; }
+        .btn-ficha-suspender { border-color: #d4720a; color: #d4720a; }
+        .btn-ficha-desligar  { border-color: #9a1f1f; color: #9a1f1f; }
+        .btn-ficha-reativar  { border-color: #0f172a; color: #0f172a; }
+        .btn-ficha-instrumento { border-color: #0f172a; color: #0f172a; }
 
-        /* DECLARAÇÃO MENOR */
+        /* DECLARAÇÃO MENOR NO MODAL */
         .declaracao-area {
             display: flex; align-items: center; gap: 8px;
             background: #f0f4ff; border: 1px solid #c5d0f0;
-            border-radius: 8px; padding: 6px 10px;
-            font-size: 12px; color: #555; margin-top: 8px;
+            border-radius: 8px; padding: 8px 12px;
+            font-size: 12px; color: #555; flex-wrap: wrap;
         }
         .btn-declaracao { border: 1.5px solid; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; background: transparent; }
         .btn-declaracao.pendente { border-color: #0f172a; color: #0f172a; }
         .btn-declaracao.entregue { border-color: #999; color: #666; }
-
-        /* AÇÕES */
-        .card-acoes { display: flex; flex-direction: column; gap: 8px; align-items: stretch; flex-shrink: 0; width: 140px; }
-        .acoes-linha { display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
-        .btn-menu-mobile { display: none; }
-        .menu-mobile-dropdown { display: none; position: absolute; right: 0; top: 32px; background: white; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); z-index: 100; min-width: 170px; overflow: hidden; }
-        .menu-mobile-dropdown button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 16px; border: none; background: transparent; font-size: 14px; font-weight: 500; cursor: pointer; text-align: left; }
-        .menu-mobile-dropdown button:hover { background: #f5f5f5; }
-        .menu-mobile-dropdown button:not(:last-child) { border-bottom: 1px solid #f0f0f0; }
-        .card-menu-wrap { position: relative; display: none; }
-        .btn-acao {
-            border: 1.5px solid; padding: 9px 16px; border-radius: 8px;
-            cursor: pointer; font-size: 13px; font-weight: bold;
-            background: transparent; width: 100%; justify-content: center;
-        }
-        .btn-aprovar { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
-        .btn-rejeitar { border-color: #999; color: #666; }
-        .btn-suspender { border-color: #d4720a; color: #d4720a; }
-        .btn-desligar { border-color: #9a1f1f; color: #9a1f1f; }
-        .btn-reativar { border-color: #0f172a; color: #0f172a; }
-        .btn-editar-inst { border-color: #0f172a; color: #0f172a; }
 
         /* VAZIO */
         .vazio { text-align: center; padding: 40px; color: #999; font-size: 15px; }
@@ -255,8 +252,7 @@
         /* TABLET */
         @media (max-width: 900px) {
             .container { max-width: 100%; }
-            .card-acoes { width: 120px; }
-            .btn-acao { font-size: 12px; padding: 8px 10px; }
+            .card-ritmista { padding: 12px 14px; }
         }
 
         /* MOBILE */
@@ -276,18 +272,16 @@
             .total-card { padding: 12px 14px; }
             .total-numero { font-size: 24px; }
 
-            .card { flex-direction: column; gap: 12px; padding: 14px; }
-            .card-acoes { display: none; }
-            .card-menu-wrap { display: block; position: absolute; top: 14px; right: 14px; }
-            .btn-menu-mobile { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 8px; border: 1px solid #e0e0e0; background: white; font-size: 18px; cursor: pointer; color: #555; }
-
-            .card-dados { flex-direction: column; gap: 5px; }
-            .card-sep { display: none; }
-
-            .declaracao-area { flex-wrap: wrap; }
+            .card-ritmista { padding: 12px 14px; gap: 10px; }
+            .card-nome { font-size: 14px; }
+            .btn-card-acao { font-size: 11px; padding: 6px 10px; }
 
             .filtros { gap: 6px; }
             .btn-filtro { font-size: 12px; padding: 6px 12px; }
+
+            .modal { padding: 20px 16px; margin: 12px; }
+            .ficha-grid { grid-template-columns: 1fr; }
+            .modal-acoes-ficha { gap: 6px; }
         }
     </style>
 </head>
@@ -399,20 +393,37 @@
             <div class="ficha-grid">
                 <div class="ficha-campo"><span>Instrumento</span><strong id="fc-instrumento"></strong></div>
                 <div class="ficha-campo"><span>Status</span><strong id="fc-status"></strong></div>
-                <div class="ficha-campo full"><span>Na Swing desde</span><strong id="fc-tempo"></strong></div>
+                <div class="ficha-campo"><span>Membro desde</span><strong id="fc-tempo"></strong></div>
+                <div class="ficha-campo"><span>Tipo sanguíneo</span><strong id="fc-tipo-sanguineo"></strong></div>
             </div>
         </div>
 
         <div class="ficha-secao" id="fc-secao-vestimenta">
             <div class="ficha-secao-titulo">Vestimenta</div>
             <div class="ficha-grid">
-                <div class="ficha-campo"><span>Tamanho de camisa</span><strong id="fc-camisa"></strong></div>
-                <div class="ficha-campo"><span>Tamanho de fantasia</span><strong id="fc-fantasia"></strong></div>
-                <div class="ficha-campo"><span>Tamanho do sapato</span><strong id="fc-sapato"></strong></div>
+                <div class="ficha-campo"><span>Camisa</span><strong id="fc-camisa"></strong></div>
+                <div class="ficha-campo"><span>Fantasia</span><strong id="fc-fantasia"></strong></div>
+                <div class="ficha-campo"><span>Sapato</span><strong id="fc-sapato"></strong></div>
             </div>
         </div>
 
-        <div class="modal-acoes">
+        <div class="ficha-secao" id="fc-secao-emergencia">
+            <div class="ficha-secao-titulo">Contato de emergência</div>
+            <div class="ficha-grid">
+                <div class="ficha-campo"><span>Nome</span><strong id="fc-emergencia-nome"></strong></div>
+                <div class="ficha-campo"><span>Parentesco</span><strong id="fc-emergencia-parentesco"></strong></div>
+                <div class="ficha-campo full"><span>Celular</span><strong id="fc-emergencia-celular"></strong></div>
+            </div>
+        </div>
+
+        <div id="fc-secao-menor" style="display:none; margin-bottom:18px;">
+            <div class="ficha-secao-titulo" style="font-size:10px;font-weight:bold;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;border-bottom:1px solid #f0f0f0;padding-bottom:4px;">Menor de idade</div>
+            <div id="fc-declaracao-area" class="declaracao-area"></div>
+        </div>
+
+        <div id="modalCadastroAcoes" class="modal-acoes-ficha"></div>
+
+        <div class="modal-acoes" style="margin-top:12px;">
             <button class="btn-modal-cancelar" onclick="fecharModal('modalCadastroOverlay')">Fechar</button>
         </div>
     </div>
@@ -564,108 +575,49 @@
             return;
         }
 
+        const svgCheck  = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2d7a4f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+        const svgX      = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+        const svgPause  = '<svg width="12" height="12" viewBox="0 0 24 24" fill="#d4720a"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
+        const svgSlash  = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#9a1f1f" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>';
+        const svgClock  = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a6800" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+        const svgTriang = '<svg width="12" height="12" viewBox="0 0 24 24" fill="#3a5bbf"><path d="M12 2L1 21h22L12 2z"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="17" width="2" height="2" rx="1" fill="white"/></svg>';
+
         container.innerHTML = lista.map(r => {
             const idade = calcularIdade(r.nascimento);
             const menor = idade !== null && idade < 18;
-            const declaracaoEntregue = r.declaracao_responsavel;
             const status = r.status || 'pendente';
 
-            const svgCheck      = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2d7a4f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>';
-            const svgCheckBranco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>';
-            const svgX       = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-            const svgPause   = '<svg width="13" height="13" viewBox="0 0 24 24" fill="#d4720a" style="flex-shrink:0"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>';
-            const svgSlash   = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9a1f1f" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>';
-            const svgReativar= '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>';
-            const svgEdit    = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
-            const svgClock   = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8a6800" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
-
-            let botoesAcao = '';
-            let itensMenuMobile = '';
-            if (status === 'pendente') {
-                botoesAcao = `
-                    <button class="btn-acao btn-aprovar" onclick="atualizarStatus(${r.id}, 'aprovado')">${svgCheckBranco} Ativar</button>
-                    <button class="btn-acao btn-rejeitar" onclick="atualizarStatus(${r.id}, 'rejeitado')">${svgX} Rejeitar</button>`;
-                itensMenuMobile = `
-                    <button style="color:#2d7a4f;" onclick="atualizarStatus(${r.id}, 'aprovado')">✓ Ativar</button>
-                    <button style="color:#666;" onclick="atualizarStatus(${r.id}, 'rejeitado')">✕ Rejeitar</button>`;
-            } else if (status === 'aprovado') {
-                botoesAcao = `
-                    <button class="btn-acao btn-editar-inst" onclick="abrirModalInstrumento(${r.id}, '${r.nome}', '${r.instrumento || ''}')">${svgEdit} Instrumento</button>
-                    <button class="btn-acao btn-suspender" onclick="abrirModalSuspender(${r.id}, '${r.nome}')">${svgPause} Suspender</button>
-                    <button class="btn-acao btn-desligar" onclick="abrirModalDesligar(${r.id}, '${r.nome}')">${svgSlash} Desligar</button>`;
-                itensMenuMobile = `
-                    <button onclick="abrirModalInstrumento(${r.id}, '${r.nome}', '${r.instrumento || ''}')">✏️ Instrumento</button>
-                    <button style="color:#d4720a;" onclick="abrirModalSuspender(${r.id}, '${r.nome}')">⏸ Suspender</button>
-                    <button style="color:#9a1f1f;" onclick="abrirModalDesligar(${r.id}, '${r.nome}')">⊘ Desligar</button>`;
-            } else if (status === 'suspenso') {
-                botoesAcao = `
-                    <button class="btn-acao btn-reativar" onclick="atualizarStatus(${r.id}, 'aprovado')">${svgReativar} Reativar</button>
-                    <button class="btn-acao btn-desligar" onclick="abrirModalDesligar(${r.id}, '${r.nome}')">${svgSlash} Desligar</button>`;
-                itensMenuMobile = `
-                    <button style="color:#0f172a;" onclick="atualizarStatus(${r.id}, 'aprovado')">↩ Reativar</button>
-                    <button style="color:#9a1f1f;" onclick="abrirModalDesligar(${r.id}, '${r.nome}')">⊘ Desligar</button>`;
-            } else {
-                botoesAcao = `<button class="btn-acao btn-reativar" onclick="atualizarStatus(${r.id}, 'aprovado')">${svgReativar} Reativar</button>`;
-                itensMenuMobile = `<button style="color:#0f172a;" onclick="atualizarStatus(${r.id}, 'aprovado')">↩ Reativar</button>`;
-            }
-
-            const mesAtual = new Date().getMonth() + 1;
             const nascDate = r.nascimento ? new Date(r.nascimento + 'T00:00:00') : null;
-            const aniverMes = nascDate ? nascDate.getMonth() + 1 : null;
-            const aniversarioHoje = nascDate && nascDate.getDate() === new Date().getDate() && aniverMes === mesAtual;
-            const aniversarioMes = aniverMes === mesAtual;
-            const nascFormatado = nascDate ? `${String(nascDate.getDate()).padStart(2,'0')}/${String(nascDate.getMonth()+1).padStart(2,'0')}` : '-';
-            const aniverEmoji = aniversarioMes ? '<span style="vertical-align:middle;line-height:1">🎂</span> ' : '';
+            const aniversarioMes = nascDate && (nascDate.getMonth() + 1) === (new Date().getMonth() + 1);
 
             const badgeStatus = {
-                pendente:  `<span class="badge badge-pendente">${svgClock} PENDENTE</span>`,
-                aprovado:  `<span class="badge badge-aprovado">${svgCheck} ATIVO</span>`,
-                suspenso:  `<span class="badge badge-suspenso">${svgPause} SUSPENSO</span>`,
-                desligado: `<span class="badge badge-desligado">${svgSlash} DESLIGADO</span>`,
-                rejeitado: `<span class="badge badge-rejeitado">${svgX} REJEITADO</span>`,
+                pendente:  `<span class="badge badge-pendente">${svgClock} Pendente</span>`,
+                aprovado:  `<span class="badge badge-aprovado">${svgCheck} Ativo</span>`,
+                suspenso:  `<span class="badge badge-suspenso">${svgPause} Suspenso</span>`,
+                desligado: `<span class="badge badge-desligado">${svgSlash} Desligado</span>`,
+                rejeitado: `<span class="badge badge-rejeitado">${svgX} Rejeitado</span>`,
             }[status] || '';
 
+            const direita = status === 'pendente'
+                ? `<button class="btn-card-acao btn-card-ativar" onclick="event.stopPropagation(); atualizarStatus(${r.id},'aprovado')">✓ Ativar</button>
+                   <button class="btn-card-acao btn-card-rejeitar" onclick="event.stopPropagation(); atualizarStatus(${r.id},'rejeitado')">✕ Rejeitar</button>`
+                : `<span class="card-chevron">›</span>`;
+
             return `
-            <div class="card ${status} ${menor ? 'menor-flag' : ''}">
-                <div class="card-menu-wrap">
-                    <button class="btn-menu-mobile" onclick="toggleMenuMobile(this)">⋮</button>
-                    <div class="menu-mobile-dropdown">
-                        ${itensMenuMobile}
-                        <button onclick="abrirCadastro(${r.id})">📋 Cadastro</button>
-                    </div>
-                </div>
-                <div class="card-info">
-                    <div class="card-topo">
+            <div class="card-ritmista ${status}" onclick="abrirCadastro(${r.id})">
+                <div class="card-esquerda">
+                    <div class="card-linha1">
                         <span class="card-nome">${r.nome}</span>
+                        ${r.apelido ? `<span class="card-apelido-inline">"${r.apelido}"</span>` : ''}
+                        ${menor ? `<span class="badge badge-menor">${svgTriang} Menor · ${idade} anos</span>` : ''}
+                        ${aniversarioMes ? '<span title="Aniversário este mês">🎂</span>' : ''}
+                    </div>
+                    <div class="card-linha2">
+                        <span class="pill-instrumento">🥁 ${r.instrumento || '—'}</span>
                         ${badgeStatus}
-                        ${menor ? `<span class="badge badge-menor"><svg width="12" height="12" viewBox="0 0 24 24" fill="#e0a800" style="flex-shrink:0"><path d="M12 2L1 21h22L12 2z"/><rect x="11" y="9" width="2" height="6" rx="1" fill="white"/><rect x="11" y="17" width="2" height="2" rx="1" fill="white"/></svg> Menor · ${idade} anos</span>` : ''}
-                    </div>
-                    ${r.apelido ? `<div class="card-apelido">"${r.apelido}"</div>` : ''}
-                    <div class="card-instrumento">🥁 ${r.instrumento || '—'}</div>
-                    ${r.motivo_status ? `<div class="motivo-status">Motivo: ${r.motivo_status}</div>` : ''}
-                    <div class="card-dados">
-                        <div class="card-dado"><strong>CPF:</strong> ${r.cpf || '-'}</div>
-                        <div class="card-dado"><strong>Celular:</strong> ${r.celular || '-'}</div>
-                        <div class="card-dado"><strong>Aniversário:</strong> ${aniverEmoji}${nascFormatado}</div>
-                        <div class="card-dado"><strong>Desde:</strong> ${new Date(r.created_at).toLocaleDateString('pt-BR', {month:'2-digit',year:'numeric'})}</div>
-                    </div>
-                    ${menor ? `
-                    <div class="declaracao-area">
-                        <span>📄 Declaração do responsável:</span>
-                        ${declaracaoEntregue
-                            ? `<span style="color:#28a745;font-weight:bold;display:inline-flex;align-items:center;gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg> Entregue</span>
-                               <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id}, false)">Desfazer</button>`
-                            : `<span style="color:#dc3545;font-weight:bold;">✗ Pendente</span>
-                               <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id}, true)">Marcar como entregue</button>`
-                        }
-                    </div>` : ''}
-                </div>
-                <div class="card-acoes">
-                    <div class="acoes-linha">
-                        ${botoesAcao}
-                        <button class="btn-acao" style="background:#0f172a;color:white;border-color:#0f172a;" onclick="abrirCadastro(${r.id})">📋 Cadastro</button>
                     </div>
                 </div>
+                <div class="card-direita">${direita}</div>
             </div>`;
         }).join('');
     }
@@ -744,9 +696,12 @@
         const r = todosRitmistas.find(x => x.id === id);
         if (!r) return;
         const idade = calcularIdade(r.nascimento);
+        const status = r.status || 'pendente';
         const statusLabels = { pendente: 'Pendente', aprovado: 'Ativo', suspenso: 'Suspenso', desligado: 'Desligado', rejeitado: 'Rejeitado' };
+
         document.getElementById('modalCadastroNome').textContent = r.nome;
         document.getElementById('modalCadastroSubtitulo').textContent = [r.apelido ? `"${r.apelido}"` : '', r.instrumento || '', idade !== null ? `${idade} anos` : ''].filter(Boolean).join(' · ');
+
         document.getElementById('fc-cpf').textContent = r.cpf || '—';
         document.getElementById('fc-nascimento').textContent = r.nascimento ? new Date(r.nascimento + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
         document.getElementById('fc-celular').textContent = r.celular || '—';
@@ -757,11 +712,52 @@
         document.getElementById('fc-bairro').textContent = r.bairro || '—';
         document.getElementById('fc-cidade').textContent = [r.cidade, r.estado].filter(Boolean).join(' / ') || '—';
         document.getElementById('fc-instrumento').textContent = r.instrumento || '—';
-        document.getElementById('fc-status').textContent = statusLabels[r.status] || r.status || '—';
-        document.getElementById('fc-tempo').textContent = r.tempo_casa || '—';
+        document.getElementById('fc-status').textContent = statusLabels[status] || '—';
+        document.getElementById('fc-tempo').textContent = r.membro_desde || '—';
+        document.getElementById('fc-tipo-sanguineo').textContent = r.tipo_sanguineo || '—';
         document.getElementById('fc-camisa').textContent = r.tamanho_camisa || '—';
         document.getElementById('fc-fantasia').textContent = r.tamanho_fantasia || '—';
         document.getElementById('fc-sapato').textContent = r.tamanho_sapato || '—';
+        document.getElementById('fc-emergencia-nome').textContent = r.emergencia_nome || '—';
+        document.getElementById('fc-emergencia-parentesco').textContent = r.emergencia_parentesco || '—';
+        document.getElementById('fc-emergencia-celular').textContent = r.emergencia_celular || '—';
+
+        // Menor de idade — declaração
+        const menor = idade !== null && idade < 18;
+        const secaoMenor = document.getElementById('fc-secao-menor');
+        if (menor) {
+            secaoMenor.style.display = 'block';
+            const decArea = document.getElementById('fc-declaracao-area');
+            decArea.innerHTML = r.declaracao_responsavel
+                ? `<span>📄 Declaração do responsável:</span>
+                   <span style="color:#28a745;font-weight:bold;">✓ Entregue</span>
+                   <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id}, false); fecharModal('modalCadastroOverlay');">Desfazer</button>`
+                : `<span>📄 Declaração do responsável:</span>
+                   <span style="color:#dc3545;font-weight:bold;">✗ Pendente</span>
+                   <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id}, true); fecharModal('modalCadastroOverlay');">Marcar como entregue</button>`;
+        } else {
+            secaoMenor.style.display = 'none';
+        }
+
+        // Botões de ação
+        const acoesDiv = document.getElementById('modalCadastroAcoes');
+        let btns = '';
+        if (status === 'pendente') {
+            btns = `<button class="btn-ficha btn-ficha-ativar" onclick="fecharModal('modalCadastroOverlay'); atualizarStatus(${r.id},'aprovado')">✓ Ativar</button>
+                    <button class="btn-ficha btn-ficha-rejeitar" onclick="fecharModal('modalCadastroOverlay'); atualizarStatus(${r.id},'rejeitado')">✕ Rejeitar</button>`;
+        } else if (status === 'aprovado') {
+            btns = `<button class="btn-ficha btn-ficha-instrumento" onclick="fecharModal('modalCadastroOverlay'); abrirModalInstrumento(${r.id},'${r.nome.replace(/'/g,"\\'")}','${(r.instrumento||'').replace(/'/g,"\\'")}')">✏ Instrumento</button>
+                    <button class="btn-ficha btn-ficha-suspender" onclick="fecharModal('modalCadastroOverlay'); abrirModalSuspender(${r.id},'${r.nome.replace(/'/g,"\\'")}')">⏸ Suspender</button>
+                    <button class="btn-ficha btn-ficha-desligar" onclick="fecharModal('modalCadastroOverlay'); abrirModalDesligar(${r.id},'${r.nome.replace(/'/g,"\\'")}')">⊘ Desligar</button>`;
+        } else if (status === 'suspenso') {
+            btns = `<button class="btn-ficha btn-ficha-reativar" onclick="fecharModal('modalCadastroOverlay'); atualizarStatus(${r.id},'aprovado')">↩ Reativar</button>
+                    <button class="btn-ficha btn-ficha-instrumento" onclick="fecharModal('modalCadastroOverlay'); abrirModalInstrumento(${r.id},'${r.nome.replace(/'/g,"\\'")}','${(r.instrumento||'').replace(/'/g,"\\'")}')">✏ Instrumento</button>
+                    <button class="btn-ficha btn-ficha-desligar" onclick="fecharModal('modalCadastroOverlay'); abrirModalDesligar(${r.id},'${r.nome.replace(/'/g,"\\'")}')">⊘ Desligar</button>`;
+        } else {
+            btns = `<button class="btn-ficha btn-ficha-reativar" onclick="fecharModal('modalCadastroOverlay'); atualizarStatus(${r.id},'aprovado')">↩ Reativar</button>`;
+        }
+        acoesDiv.innerHTML = btns;
+
         document.getElementById('modalCadastroOverlay').classList.add('aberto');
     }
 
@@ -772,17 +768,6 @@
 
     function sair() { window.location.href = 'login.html'; }
 
-    function toggleMenuMobile(btn) {
-        const dropdown = btn.nextElementSibling;
-        const aberto = dropdown.style.display === 'block';
-        document.querySelectorAll('.menu-mobile-dropdown').forEach(d => d.style.display = 'none');
-        dropdown.style.display = aberto ? 'none' : 'block';
-    }
-    document.addEventListener('click', e => {
-        if (!e.target.closest('.card-menu-wrap')) {
-            document.querySelectorAll('.menu-mobile-dropdown').forEach(d => d.style.display = 'none');
-        }
-    });
 
     const INSTRUMENTOS = ['Caixa','Chocalho','Cuíca','Repique','Surdo de Primeira','Surdo de Segunda','Surdo de Terceira','Tamborim'];
     let instrumentosDiretor = INSTRUMENTOS; // padrão: todos (mestre/admin)
