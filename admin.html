@@ -472,6 +472,9 @@
                 <div class="ficha-campo"><span>Apelido</span><strong id="fc-apelido"></strong></div>
                 <div class="ficha-campo"><span>Nacionalidade</span><strong id="fc-nacionalidade"></strong></div>
                 <div class="ficha-campo"><span>CPF</span><strong id="fc-cpf"></strong></div>
+                <div class="ficha-campo" id="fc-bloco-documento" style="display:none">
+                    <span>Documento</span><strong id="fc-documento"></strong>
+                </div>
                 <div class="ficha-campo"><span>Data de nascimento</span><strong id="fc-nascimento"></strong></div>
                 <div class="ficha-campo"><span>Celular</span><strong id="fc-celular"></strong></div>
                 <div class="ficha-campo"><span>Cadastro</span><strong id="fc-cadastro"></strong></div>
@@ -817,6 +820,13 @@
         document.getElementById('fc-apelido').textContent = r.apelido || '—';
         document.getElementById('fc-nacionalidade').textContent = r.nacionalidade || '—';
         document.getElementById('fc-cpf').textContent = r.cpf || '—';
+        const blocoDoc = document.getElementById('fc-bloco-documento');
+        if (r.tipo_documento || r.numero_documento) {
+            document.getElementById('fc-documento').textContent = [r.tipo_documento, r.numero_documento].filter(Boolean).join(' · ');
+            blocoDoc.style.display = '';
+        } else {
+            blocoDoc.style.display = 'none';
+        }
         document.getElementById('fc-nascimento').textContent = r.nascimento ? new Date(r.nascimento + 'T00:00:00').toLocaleDateString('pt-BR') : '—';
         document.getElementById('fc-celular').textContent = r.celular || '—';
         document.getElementById('fc-cadastro').textContent = new Date(r.created_at).toLocaleDateString('pt-BR');
