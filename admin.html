@@ -52,6 +52,9 @@
         .painel { display: none; }
         .painel.ativo { display: block; }
 
+        /* MAIN WRAPPER */
+        .main { flex: 1; padding: 32px 24px; max-width: 1100px; width: 100%; margin: 0 auto; }
+
         /* TÍTULO DE PAINEL (padrão super-admin) */
         .painel-titulo { font-size: 20px; font-weight: 800; color: var(--cor-texto-principal); margin-bottom: 20px; }
 
@@ -307,7 +310,7 @@
             .header-user { display: none; }
             .btn-sair { font-size: 11px; padding: 5px 10px; }
 
-            .container { padding: 16px 12px; }
+            .main { padding: 16px 12px; }
 
             .totalizadores { gap: 8px; }
             .total-card { padding: 12px 14px; }
@@ -346,8 +349,10 @@
     <button class="aba-btn" onclick="trocarAba('visao', this)">Visão Geral</button>
 </nav>
 
+<div class="main">
+
 <!-- PAINEL RITMISTAS -->
-<div class="container painel ativo" id="painel-ritmistas">
+<div class="painel ativo" id="painel-ritmistas">
 
     <div class="painel-titulo">Ritmistas</div>
 
@@ -403,7 +408,7 @@
 </div>
 
 <!-- PAINEL VAGAS -->
-<div class="container painel" id="painel-vagas">
+<div class="painel" id="painel-vagas">
 
     <div class="painel-titulo">Vagas</div>
 
@@ -414,7 +419,7 @@
 </div>
 
 <!-- PAINEL VISÃO GERAL -->
-<div class="container painel" id="painel-visao">
+<div class="painel" id="painel-visao">
 
     <div class="painel-titulo">Visão Geral</div>
 
@@ -431,7 +436,9 @@
         Em breve: frequência nos ensaios
     </div>
 
-</div>
+</div><!-- /painel-visao -->
+
+</div><!-- /main -->
 
 
 <!-- MODAL CADASTRO COMPLETO -->
