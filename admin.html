@@ -382,13 +382,12 @@
                 <span id="statusSelectArrow">▼</span>
             </div>
             <div class="multi-select-dropdown" id="statusSelectDropdown" style="display:none;">
-                <label class="multi-select-option"><input type="radio" name="statusFiltro" value="todos" checked onchange="onChangeStatus(this)"> Todos</label>
-                <label class="multi-select-option"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ffc107;margin-right:4px;"></span><input type="radio" name="statusFiltro" value="pendente" onchange="onChangeStatus(this)"> Pendentes</label>
-                <label class="multi-select-option"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#28a745;margin-right:4px;"></span><input type="radio" name="statusFiltro" value="aprovado" onchange="onChangeStatus(this)"> Ativos</label>
-                <label class="multi-select-option"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fd7e14;margin-right:4px;"></span><input type="radio" name="statusFiltro" value="suspenso" onchange="onChangeStatus(this)"> Suspensos</label>
-                <label class="multi-select-option"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#dc3545;margin-right:4px;"></span><input type="radio" name="statusFiltro" value="desligado" onchange="onChangeStatus(this)"> Desligados</label>
-                <label class="multi-select-option"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6c757d;margin-right:4px;"></span><input type="radio" name="statusFiltro" value="rejeitado" onchange="onChangeStatus(this)"> Rejeitados</label>
-                <label class="multi-select-option"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#3a5bbf;margin-right:4px;"></span><input type="radio" name="statusFiltro" value="menor" onchange="onChangeStatus(this)"> Menores</label>
+                <label class="multi-select-option"><input type="checkbox" value="pendente" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ffc107;margin:0 4px;"></span>Pendentes</label>
+                <label class="multi-select-option"><input type="checkbox" value="aprovado" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#28a745;margin:0 4px;"></span>Ativos</label>
+                <label class="multi-select-option"><input type="checkbox" value="suspenso" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fd7e14;margin:0 4px;"></span>Suspensos</label>
+                <label class="multi-select-option"><input type="checkbox" value="desligado" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#dc3545;margin:0 4px;"></span>Desligados</label>
+                <label class="multi-select-option"><input type="checkbox" value="rejeitado" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#6c757d;margin:0 4px;"></span>Rejeitados</label>
+                <label class="multi-select-option"><input type="checkbox" value="menor" onchange="onChangeStatus()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#3a5bbf;margin:0 4px;"></span>Menores</label>
             </div>
         </div>
     </div>
@@ -583,7 +582,7 @@
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrdnpzZ3JreWxya3l6bGlnZWltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2Mjg0NjAsImV4cCI6MjA5ODIwNDQ2MH0.jASGzRUdZWzUwOHDww3XSDPtzw8_JU_OfTCoCpJEWBM';
 
     let todosRitmistas = [];
-    let filtroStatusAtual = 'todos';
+    let filtroStatusSelecionados = [];
     const semAcento = s => (s||'').toLowerCase().normalize('NFD').split('').filter(c => c.charCodeAt(0) < 768 || c.charCodeAt(0) > 879).join('').trim();
     let acaoAtualId = null;
 
@@ -623,23 +622,29 @@
         arrow.textContent = aberto ? '▼' : '▲';
     }
 
-    function onChangeStatus(radio) {
-        filtroStatusAtual = radio.value;
-        const labels = { todos: 'Todos os status', pendente: 'Pendentes', aprovado: 'Ativos', suspenso: 'Suspensos', desligado: 'Desligados', rejeitado: 'Rejeitados', menor: 'Menores' };
-        document.getElementById('statusSelectLabel').textContent = labels[radio.value] || 'Todos os status';
-        document.getElementById('statusSelectTrigger').classList.toggle('ativo', radio.value !== 'todos');
-        document.getElementById('statusSelectDropdown').style.display = 'none';
-        document.getElementById('statusSelectArrow').textContent = '▼';
+    function onChangeStatus() {
+        const checks = document.querySelectorAll('#statusSelectDropdown input[type=checkbox]:checked');
+        filtroStatusSelecionados = Array.from(checks).map(c => c.value);
+        const labels = { pendente: 'Pendentes', aprovado: 'Ativos', suspenso: 'Suspensos', desligado: 'Desligados', rejeitado: 'Rejeitados', menor: 'Menores' };
+        const label = document.getElementById('statusSelectLabel');
+        label.textContent = filtroStatusSelecionados.length === 0
+            ? 'Todos os status'
+            : filtroStatusSelecionados.map(v => labels[v]).join(', ');
+        document.getElementById('statusSelectTrigger').classList.toggle('ativo', filtroStatusSelecionados.length > 0);
         aplicarFiltros();
     }
 
     function aplicarFiltros() {
         let lista = todosRitmistas;
 
-        if (filtroStatusAtual === 'menor') {
-            lista = lista.filter(r => { const i = calcularIdade(r.nascimento); return i !== null && i < 18; });
-        } else if (filtroStatusAtual !== 'todos') {
-            lista = lista.filter(r => r.status === filtroStatusAtual);
+        if (filtroStatusSelecionados.length > 0) {
+            lista = lista.filter(r => {
+                const idade = calcularIdade(r.nascimento);
+                return filtroStatusSelecionados.some(f => {
+                    if (f === 'menor') return idade !== null && idade < 18;
+                    return r.status === f;
+                });
+            });
         }
 
         if (filtroInstrumentosSelecionados.length > 0) {
