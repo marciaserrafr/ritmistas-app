@@ -661,6 +661,14 @@
             );
         }
 
+        const ordemStatus = { pendente: 0, aprovado: 1, suspenso: 2, rejeitado: 3, desligado: 4 };
+        lista.sort((a, b) => {
+            const sa = ordemStatus[a.status] ?? 5;
+            const sb = ordemStatus[b.status] ?? 5;
+            if (sa !== sb) return sa - sb;
+            return (a.nome || '').localeCompare(b.nome || '', 'pt-BR');
+        });
+
         renderizar(lista);
     }
 
