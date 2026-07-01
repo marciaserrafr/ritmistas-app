@@ -166,20 +166,18 @@
                     <label for="sem_cpf" style="margin:0;font-size:12px;color:#666;cursor:pointer;font-weight:500;">Não tenho CPF</label>
                 </div>
                 <div id="bloco-documento" style="display:none; margin-top:10px;">
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                        <div>
-                            <label style="font-size:12px;">Tipo de documento</label>
-                            <select id="tipo_documento" style="margin-top:4px;">
-                                <option value="">Selecione</option>
-                                <option>Passaporte</option>
-                                <option>RNE</option>
-                                <option>CRNM</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label style="font-size:12px;">Número</label>
-                            <input type="text" id="numero_documento" placeholder="Número do documento" style="margin-top:4px;">
-                        </div>
+                    <div class="form-group" style="margin-bottom:10px;">
+                        <label>Tipo de documento</label>
+                        <select id="tipo_documento">
+                            <option value="">Selecione</option>
+                            <option>Passaporte</option>
+                            <option>RNE</option>
+                            <option>CRNM</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label>Número do documento</label>
+                        <input type="text" id="numero_documento" placeholder="Ex: AB123456">
                     </div>
                 </div>
                 <span class="erro-campo" id="erro-cpf-email"></span>
