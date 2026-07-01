@@ -284,6 +284,23 @@
             <div class="form-group"></div>
         </div>
 
+        <div class="secao">Saúde</div>
+
+        <div class="form-group">
+            <label>Tipo sanguíneo</label>
+            <select id="tipo_sanguineo">
+                <option value="">Não sei / Prefiro não informar</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+                <option>O+</option>
+                <option>O-</option>
+            </select>
+        </div>
+
         <div class="secao">Contato de Emergência</div>
 
         <div class="form-group">
@@ -462,6 +479,7 @@
             tamanho_sapato: valorTamanho('tamanho_sapato'),
             senha: document.getElementById('senha').value,
             membro_desde: document.getElementById('membro_desde').value || null,
+            tipo_sanguineo: document.getElementById('tipo_sanguineo').value || null,
             emergencia_nome: document.getElementById('emergencia_nome').value,
             emergencia_parentesco: document.getElementById('emergencia_parentesco').value,
             emergencia_celular: document.getElementById('emergencia_celular').value,
