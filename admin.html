@@ -358,17 +358,6 @@
 
     <button class="btn-novo" onclick="window.location.href='index.html'" style="margin-bottom:20px;">+ Cadastrar Ritmista</button>
 
-    <div class="totalizadores">
-        <div class="total-card">
-            <div class="total-numero dourado" id="totalAtivos">—</div>
-            <div class="total-label">Ritmistas ativos</div>
-        </div>
-        <div class="total-card">
-            <div class="total-numero" id="totalPendentes">—</div>
-            <div class="total-label">Pendentes</div>
-        </div>
-    </div>
-
     <!-- BUSCA -->
     <div style="margin-bottom:20px;">
         <input type="text" id="campoBusca" placeholder="Buscar por nome, apelido ou CPF..." oninput="aplicarFiltros()"
@@ -422,6 +411,17 @@
 <div class="painel" id="painel-visao">
 
     <div class="painel-titulo">Visão Geral</div>
+
+    <div class="totalizadores">
+        <div class="total-card">
+            <div class="total-numero dourado" id="totalAtivos">—</div>
+            <div class="total-label">Ritmistas ativos</div>
+        </div>
+        <div class="total-card">
+            <div class="total-numero" id="totalPendentes">—</div>
+            <div class="total-label">Pendentes</div>
+        </div>
+    </div>
 
     <div class="vg-card">
         <div class="vg-secao-titulo">🎂 Aniversariantes do mês</div>
