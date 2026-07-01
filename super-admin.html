@@ -517,68 +517,8 @@
             <div class="modal-sa-titulo" id="form-escola-titulo">Nova Escola</div>
             <button class="modal-sa-fechar" onclick="fecharFormEscola()">✕</button>
         </div>
-        <div class="modal-sa-body">
-            <!-- VISUALIZAÇÃO -->
-            <div id="escola-view" style="display:none">
-                <div class="ficha-sa-grid">
-                    <div class="ficha-sa-campo"><span>Nome completo</span><strong id="vw-escola-nome"></strong></div>
-                    <div class="ficha-sa-campo"><span>Sigla</span><strong id="vw-escola-sigla"></strong></div>
-                    <div class="ficha-sa-campo"><span>Temporada</span><strong id="vw-escola-temporada"></strong></div>
-                    <div class="ficha-sa-campo"><span>Cor primária</span><strong id="vw-escola-cor-primaria"></strong></div>
-                    <div class="ficha-sa-campo"><span>Cor destaque</span><strong id="vw-escola-cor-destaque"></strong></div>
-                </div>
-            </div>
-            <!-- FORMULÁRIO -->
-            <div id="escola-form" style="display:none">
-                <input type="hidden" id="escola-id">
-                <div class="form-grid">
-                    <div class="campo campo-full">
-                        <label>Nome Completo *</label>
-                        <input type="text" id="escola-nome" placeholder="Ex: Grêmio Recreativo Escola de Samba Imperatriz Leopoldinense">
-                    </div>
-                    <div class="campo campo-full">
-                        <label>Sigla *</label>
-                        <input type="text" id="escola-sigla" placeholder="Ex: Imperatriz">
-                    </div>
-                    <div class="campo campo-full">
-                        <label>URL do Logo</label>
-                        <input type="url" id="escola-logo" placeholder="https://..." oninput="atualizarPreviewEscola()">
-                    </div>
-                    <div class="campo campo-full">
-                        <label>Temporada Atual</label>
-                        <input type="text" id="escola-temporada" placeholder="Ex: Carnaval 2027">
-                    </div>
-                    <div class="campo">
-                        <label>Cor Primária</label>
-                        <div class="campo-cor">
-                            <input type="color" id="escola-cor-primaria-picker" value="#12101a" oninput="sincronizarCor('escola-cor-primaria', this.value); atualizarPreviewEscola()">
-                            <input type="text" id="escola-cor-primaria" placeholder="#12101a" value="#12101a" oninput="sincronizarCorText('escola-cor-primaria-picker', this.value); atualizarPreviewEscola()">
-                        </div>
-                    </div>
-                    <div class="campo">
-                        <label>Cor Destaque</label>
-                        <div class="campo-cor">
-                            <input type="color" id="escola-cor-destaque-picker" value="#D4AF37" oninput="sincronizarCor('escola-cor-destaque', this.value); atualizarPreviewEscola()">
-                            <input type="text" id="escola-cor-destaque" placeholder="#D4AF37" value="#D4AF37" oninput="sincronizarCorText('escola-cor-destaque-picker', this.value); atualizarPreviewEscola()">
-                        </div>
-                    </div>
-                    <div class="campo campo-full">
-                        <label>Preview da Paleta</label>
-                        <div class="preview-cores" id="preview-escola">
-                            <div class="preview-circulo" id="preview-escola-circulo" style="background:#12101a"></div>
-                            <span class="preview-texto">Cores da escola</span>
-                            <button class="preview-botao" id="preview-escola-botao" style="background:#D4AF37;color:#12101a">Destaque</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-sa-rodape">
-            <button class="btn-cancelar" onclick="fecharFormEscola()">Fechar</button>
-            <button class="btn-acao danger" id="btn-toggle-escola" style="display:none"></button>
-            <button class="btn-acao btn-editar" id="btn-editar-escola" onclick="habilitarEdicaoEscola()" style="display:none">Editar</button>
-            <button class="btn-salvar" id="btn-salvar-escola" onclick="salvarEscola()" style="display:none">Salvar Escola</button>
-        </div>
+        <div class="modal-sa-body" id="modal-escola-body"></div>
+        <div class="modal-sa-rodape" id="modal-escola-rodape"></div>
     </div>
 </div>
 
@@ -589,51 +529,8 @@
             <div class="modal-sa-titulo" id="form-bateria-titulo">Nova Bateria</div>
             <button class="modal-sa-fechar" onclick="fecharFormBateria()">✕</button>
         </div>
-        <div class="modal-sa-body">
-            <!-- VISUALIZAÇÃO -->
-            <div id="bateria-view" style="display:none">
-                <div class="ficha-sa-grid">
-                    <div class="ficha-sa-campo ficha-sa-full"><span>Nome</span><strong id="vw-bateria-nome"></strong></div>
-                    <div class="ficha-sa-campo"><span>Escola</span><strong id="vw-bateria-escola"></strong></div>
-                    <div class="ficha-sa-campo"><span>Mestre</span><strong id="vw-bateria-mestre"></strong></div>
-                    <div class="ficha-sa-campo"><span>Instagram</span><strong id="vw-bateria-instagram"></strong></div>
-                </div>
-            </div>
-            <!-- FORMULÁRIO -->
-            <div id="bateria-form" style="display:none">
-                <input type="hidden" id="bateria-id">
-                <div class="form-grid">
-                    <div class="campo campo-full">
-                        <label>Nome da Bateria *</label>
-                        <input type="text" id="bateria-nome" placeholder="Ex: Swing da Leopoldina">
-                    </div>
-                    <div class="campo campo-full">
-                        <label>Escola Vinculada *</label>
-                        <select id="bateria-escola-id">
-                            <option value="">Selecione uma escola...</option>
-                        </select>
-                    </div>
-                    <div class="campo campo-full">
-                        <label>URL do Logo da Bateria</label>
-                        <input type="url" id="bateria-logo" placeholder="https://...">
-                    </div>
-                    <div class="campo campo-full">
-                        <label>Instagram</label>
-                        <input type="text" id="bateria-instagram" placeholder="@swingdaleopoldina">
-                    </div>
-                    <div class="campo campo-full">
-                        <label>Mestre de Bateria</label>
-                        <input type="text" id="bateria-mestre" placeholder="Nome do mestre">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-sa-rodape">
-            <button class="btn-cancelar" onclick="fecharFormBateria()">Fechar</button>
-            <button class="btn-acao danger" id="btn-toggle-bateria" style="display:none"></button>
-            <button class="btn-acao btn-editar" id="btn-editar-bateria" onclick="habilitarEdicaoBateria()" style="display:none">Editar</button>
-            <button class="btn-salvar" id="btn-salvar-bateria" onclick="salvarBateria()" style="display:none">Salvar Bateria</button>
-        </div>
+        <div class="modal-sa-body" id="modal-bateria-body"></div>
+        <div class="modal-sa-rodape" id="modal-bateria-rodape"></div>
     </div>
 </div>
 
@@ -644,60 +541,8 @@
             <div class="modal-sa-titulo" id="form-acesso-titulo">Novo Acesso</div>
             <button class="modal-sa-fechar" onclick="fecharFormAcesso()">✕</button>
         </div>
-        <div class="modal-sa-body">
-            <!-- VISUALIZAÇÃO -->
-            <div id="acesso-view" style="display:none">
-                <div class="ficha-sa-grid">
-                    <div class="ficha-sa-campo ficha-sa-full"><span>Nome</span><strong id="vw-acesso-nome"></strong></div>
-                    <div class="ficha-sa-campo"><span>Apelido</span><strong id="vw-acesso-apelido"></strong></div>
-                    <div class="ficha-sa-campo"><span>CPF</span><strong id="vw-acesso-cpf"></strong></div>
-                    <div class="ficha-sa-campo"><span>Perfil</span><strong id="vw-acesso-perfil"></strong></div>
-                    <div class="ficha-sa-campo ficha-sa-full"><span>Bateria</span><strong id="vw-acesso-bateria"></strong></div>
-                </div>
-            </div>
-            <!-- FORMULÁRIO -->
-            <div id="acesso-form" style="display:none">
-                <input type="hidden" id="acesso-id">
-                <div class="form-grid">
-                    <div class="campo campo-full">
-                        <label>Nome Completo *</label>
-                        <input type="text" id="acesso-nome" placeholder="Nome completo">
-                    </div>
-                    <div class="campo campo-full">
-                        <label>Apelido *</label>
-                        <input type="text" id="acesso-apelido" placeholder="Como aparece na carteirinha e no sistema">
-                    </div>
-                    <div class="campo">
-                        <label>CPF *</label>
-                        <input type="text" id="acesso-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)">
-                    </div>
-                    <div class="campo">
-                        <label>Senha *</label>
-                        <input type="password" id="acesso-senha" placeholder="Mínimo 6 caracteres">
-                    </div>
-                    <div class="campo">
-                        <label>Perfil *</label>
-                        <select id="acesso-perfil">
-                            <option value="">Selecione...</option>
-                            <option value="mestre">Mestre de Bateria</option>
-                            <option value="diretor">Diretor</option>
-                        </select>
-                    </div>
-                    <div class="campo">
-                        <label>Bateria Vinculada *</label>
-                        <select id="acesso-bateria-id">
-                            <option value="">Selecione uma bateria...</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal-sa-rodape">
-            <button class="btn-cancelar" onclick="fecharFormAcesso()">Fechar</button>
-            <button class="btn-acao danger" id="btn-toggle-acesso" style="display:none"></button>
-            <button class="btn-acao btn-editar" id="btn-editar-acesso" onclick="habilitarEdicaoAcesso()" style="display:none">Editar</button>
-            <button class="btn-salvar" id="btn-salvar-acesso" onclick="salvarAcesso()" style="display:none">Criar Acesso</button>
-        </div>
+        <div class="modal-sa-body" id="modal-acesso-body"></div>
+        <div class="modal-sa-rodape" id="modal-acesso-rodape"></div>
     </div>
 </div>
 
@@ -803,59 +648,30 @@
         `).join('');
     }
 
-    function setModoLeitura(formId, btnEditarId, btnSalvarId, leitura) {
-        const form = document.getElementById(formId);
-        if (leitura) {
-            form.classList.add('modo-leitura');
-        } else {
-            form.classList.remove('modo-leitura');
-        }
-        document.getElementById(btnEditarId).style.display = leitura ? 'inline-flex' : 'none';
-        document.getElementById(btnSalvarId).style.display = leitura ? 'none' : 'inline-flex';
+    function corCirculo(hex) {
+        return hex ? `<span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${hex};vertical-align:middle;margin-right:5px;border:1px solid rgba(0,0,0,0.15)"></span>${hex}` : '—';
     }
 
-    function habilitarEdicaoEscola() {
-        document.getElementById('escola-view').style.display = 'none';
-        document.getElementById('escola-form').style.display = 'block';
-        document.getElementById('form-escola-titulo').textContent = 'Editar Escola';
-        document.getElementById('btn-editar-escola').style.display = 'none';
-        document.getElementById('btn-toggle-escola').style.display = 'none';
-        document.getElementById('btn-salvar-escola').style.display = 'inline-flex';
-    }
-    function habilitarEdicaoBateria() {
-        document.getElementById('bateria-view').style.display = 'none';
-        document.getElementById('bateria-form').style.display = 'block';
-        document.getElementById('form-bateria-titulo').textContent = 'Editar Bateria';
-        document.getElementById('btn-editar-bateria').style.display = 'none';
-        document.getElementById('btn-toggle-bateria').style.display = 'none';
-        document.getElementById('btn-salvar-bateria').style.display = 'inline-flex';
-    }
-    function habilitarEdicaoAcesso() {
-        document.getElementById('acesso-view').style.display = 'none';
-        document.getElementById('acesso-form').style.display = 'block';
-        document.getElementById('form-acesso-titulo').textContent = 'Editar Acesso';
-        document.getElementById('btn-editar-acesso').style.display = 'none';
-        document.getElementById('btn-toggle-acesso').style.display = 'none';
-        document.getElementById('btn-salvar-acesso').style.display = 'inline-flex';
+    function fichaItem(label, valor, full = false) {
+        return `<div class="ficha-sa-campo${full ? ' ficha-sa-full' : ''}"><span>${label}</span><strong>${valor || '—'}</strong></div>`;
     }
 
     function abrirFormEscola() {
-        document.getElementById('escola-id').value = '';
-        document.getElementById('escola-nome').value = '';
-        document.getElementById('escola-sigla').value = '';
-        document.getElementById('escola-logo').value = '';
-        document.getElementById('escola-temporada').value = '';
-        document.getElementById('escola-cor-primaria').value = '#12101a';
-        document.getElementById('escola-cor-primaria-picker').value = '#12101a';
-        document.getElementById('escola-cor-destaque').value = '#D4AF37';
-        document.getElementById('escola-cor-destaque-picker').value = '#D4AF37';
         document.getElementById('form-escola-titulo').textContent = 'Nova Escola';
-        document.getElementById('btn-salvar-escola').textContent = 'Salvar Escola';
-        document.getElementById('escola-view').style.display = 'none';
-        document.getElementById('escola-form').style.display = 'block';
-        document.getElementById('btn-editar-escola').style.display = 'none';
-        document.getElementById('btn-toggle-escola').style.display = 'none';
-        document.getElementById('btn-salvar-escola').style.display = 'inline-flex';
+        document.getElementById('modal-escola-body').innerHTML = `
+            <div class="form-grid">
+                <div class="campo campo-full"><label>Nome Completo *</label><input type="text" id="escola-nome" placeholder="Ex: Grêmio Recreativo..."></div>
+                <div class="campo campo-full"><label>Sigla *</label><input type="text" id="escola-sigla" placeholder="Ex: Imperatriz"></div>
+                <div class="campo campo-full"><label>URL do Logo</label><input type="url" id="escola-logo" placeholder="https://..." oninput="atualizarPreviewEscola()"></div>
+                <div class="campo campo-full"><label>Temporada Atual</label><input type="text" id="escola-temporada" placeholder="Ex: Carnaval 2027"></div>
+                <div class="campo"><label>Cor Primária</label><div class="campo-cor"><input type="color" id="escola-cor-primaria-picker" value="#12101a" oninput="sincronizarCor('escola-cor-primaria',this.value);atualizarPreviewEscola()"><input type="text" id="escola-cor-primaria" value="#12101a" oninput="sincronizarCorText('escola-cor-primaria-picker',this.value);atualizarPreviewEscola()"></div></div>
+                <div class="campo"><label>Cor Destaque</label><div class="campo-cor"><input type="color" id="escola-cor-destaque-picker" value="#D4AF37" oninput="sincronizarCor('escola-cor-destaque',this.value);atualizarPreviewEscola()"><input type="text" id="escola-cor-destaque" value="#D4AF37" oninput="sincronizarCorText('escola-cor-destaque-picker',this.value);atualizarPreviewEscola()"></div></div>
+                <div class="campo campo-full"><label>Preview</label><div class="preview-cores" id="preview-escola"><div class="preview-circulo" id="preview-escola-circulo" style="background:#12101a"></div><span class="preview-texto">Cores da escola</span><button class="preview-botao" id="preview-escola-botao" style="background:#D4AF37;color:#12101a">Destaque</button></div></div>
+            </div>
+            <input type="hidden" id="escola-id" value="">`;
+        document.getElementById('modal-escola-rodape').innerHTML = `
+            <button class="btn-cancelar" onclick="fecharFormEscola()">Fechar</button>
+            <button class="btn-salvar" onclick="salvarEscola()">Salvar Escola</button>`;
         atualizarPreviewEscola();
         document.getElementById('modal-escola-overlay').classList.add('aberto');
     }
@@ -871,36 +687,38 @@
         if (!dados.length) return;
         const e = dados[0];
         const ativa = e.ativa !== false;
-        // preenche form
-        document.getElementById('escola-id').value = e.id;
-        document.getElementById('escola-nome').value = e.nome || '';
-        document.getElementById('escola-sigla').value = e.sigla || '';
-        document.getElementById('escola-logo').value = e.logo_url || '';
-        document.getElementById('escola-temporada').value = e.temporada_atual || '';
-        document.getElementById('escola-cor-primaria').value = e.cor_primaria || '#12101a';
-        document.getElementById('escola-cor-primaria-picker').value = e.cor_primaria || '#12101a';
-        document.getElementById('escola-cor-destaque').value = e.cor_destaque || '#D4AF37';
-        document.getElementById('escola-cor-destaque-picker').value = e.cor_destaque || '#D4AF37';
-        atualizarPreviewEscola();
-        // preenche visualização
-        document.getElementById('vw-escola-nome').textContent = e.nome || '—';
-        document.getElementById('vw-escola-sigla').textContent = e.sigla || '—';
-        document.getElementById('vw-escola-temporada').textContent = e.temporada_atual || '—';
-        document.getElementById('vw-escola-cor-primaria').innerHTML = e.cor_primaria ? `<span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${e.cor_primaria};vertical-align:middle;margin-right:6px;border:1px solid rgba(0,0,0,0.1)"></span>${e.cor_primaria}` : '—';
-        document.getElementById('vw-escola-cor-destaque').innerHTML = e.cor_destaque ? `<span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${e.cor_destaque};vertical-align:middle;margin-right:6px;border:1px solid rgba(0,0,0,0.1)"></span>${e.cor_destaque}` : '—';
         document.getElementById('form-escola-titulo').textContent = e.sigla || e.nome;
-        document.getElementById('btn-salvar-escola').textContent = 'Atualizar Escola';
-        // alterna view/form
-        document.getElementById('escola-view').style.display = leitura ? 'block' : 'none';
-        document.getElementById('escola-form').style.display = leitura ? 'none' : 'block';
-        // botões rodapé
-        const btnToggle = document.getElementById('btn-toggle-escola');
-        btnToggle.textContent = ativa ? 'Desativar' : 'Ativar';
-        btnToggle.className = ativa ? 'btn-acao danger' : 'btn-acao';
-        btnToggle.onclick = () => { fecharFormEscola(); toggleEscolaAtiva(e.id, ativa); };
-        btnToggle.style.display = leitura ? 'inline-flex' : 'none';
-        document.getElementById('btn-editar-escola').style.display = leitura ? 'inline-flex' : 'none';
-        document.getElementById('btn-salvar-escola').style.display = leitura ? 'none' : 'inline-flex';
+
+        if (leitura) {
+            document.getElementById('modal-escola-body').innerHTML = `
+                <div class="ficha-sa-grid">
+                    ${fichaItem('Nome completo', e.nome, true)}
+                    ${fichaItem('Sigla', e.sigla)}
+                    ${fichaItem('Temporada', e.temporada_atual)}
+                    <div class="ficha-sa-campo"><span>Cor primária</span><strong>${corCirculo(e.cor_primaria)}</strong></div>
+                    <div class="ficha-sa-campo"><span>Cor destaque</span><strong>${corCirculo(e.cor_destaque)}</strong></div>
+                </div>`;
+            document.getElementById('modal-escola-rodape').innerHTML = `
+                <button class="btn-cancelar" onclick="fecharFormEscola()">Fechar</button>
+                <button class="btn-acao danger" onclick="fecharFormEscola();toggleEscolaAtiva('${e.id}',${ativa})">${ativa ? 'Desativar' : 'Ativar'}</button>
+                <button class="btn-acao btn-editar" onclick="editarEscola('${e.id}',false)">Editar</button>`;
+        } else {
+            document.getElementById('modal-escola-body').innerHTML = `
+                <div class="form-grid">
+                    <div class="campo campo-full"><label>Nome Completo *</label><input type="text" id="escola-nome" value="${e.nome || ''}"></div>
+                    <div class="campo campo-full"><label>Sigla *</label><input type="text" id="escola-sigla" value="${e.sigla || ''}"></div>
+                    <div class="campo campo-full"><label>URL do Logo</label><input type="url" id="escola-logo" value="${e.logo_url || ''}" oninput="atualizarPreviewEscola()"></div>
+                    <div class="campo campo-full"><label>Temporada Atual</label><input type="text" id="escola-temporada" value="${e.temporada_atual || ''}"></div>
+                    <div class="campo"><label>Cor Primária</label><div class="campo-cor"><input type="color" id="escola-cor-primaria-picker" value="${e.cor_primaria || '#12101a'}" oninput="sincronizarCor('escola-cor-primaria',this.value);atualizarPreviewEscola()"><input type="text" id="escola-cor-primaria" value="${e.cor_primaria || '#12101a'}" oninput="sincronizarCorText('escola-cor-primaria-picker',this.value);atualizarPreviewEscola()"></div></div>
+                    <div class="campo"><label>Cor Destaque</label><div class="campo-cor"><input type="color" id="escola-cor-destaque-picker" value="${e.cor_destaque || '#D4AF37'}" oninput="sincronizarCor('escola-cor-destaque',this.value);atualizarPreviewEscola()"><input type="text" id="escola-cor-destaque" value="${e.cor_destaque || '#D4AF37'}" oninput="sincronizarCorText('escola-cor-destaque-picker',this.value);atualizarPreviewEscola()"></div></div>
+                    <div class="campo campo-full"><label>Preview</label><div class="preview-cores" id="preview-escola"><div class="preview-circulo" id="preview-escola-circulo" style="background:${e.cor_primaria||'#12101a'}"></div><span class="preview-texto">Cores da escola</span><button class="preview-botao" id="preview-escola-botao" style="background:${e.cor_destaque||'#D4AF37'};color:#12101a">Destaque</button></div></div>
+                </div>
+                <input type="hidden" id="escola-id" value="${e.id}">`;
+            document.getElementById('modal-escola-rodape').innerHTML = `
+                <button class="btn-cancelar" onclick="fecharFormEscola()">Fechar</button>
+                <button class="btn-salvar" onclick="salvarEscola()">Atualizar Escola</button>`;
+            atualizarPreviewEscola();
+        }
         document.getElementById('modal-escola-overlay').classList.add('aberto');
     }
 
@@ -1026,20 +844,30 @@
         `).join('');
     }
 
+    function escolasOpcoesHTML(selecionado = '') {
+        return '<option value="">Selecione uma escola...</option>' +
+            escolasCache.map(e => `<option value="${e.id}"${e.id === selecionado ? ' selected' : ''}>${e.nome}</option>`).join('');
+    }
+
+    function bateriasOpcoesHTML(selecionado = '') {
+        return '<option value="">Selecione uma bateria...</option>' +
+            bateriasCache.map(b => `<option value="${b.id}"${b.id === selecionado ? ' selected' : ''}>${b.nome}</option>`).join('');
+    }
+
     function abrirFormBateria() {
-        document.getElementById('bateria-id').value = '';
-        document.getElementById('bateria-nome').value = '';
-        document.getElementById('bateria-escola-id').value = '';
-        document.getElementById('bateria-logo').value = '';
-        document.getElementById('bateria-instagram').value = '';
-        document.getElementById('bateria-mestre').value = '';
         document.getElementById('form-bateria-titulo').textContent = 'Nova Bateria';
-        document.getElementById('btn-salvar-bateria').textContent = 'Salvar Bateria';
-        document.getElementById('bateria-view').style.display = 'none';
-        document.getElementById('bateria-form').style.display = 'block';
-        document.getElementById('btn-editar-bateria').style.display = 'none';
-        document.getElementById('btn-toggle-bateria').style.display = 'none';
-        document.getElementById('btn-salvar-bateria').style.display = 'inline-flex';
+        document.getElementById('modal-bateria-body').innerHTML = `
+            <div class="form-grid">
+                <div class="campo campo-full"><label>Nome da Bateria *</label><input type="text" id="bateria-nome" placeholder="Ex: Swing da Leopoldina"></div>
+                <div class="campo campo-full"><label>Escola Vinculada *</label><select id="bateria-escola-id">${escolasOpcoesHTML()}</select></div>
+                <div class="campo campo-full"><label>URL do Logo</label><input type="url" id="bateria-logo" placeholder="https://..."></div>
+                <div class="campo campo-full"><label>Instagram</label><input type="text" id="bateria-instagram" placeholder="@swingdaleopoldina"></div>
+                <div class="campo campo-full"><label>Mestre de Bateria</label><input type="text" id="bateria-mestre" placeholder="Nome do mestre"></div>
+            </div>
+            <input type="hidden" id="bateria-id" value="">`;
+        document.getElementById('modal-bateria-rodape').innerHTML = `
+            <button class="btn-cancelar" onclick="fecharFormBateria()">Fechar</button>
+            <button class="btn-salvar" onclick="salvarBateria()">Salvar Bateria</button>`;
         document.getElementById('modal-bateria-overlay').classList.add('aberto');
     }
 
@@ -1054,31 +882,34 @@
         if (!dados.length) return;
         const b = dados[0];
         const ativa = b.ativa !== false;
-        // preenche form
-        document.getElementById('bateria-id').value = b.id;
-        document.getElementById('bateria-nome').value = b.nome || '';
-        document.getElementById('bateria-escola-id').value = b.escola_id || '';
-        document.getElementById('bateria-logo').value = b.logo_url || '';
-        document.getElementById('bateria-instagram').value = b.instagram || '';
-        document.getElementById('bateria-mestre').value = b.mestre_de_bateria || '';
-        // preenche visualização
-        document.getElementById('vw-bateria-nome').textContent = b.nome || '—';
-        document.getElementById('vw-bateria-escola').textContent = nomeEscola(b.escola_id);
-        document.getElementById('vw-bateria-mestre').textContent = b.mestre_de_bateria || '—';
-        document.getElementById('vw-bateria-instagram').textContent = b.instagram || '—';
         document.getElementById('form-bateria-titulo').textContent = b.nome;
-        document.getElementById('btn-salvar-bateria').textContent = 'Atualizar Bateria';
-        // alterna view/form
-        document.getElementById('bateria-view').style.display = leitura ? 'block' : 'none';
-        document.getElementById('bateria-form').style.display = leitura ? 'none' : 'block';
-        // botões rodapé
-        const btnToggle = document.getElementById('btn-toggle-bateria');
-        btnToggle.textContent = ativa ? 'Desativar' : 'Ativar';
-        btnToggle.className = ativa ? 'btn-acao danger' : 'btn-acao';
-        btnToggle.onclick = () => { fecharFormBateria(); toggleBateriaAtiva(b.id, ativa); };
-        btnToggle.style.display = leitura ? 'inline-flex' : 'none';
-        document.getElementById('btn-editar-bateria').style.display = leitura ? 'inline-flex' : 'none';
-        document.getElementById('btn-salvar-bateria').style.display = leitura ? 'none' : 'inline-flex';
+
+        if (leitura) {
+            document.getElementById('modal-bateria-body').innerHTML = `
+                <div class="ficha-sa-grid">
+                    ${fichaItem('Nome', b.nome, true)}
+                    ${fichaItem('Escola', nomeEscola(b.escola_id), true)}
+                    ${fichaItem('Mestre', b.mestre_de_bateria)}
+                    ${fichaItem('Instagram', b.instagram)}
+                </div>`;
+            document.getElementById('modal-bateria-rodape').innerHTML = `
+                <button class="btn-cancelar" onclick="fecharFormBateria()">Fechar</button>
+                <button class="btn-acao danger" onclick="fecharFormBateria();toggleBateriaAtiva('${b.id}',${ativa})">${ativa ? 'Desativar' : 'Ativar'}</button>
+                <button class="btn-acao btn-editar" onclick="editarBateria('${b.id}',false)">Editar</button>`;
+        } else {
+            document.getElementById('modal-bateria-body').innerHTML = `
+                <div class="form-grid">
+                    <div class="campo campo-full"><label>Nome da Bateria *</label><input type="text" id="bateria-nome" value="${b.nome || ''}"></div>
+                    <div class="campo campo-full"><label>Escola Vinculada *</label><select id="bateria-escola-id">${escolasOpcoesHTML(b.escola_id)}</select></div>
+                    <div class="campo campo-full"><label>URL do Logo</label><input type="url" id="bateria-logo" value="${b.logo_url || ''}"></div>
+                    <div class="campo campo-full"><label>Instagram</label><input type="text" id="bateria-instagram" value="${b.instagram || ''}"></div>
+                    <div class="campo campo-full"><label>Mestre de Bateria</label><input type="text" id="bateria-mestre" value="${b.mestre_de_bateria || ''}"></div>
+                </div>
+                <input type="hidden" id="bateria-id" value="${b.id}">`;
+            document.getElementById('modal-bateria-rodape').innerHTML = `
+                <button class="btn-cancelar" onclick="fecharFormBateria()">Fechar</button>
+                <button class="btn-salvar" onclick="salvarBateria()">Atualizar Bateria</button>`;
+        }
         document.getElementById('modal-bateria-overlay').classList.add('aberto');
     }
 
@@ -1209,46 +1040,6 @@
         `).join('');
     }
 
-    async function verAcesso(id) { await editarAcesso(id, true); }
-    async function editarAcesso(id, leitura = false) {
-        const res = await fetch(
-            `${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${id}&select=id,nome,apelido,cpf,perfil,bateria_id,status`,
-            { headers }
-        );
-        const dados = await res.json();
-        if (!dados.length) return;
-        const u = dados[0];
-        const ativo = u.status !== 'inativo';
-        // preenche form
-        document.getElementById('acesso-id').value = u.id;
-        document.getElementById('acesso-nome').value = u.nome || '';
-        document.getElementById('acesso-apelido').value = u.apelido || '';
-        document.getElementById('acesso-cpf').value = u.cpf || '';
-        document.getElementById('acesso-senha').value = '';
-        document.getElementById('acesso-perfil').value = u.perfil || '';
-        document.getElementById('acesso-bateria-id').value = u.bateria_id || '';
-        // preenche visualização
-        document.getElementById('vw-acesso-nome').textContent = u.nome || '—';
-        document.getElementById('vw-acesso-apelido').textContent = u.apelido || '—';
-        document.getElementById('vw-acesso-cpf').textContent = u.cpf || '—';
-        document.getElementById('vw-acesso-perfil').textContent = labelPerfil(u.perfil);
-        document.getElementById('vw-acesso-bateria').textContent = nomeBateria(u.bateria_id);
-        document.getElementById('form-acesso-titulo').textContent = u.apelido || u.nome;
-        document.getElementById('btn-salvar-acesso').textContent = 'Atualizar Acesso';
-        // alterna view/form
-        document.getElementById('acesso-view').style.display = leitura ? 'block' : 'none';
-        document.getElementById('acesso-form').style.display = leitura ? 'none' : 'block';
-        // botões rodapé
-        const btnToggle = document.getElementById('btn-toggle-acesso');
-        btnToggle.textContent = ativo ? 'Desativar' : 'Ativar';
-        btnToggle.className = ativo ? 'btn-acao danger' : 'btn-acao';
-        btnToggle.onclick = () => { fecharFormAcesso(); toggleAcessoAtivo(u.id, u.status); };
-        btnToggle.style.display = leitura ? 'inline-flex' : 'none';
-        document.getElementById('btn-editar-acesso').style.display = leitura ? 'inline-flex' : 'none';
-        document.getElementById('btn-salvar-acesso').style.display = leitura ? 'none' : 'inline-flex';
-        document.getElementById('modal-acesso-overlay').classList.add('aberto');
-    }
-
     async function toggleAcessoAtivo(id, statusAtual) {
         const ativoAgora = statusAtual !== 'inativo';
         if (ativoAgora) {
@@ -1270,25 +1061,68 @@
     }
 
     function abrirFormAcesso() {
-        document.getElementById('acesso-id').value = '';
-        document.getElementById('acesso-nome').value = '';
-        document.getElementById('acesso-apelido').value = '';
-        document.getElementById('acesso-cpf').value = '';
-        document.getElementById('acesso-senha').value = '';
-        document.getElementById('acesso-perfil').value = '';
-        document.getElementById('acesso-bateria-id').value = '';
         document.getElementById('form-acesso-titulo').textContent = 'Novo Acesso';
-        document.getElementById('btn-salvar-acesso').textContent = 'Criar Acesso';
-        document.getElementById('acesso-view').style.display = 'none';
-        document.getElementById('acesso-form').style.display = 'block';
-        document.getElementById('btn-editar-acesso').style.display = 'none';
-        document.getElementById('btn-toggle-acesso').style.display = 'none';
-        document.getElementById('btn-salvar-acesso').style.display = 'inline-flex';
+        document.getElementById('modal-acesso-body').innerHTML = `
+            <div class="form-grid">
+                <div class="campo campo-full"><label>Nome Completo *</label><input type="text" id="acesso-nome" placeholder="Nome completo"></div>
+                <div class="campo campo-full"><label>Apelido *</label><input type="text" id="acesso-apelido" placeholder="Como aparece no sistema"></div>
+                <div class="campo"><label>CPF *</label><input type="text" id="acesso-cpf" placeholder="000.000.000-00" maxlength="14" oninput="mascaraCPF(this)"></div>
+                <div class="campo"><label>Senha *</label><input type="password" id="acesso-senha" placeholder="Mínimo 6 caracteres"></div>
+                <div class="campo"><label>Perfil *</label><select id="acesso-perfil"><option value="">Selecione...</option><option value="mestre">Mestre de Bateria</option><option value="diretor">Diretor</option></select></div>
+                <div class="campo"><label>Bateria Vinculada *</label><select id="acesso-bateria-id">${bateriasOpcoesHTML()}</select></div>
+            </div>
+            <input type="hidden" id="acesso-id" value="">`;
+        document.getElementById('modal-acesso-rodape').innerHTML = `
+            <button class="btn-cancelar" onclick="fecharFormAcesso()">Fechar</button>
+            <button class="btn-salvar" onclick="salvarAcesso()">Criar Acesso</button>`;
         document.getElementById('modal-acesso-overlay').classList.add('aberto');
     }
 
     function fecharFormAcesso() {
         document.getElementById('modal-acesso-overlay').classList.remove('aberto');
+    }
+
+    async function verAcesso(id) { await editarAcesso(id, true); }
+    async function editarAcesso(id, leitura = false) {
+        const res = await fetch(
+            `${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${id}&select=id,nome,apelido,cpf,perfil,bateria_id,status`,
+            { headers }
+        );
+        const dados = await res.json();
+        if (!dados.length) return;
+        const u = dados[0];
+        const ativo = u.status !== 'inativo';
+        document.getElementById('form-acesso-titulo').textContent = u.apelido || u.nome;
+
+        if (leitura) {
+            document.getElementById('modal-acesso-body').innerHTML = `
+                <div class="ficha-sa-grid">
+                    ${fichaItem('Nome', u.nome, true)}
+                    ${fichaItem('Apelido', u.apelido)}
+                    ${fichaItem('CPF', u.cpf)}
+                    ${fichaItem('Perfil', labelPerfil(u.perfil))}
+                    ${fichaItem('Bateria', nomeBateria(u.bateria_id), true)}
+                </div>`;
+            document.getElementById('modal-acesso-rodape').innerHTML = `
+                <button class="btn-cancelar" onclick="fecharFormAcesso()">Fechar</button>
+                <button class="btn-acao danger" onclick="fecharFormAcesso();toggleAcessoAtivo('${u.id}','${u.status}')">${ativo ? 'Desativar' : 'Ativar'}</button>
+                <button class="btn-acao btn-editar" onclick="editarAcesso('${u.id}',false)">Editar</button>`;
+        } else {
+            document.getElementById('modal-acesso-body').innerHTML = `
+                <div class="form-grid">
+                    <div class="campo campo-full"><label>Nome Completo *</label><input type="text" id="acesso-nome" value="${u.nome || ''}"></div>
+                    <div class="campo campo-full"><label>Apelido *</label><input type="text" id="acesso-apelido" value="${u.apelido || ''}"></div>
+                    <div class="campo"><label>CPF *</label><input type="text" id="acesso-cpf" value="${u.cpf || ''}" maxlength="14" oninput="mascaraCPF(this)"></div>
+                    <div class="campo"><label>Senha <span style="font-weight:400;text-transform:none">(deixe em branco para manter)</span></label><input type="password" id="acesso-senha" placeholder="Nova senha (opcional)"></div>
+                    <div class="campo"><label>Perfil *</label><select id="acesso-perfil"><option value="">Selecione...</option><option value="mestre"${u.perfil==='mestre'?' selected':''}>Mestre de Bateria</option><option value="diretor"${u.perfil==='diretor'?' selected':''}>Diretor</option></select></div>
+                    <div class="campo"><label>Bateria Vinculada *</label><select id="acesso-bateria-id">${bateriasOpcoesHTML(u.bateria_id)}</select></div>
+                </div>
+                <input type="hidden" id="acesso-id" value="${u.id}">`;
+            document.getElementById('modal-acesso-rodape').innerHTML = `
+                <button class="btn-cancelar" onclick="fecharFormAcesso()">Fechar</button>
+                <button class="btn-salvar" onclick="salvarAcesso()">Atualizar Acesso</button>`;
+        }
+        document.getElementById('modal-acesso-overlay').classList.add('aberto');
     }
 
     function fecharSeForaModal(event, overlayId, fecharFn) {
