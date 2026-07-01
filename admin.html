@@ -539,8 +539,8 @@
         </div>
 
         <div id="fc-secao-menor" style="display:none; margin-bottom:18px;">
-            <div class="ficha-secao-titulo">Menor de idade</div>
-            <div id="fc-declaracao-area" class="declaracao-area"></div>
+            <div class="ficha-secao-titulo">Declaração do responsável</div>
+            <div id="fc-declaracao-area"></div>
         </div>
 
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:14px; border-top:1px solid #f0f0f0; margin-top:16px;">
@@ -772,10 +772,30 @@
         await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` },
-            body: JSON.stringify({ declaracao_responsavel: entregue })
+            body: JSON.stringify({ declaracao_menor: entregue })
         });
         await carregarRitmistas();
         abrirCadastro(id);
+    }
+
+    function renderToggleDeclaracao(id, entregue) {
+        const area = document.getElementById('fc-declaracao-area');
+        if (!area) return;
+        if (entregue) {
+            area.innerHTML = `
+                <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="alternarDeclaracao(${id},false)">
+                    <div style="width:20px;height:20px;border-radius:50%;background:#12101a;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <span style="font-size:12px;color:#12101a;font-weight:500;">Entregue</span>
+                </div>`;
+        } else {
+            area.innerHTML = `
+                <div style="display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="alternarDeclaracao(${id},true)">
+                    <div style="width:20px;height:20px;border-radius:50%;border:1.5px solid #e8e6f0;background:transparent;flex-shrink:0;"></div>
+                    <span style="font-size:12px;color:#8b88a0;">Não entregue</span>
+                </div>`;
+        }
     }
 
     // MODAIS
@@ -867,17 +887,7 @@
         const secaoMenor = document.getElementById('fc-secao-menor');
         if (menor) {
             secaoMenor.style.display = 'block';
-            document.getElementById('fc-declaracao-area').innerHTML = r.declaracao_responsavel
-                ? `<div style="font-size:11px;color:#999;margin-bottom:3px;">Declaração do responsável</div>
-                   <div style="display:flex;align-items:center;gap:10px;">
-                     <span style="font-size:13px;color:#2d7a4f;font-weight:600;">Entregue</span>
-                     <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id},false)">Desfazer</button>
-                   </div>`
-                : `<div style="font-size:11px;color:#999;margin-bottom:3px;">Declaração do responsável</div>
-                   <div style="display:flex;align-items:center;gap:10px;">
-                     <span style="font-size:13px;color:#5b21b6;font-weight:600;">Pendente</span>
-                     <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id},true)">Marcar como entregue</button>
-                   </div>`;
+            renderToggleDeclaracao(r.id, r.declaracao_menor);
         } else {
             secaoMenor.style.display = 'none';
         }
