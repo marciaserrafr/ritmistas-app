@@ -246,15 +246,7 @@
 
         // Membro desde
         if (ritmista.membro_desde) {
-            const partes = ritmista.membro_desde.split('-');
-            let texto = '';
-            if (partes.length === 2) {
-                const mesIdx = parseInt(partes[1], 10) - 1;
-                texto = MESES[mesIdx] + '/' + partes[0];
-            } else {
-                texto = partes[0];
-            }
-            document.getElementById('membroDesde').textContent = texto;
+            document.getElementById('membroDesde').textContent = ritmista.membro_desde;
             document.getElementById('membroDesdeBox').style.display = 'block';
         }
 
