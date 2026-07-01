@@ -35,13 +35,30 @@
         .header-user { font-size: 13px; color: rgba(255,255,255,0.6); }
         .btn-sair { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); padding: 6px 14px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600; }
         .btn-sair:hover { background: rgba(255,255,255,0.08); }
-        .btn-cadastrar-ritmista {
+        /* NAV ABAS */
+        .nav-abas {
+            display: flex; gap: 0; border-bottom: 2px solid #e8e6f0;
+            margin-bottom: 0; padding: 0 24px;
+            background: white; position: sticky; top: 56px; z-index: 90;
+        }
+        .aba-btn {
+            padding: 14px 20px; background: none; border: none; cursor: pointer;
+            font-size: 13px; font-weight: 600; color: #888;
+            border-bottom: 2px solid transparent; margin-bottom: -2px;
+            transition: color 0.15s; white-space: nowrap;
+        }
+        .aba-btn:hover { color: #0f172a; }
+        .aba-btn.ativa { color: #0f172a; border-bottom-color: #D4AF37; }
+        .painel { display: none; }
+        .painel.ativo { display: block; }
+
+        /* BOTÃO NOVO (padrão super-admin) */
+        .btn-novo {
             display: inline-flex; align-items: center; gap: 6px;
             background: var(--cor-destaque); border: none; color: var(--cor-texto-destaque);
             padding: 8px 18px; border-radius: 20px; cursor: pointer;
             font-size: 13px; font-weight: 700;
         }
-        .btn-cadastrar-texto { display: inline; }
         /* TOTALIZADORES */
         .totalizadores {
             display: flex; gap: 12px; margin-bottom: 16px;
@@ -98,21 +115,14 @@
         .multi-select-option:hover { background: #f5f5f5; }
         .multi-select-option input[type=checkbox] { accent-color: var(--cor-destaque); width: 15px; height: 15px; cursor: pointer; }
 
-        /* VAGAS COLAPSÁVEL */
-        .vagas-toggle {
-            display: flex; align-items: center; justify-content: space-between;
-            cursor: pointer; padding: 8px 0; margin-bottom: 4px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .vagas-toggle:hover .vagas-toggle-label { color: #555; }
-        .vagas-toggle-label { font-size: 11px; font-weight: 700; color: #aaa; text-transform: uppercase; letter-spacing: 1px; transition: color 0.15s; }
-        .vagas-toggle-arrow { font-size: 10px; color: #bbb; transition: transform 0.2s; }
-        .vagas-toggle-arrow.aberto { transform: rotate(180deg); }
-        .vagas-conteudo { padding: 10px 0 4px; }
-        .vaga-num { font-weight: bold; color: #0f172a; min-width: 20px; }
-        .vaga-sep { color: #ccc; }
-        .vaga-input { width: 44px; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-size: 12px; text-align: center; color: #666; }
-        .vaga-alerta { color: #c0392b; font-size: 11px; font-weight: bold; }
+        /* VISÃO GERAL */
+        .vg-secao-titulo { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .vg-card { background: white; border-radius: 14px; padding: 20px 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); margin-bottom: 16px; }
+        .vg-placeholder { background: #fafafa; border: 1.5px dashed #e0e0e0; border-radius: 14px; padding: 24px; text-align: center; color: #bbb; font-size: 13px; margin-bottom: 16px; }
+        .vg-aniversariante { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid #f4f4f4; font-size: 13px; }
+        .vg-aniversariante:last-child { border-bottom: none; }
+        .vg-aniv-nome { font-weight: 700; color: #0f172a; }
+        .vg-aniv-detalhe { font-size: 12px; color: #888; }
 
         /* CONTADOR */
         .contador { font-size: 13px; color: #666; margin-bottom: 20px; }
@@ -285,8 +295,8 @@
 
         /* MOBILE */
         @media (max-width: 600px) {
-            .btn-cadastrar-texto { display: none; }
-            .btn-cadastrar-ritmista { padding: 7px 10px; font-size: 15px; }
+            .nav-abas { padding: 0 12px; }
+            .aba-btn { padding: 12px 14px; font-size: 12px; }
 
             .header { padding: 12px 16px; gap: 8px; }
             .header-marca { font-size: 18px; }
@@ -321,45 +331,39 @@
         <div class="header-badge" id="headerBateria"></div>
     </div>
     <div class="header-acoes">
-        <button class="btn-cadastrar-ritmista" onclick="window.location.href='index.html'">+ <span class="btn-cadastrar-texto">Cadastrar Ritmista</span></button>
         <span class="header-user" id="headerNome"></span>
         <button class="btn-sair" onclick="sair()">Sair</button>
     </div>
 </div>
 
-<div class="container">
+<!-- NAV ABAS -->
+<nav class="nav-abas">
+    <button class="aba-btn ativa" onclick="trocarAba('ritmistas', this)">Ritmistas</button>
+    <button class="aba-btn" onclick="trocarAba('vagas', this)">Vagas</button>
+    <button class="aba-btn" onclick="trocarAba('visao', this)">Visão Geral</button>
+</nav>
 
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
-        <h1 style="font-size:20px;font-weight:800;color:#0f172a;">Ritmistas</h1>
-        <button onclick="abrirConfigurarVagas()" style="display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid #ccc;color:#666;padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;">⚙ Configurar vagas</button>
+<!-- PAINEL RITMISTAS -->
+<div class="container painel ativo" id="painel-ritmistas">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+        <div class="totalizadores" style="margin-bottom:0;flex:1;">
+            <div class="total-card">
+                <div class="total-numero dourado" id="totalAtivos">—</div>
+                <div class="total-label">Ritmistas ativos</div>
+            </div>
+            <div class="total-card">
+                <div class="total-numero" id="totalPendentes">—</div>
+                <div class="total-label">Pendentes</div>
+            </div>
+        </div>
+        <button class="btn-novo" onclick="window.location.href='index.html'">+ Cadastrar Ritmista</button>
     </div>
 
-    <!-- TOTALIZADORES -->
-    <div class="totalizadores">
-        <div class="total-card">
-            <div class="total-numero dourado" id="totalAtivos">—</div>
-            <div class="total-label">Ritmistas ativos</div>
-        </div>
-        <div class="total-card">
-            <div class="total-numero" id="totalPendentes">—</div>
-            <div class="total-label">Pendentes</div>
-        </div>
-    </div>
     <!-- BUSCA -->
     <div style="margin-bottom:20px;">
         <input type="text" id="campoBusca" placeholder="Buscar por nome, apelido ou CPF..." oninput="aplicarFiltros()"
             style="width:100%;box-sizing:border-box;padding:10px 14px 10px 38px;border-radius:8px;border:1px solid #e0e0e0;font-size:14px;outline:none;background:white url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23aaa%22 stroke-width=%222.5%22 stroke-linecap=%22round%22><circle cx=%2211%22 cy=%2211%22 r=%228%22/><line x1=%2221%22 y1=%2221%22 x2=%2216.65%22 y2=%2216.65%22/></svg>') no-repeat 12px center;">
-    </div>
-
-    <!-- CONTROLE DE VAGAS COLAPSÁVEL -->
-    <div style="margin-bottom:20px;margin-top:4px;">
-        <div class="vagas-toggle" onclick="toggleVagas()">
-            <span class="vagas-toggle-label">Controle de Vagas</span>
-            <span class="vagas-toggle-arrow" id="vagasArrow">▼</span>
-        </div>
-        <div class="vagas-conteudo" id="vagasConteudo" style="display:none;">
-            <div id="ocupacaoBar" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
-        </div>
     </div>
 
     <div style="font-size:11px;font-weight:bold;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Filtrar por instrumento</div>
@@ -388,9 +392,40 @@
         </div>
     </div>
 
-<div class="contador" id="contador"></div>
-    <div class="cards" id="listaRitmistas" style="min-height:500px;">
+    <div class="contador" id="contador"></div>
+    <div class="cards" id="listaRitmistas" style="min-height:300px;">
         <div class="vazio">Carregando...</div>
+    </div>
+
+</div>
+
+<!-- PAINEL VAGAS -->
+<div class="container painel" id="painel-vagas">
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+        <h2 style="font-size:18px;font-weight:800;color:#0f172a;">Controle de Vagas</h2>
+        <button onclick="abrirConfigurarVagas()" style="display:inline-flex;align-items:center;gap:5px;background:transparent;border:1px solid #ccc;color:#666;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">⚙ Configurar vagas</button>
+    </div>
+    <div id="ocupacaoBar" style="display:flex;flex-wrap:wrap;gap:10px;"></div>
+
+</div>
+
+<!-- PAINEL VISÃO GERAL -->
+<div class="container painel" id="painel-visao">
+
+    <h2 style="font-size:18px;font-weight:800;color:#0f172a;margin-bottom:20px;">Visão Geral</h2>
+
+    <div class="vg-card">
+        <div class="vg-secao-titulo">🎂 Aniversariantes do mês</div>
+        <div id="vg-aniversariantes"><div class="vazio" style="padding:16px 0;">Carregando...</div></div>
+    </div>
+
+    <div class="vg-placeholder">
+        Em breve: controle de entrega de camisas
+    </div>
+
+    <div class="vg-placeholder">
+        Em breve: frequência nos ensaios
     </div>
 
 </div>
@@ -564,6 +599,7 @@
         aplicarFiltros();
         renderizarOcupacao();
         atualizarTotalizadores();
+        renderizarVisaoGeral();
     }
 
     function filtrarStatus(status, btn) {
@@ -811,12 +847,41 @@
         await carregarRitmistas();
     }
 
-    function toggleVagas() {
-        const conteudo = document.getElementById('vagasConteudo');
-        const arrow = document.getElementById('vagasArrow');
-        const aberto = conteudo.style.display !== 'none';
-        conteudo.style.display = aberto ? 'none' : 'block';
-        arrow.classList.toggle('aberto', !aberto);
+    function trocarAba(aba, btn) {
+        document.querySelectorAll('.painel').forEach(p => p.classList.remove('ativo'));
+        document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
+        document.getElementById('painel-' + aba).classList.add('ativo');
+        btn.classList.add('ativa');
+    }
+
+    function renderizarVisaoGeral() {
+        const mesAtual = new Date().getMonth() + 1;
+        const aniv = todosRitmistas.filter(r => {
+            if (!r.nascimento) return false;
+            return new Date(r.nascimento + 'T00:00:00').getMonth() + 1 === mesAtual;
+        }).sort((a, b) => {
+            const dA = new Date(a.nascimento + 'T00:00:00').getDate();
+            const dB = new Date(b.nascimento + 'T00:00:00').getDate();
+            return dA - dB;
+        });
+
+        const div = document.getElementById('vg-aniversariantes');
+        if (aniv.length === 0) {
+            div.innerHTML = '<div style="color:#bbb;font-size:13px;padding:8px 0;">Nenhum aniversariante este mês.</div>';
+            return;
+        }
+        div.innerHTML = aniv.map(r => {
+            const nasc = new Date(r.nascimento + 'T00:00:00');
+            const dia = nasc.getDate().toString().padStart(2, '0');
+            const idade = calcularIdade(r.nascimento);
+            return `<div class="vg-aniversariante">
+                <span style="font-size:20px;">🎂</span>
+                <div>
+                    <div class="vg-aniv-nome">${r.nome}${r.apelido ? ` <span style="color:#D4AF37;font-weight:400;font-style:italic;">"${r.apelido}"</span>` : ''}</div>
+                    <div class="vg-aniv-detalhe">Dia ${dia} · ${idade} anos · ${r.instrumento || '—'}</div>
+                </div>
+            </div>`;
+        }).join('');
     }
 
     // Fechar modal clicando fora
