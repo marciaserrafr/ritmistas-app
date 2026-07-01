@@ -317,6 +317,8 @@
         .btn-acao:hover { background: var(--cor-fundo-claro); }
         .btn-acao.danger { border: 1.5px solid #7c2d12; color: #7c2d12; }
         .btn-acao.danger:hover { background: #fef0eb; }
+        .btn-editar { background: #D4AF37; border-color: #D4AF37; color: #12101a; font-weight: 700; }
+        .btn-editar:hover { background: #B8922A; border-color: #B8922A; }
 
         /* ── ALERTA / TOAST ── */
         .toast {
@@ -475,7 +477,7 @@
 
             <div class="form-acoes">
                 <button class="btn-cancelar" onclick="fecharFormEscola()">Fechar</button>
-                <button class="btn-cancelar" id="btn-editar-escola" onclick="habilitarEdicaoEscola()" style="display:none">Editar</button>
+                <button class="btn-cancelar btn-editar" id="btn-editar-escola" onclick="habilitarEdicaoEscola()" style="display:none">Editar</button>
                 <button class="btn-salvar" id="btn-salvar-escola" onclick="salvarEscola()">Salvar Escola</button>
             </div>
         </div>
@@ -527,7 +529,7 @@
 
             <div class="form-acoes">
                 <button class="btn-cancelar" onclick="fecharFormBateria()">Fechar</button>
-                <button class="btn-cancelar" id="btn-editar-bateria" onclick="habilitarEdicaoBateria()" style="display:none">Editar</button>
+                <button class="btn-cancelar btn-editar" id="btn-editar-bateria" onclick="habilitarEdicaoBateria()" style="display:none">Editar</button>
                 <button class="btn-salvar" id="btn-salvar-bateria" onclick="salvarBateria()">Salvar Bateria</button>
             </div>
         </div>
@@ -587,7 +589,7 @@
 
             <div class="form-acoes">
                 <button class="btn-cancelar" onclick="fecharFormAcesso()">Fechar</button>
-                <button class="btn-cancelar" id="btn-editar-acesso" onclick="habilitarEdicaoAcesso()" style="display:none">Editar</button>
+                <button class="btn-cancelar btn-editar" id="btn-editar-acesso" onclick="habilitarEdicaoAcesso()" style="display:none">Editar</button>
                 <button class="btn-salvar" id="btn-salvar-acesso" onclick="salvarAcesso()">Criar Acesso</button>
             </div>
         </div>
@@ -692,7 +694,7 @@
                 </div>
                 <div class="item-acoes">
                     <span class="${e.ativa !== false ? 'badge-ativo' : 'badge-inativo'}">${e.ativa !== false ? 'Ativa' : 'Inativa'}</span>
-                    <button class="btn-acao" onclick="event.stopPropagation();editarEscola('${e.id}')">Editar</button>
+                    <button class="btn-acao btn-editar" onclick="event.stopPropagation();editarEscola('${e.id}')">Editar</button>
                     <button class="btn-acao danger" onclick="event.stopPropagation();toggleEscolaAtiva('${e.id}', ${e.ativa !== false})">${e.ativa !== false ? 'Desativar' : 'Ativar'}</button>
                 </div>
             </div>
@@ -876,7 +878,7 @@
                 </div>
                 <div class="item-acoes">
                     <span class="${b.ativa !== false ? 'badge-ativo' : 'badge-inativo'}">${b.ativa !== false ? 'Ativa' : 'Inativa'}</span>
-                    <button class="btn-acao" onclick="event.stopPropagation();editarBateria('${b.id}')">Editar</button>
+                    <button class="btn-acao btn-editar" onclick="event.stopPropagation();editarBateria('${b.id}')">Editar</button>
                     <button class="btn-acao danger" onclick="event.stopPropagation();toggleBateriaAtiva('${b.id}', ${b.ativa !== false})">${b.ativa !== false ? 'Desativar' : 'Ativar'}</button>
                 </div>
             </div>
@@ -1042,7 +1044,7 @@
                 </div>
                 <div class="item-acoes">
                     <span class="${u.status === 'inativo' ? 'badge-inativo' : 'badge-ativo'}">${u.status === 'inativo' ? 'Inativo' : 'Ativo'}</span>
-                    <button class="btn-acao" onclick="event.stopPropagation();editarAcesso('${u.id}')">Editar</button>
+                    <button class="btn-acao btn-editar" onclick="event.stopPropagation();editarAcesso('${u.id}')">Editar</button>
                     <button class="btn-acao danger" onclick="event.stopPropagation();toggleAcessoAtivo('${u.id}', '${u.status}')">${u.status === 'inativo' ? 'Ativar' : 'Desativar'}</button>
                 </div>
             </div>
