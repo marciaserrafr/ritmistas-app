@@ -974,8 +974,9 @@
                     <div class="item-detalhe">${labelPerfil(u.perfil)} · CPF ${u.cpf || '—'}${u.bateria_id ? ' · ' + nomeBateria(u.bateria_id) : ''}</div>
                 </div>
                 <div class="item-acoes">
-                    <span class="badge-ativo">${labelPerfil(u.perfil)}</span>
+                    <span class="${u.status === 'inativo' ? 'badge-inativo' : 'badge-ativo'}">${u.status === 'inativo' ? 'Inativo' : 'Ativo'}</span>
                     <button class="btn-acao" onclick="editarAcesso('${u.id}')">Editar</button>
+                    <button class="btn-acao danger" onclick="toggleAcessoAtivo('${u.id}', '${u.status}')">${u.status === 'inativo' ? 'Ativar' : 'Desativar'}</button>
                 </div>
             </div>
         `).join('');
@@ -1000,6 +1001,26 @@
         document.getElementById('btn-salvar-acesso').textContent = 'Atualizar Acesso';
         document.getElementById('form-acesso').style.display = 'block';
         document.getElementById('form-acesso').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function toggleAcessoAtivo(id, statusAtual) {
+        const ativoAgora = statusAtual !== 'inativo';
+        if (ativoAgora) {
+            const motivo = prompt('Informe o motivo da desativação:');
+            if (motivo === null) return;
+            if (!motivo.trim()) { mostrarToast('Informe um motivo para desativar.', 'erro'); return; }
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${id}`, {
+                method: 'PATCH', headers,
+                body: JSON.stringify({ status: 'inativo', motivo_status: motivo.trim() })
+            });
+            if (res.ok) { mostrarToast('Acesso desativado.'); carregarAcessos(); }
+        } else {
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/ritmistas?id=eq.${id}`, {
+                method: 'PATCH', headers,
+                body: JSON.stringify({ status: 'aprovado', motivo_status: null })
+            });
+            if (res.ok) { mostrarToast('Acesso ativado!'); carregarAcessos(); }
+        }
     }
 
     function abrirFormAcesso() {
