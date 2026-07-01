@@ -967,11 +967,23 @@
             div.innerHTML = '<div class="estado-vazio"><div class="estado-vazio-icone">👤</div>Nenhum acesso criado ainda.</div>';
             return;
         }
-        div.innerHTML = lista.map(u => `
+        const ordenada = [...lista].sort((a, b) => {
+            const ordem = { mestre: 0, diretor: 1 };
+            const pa = ordem[a.perfil] ?? 2;
+            const pb = ordem[b.perfil] ?? 2;
+            if (pa !== pb) return pa - pb;
+            return a.nome.localeCompare(b.nome);
+        });
+
+        div.innerHTML = ordenada.map(u => `
             <div class="item-card">
                 <div class="item-info">
-                    <div class="item-nome">${u.nome}${u.apelido ? ' <span style="color:var(--cor-texto-muted);font-weight:500">"' + u.apelido + '"</span>' : ''}</div>
-                    <div class="item-detalhe">${labelPerfil(u.perfil)} · CPF ${u.cpf || '—'}${u.bateria_id ? ' · ' + nomeBateria(u.bateria_id) : ''}</div>
+                    <div class="item-nome">${u.nome}</div>
+                    ${u.apelido ? `<div style="font-size:13px;font-weight:700;color:#D4AF37;margin-top:2px">"${u.apelido}"</div>` : ''}
+                    <div class="item-detalhe" style="margin-top:4px">
+                        <strong style="color:var(--cor-texto-principal)">${labelPerfil(u.perfil)}</strong>
+                        · CPF ${u.cpf || '—'}${u.bateria_id ? ' · ' + nomeBateria(u.bateria_id) : ''}
+                    </div>
                 </div>
                 <div class="item-acoes">
                     <span class="${u.status === 'inativo' ? 'badge-inativo' : 'badge-ativo'}">${u.status === 'inativo' ? 'Inativo' : 'Ativo'}</span>
