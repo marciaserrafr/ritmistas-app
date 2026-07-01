@@ -738,7 +738,7 @@
                         <span class="card-nome">${r.nome}</span>
                         ${r.apelido ? `<span class="card-apelido-inline">"${r.apelido}"</span>` : ''}
                         ${menor ? `<span class="badge badge-menor">${svgTriang} Menor · ${idade} anos</span>` : ''}
-                        ${r.nacionalidade && r.nacionalidade !== 'Brasileira' ? `<span class="badge badge-estrangeiro" title="${r.nacionalidade}">🌍</span>` : ''}
+                        ${r.nacionalidade && r.nacionalidade !== 'Brasileira' ? `<span title="${r.nacionalidade}" style="font-size:14px;">🌍</span>` : ''}
                         ${aniversarioMes ? '<span title="Aniversário este mês">🎂</span>' : ''}
                     </div>
                     <div class="card-linha2">
