@@ -867,12 +867,16 @@
         if (menor) {
             secaoMenor.style.display = 'block';
             document.getElementById('fc-declaracao-area').innerHTML = r.declaracao_responsavel
-                ? `<span>Declaração do responsável:</span>
-                   <span style="color:#28a745;font-weight:bold;">Entregue</span>
-                   <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id},false);fecharModal('modalCadastroOverlay')">Desfazer</button>`
-                : `<span>Declaração do responsável:</span>
-                   <span style="color:#5b21b6;font-weight:600;">Pendente</span>
-                   <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id},true);fecharModal('modalCadastroOverlay')">Marcar como entregue</button>`;
+                ? `<div style="font-size:11px;color:#999;margin-bottom:3px;">Declaração do responsável</div>
+                   <div style="display:flex;align-items:center;gap:10px;">
+                     <span style="font-size:13px;color:#2d7a4f;font-weight:600;">Entregue</span>
+                     <button class="btn-declaracao entregue" onclick="alternarDeclaracao(${r.id},false)">Desfazer</button>
+                   </div>`
+                : `<div style="font-size:11px;color:#999;margin-bottom:3px;">Declaração do responsável</div>
+                   <div style="display:flex;align-items:center;gap:10px;">
+                     <span style="font-size:13px;color:#5b21b6;font-weight:600;">Pendente</span>
+                     <button class="btn-declaracao pendente" onclick="alternarDeclaracao(${r.id},true)">Marcar como entregue</button>
+                   </div>`;
         } else {
             secaoMenor.style.display = 'none';
         }
