@@ -149,8 +149,9 @@
                 <input type="text" id="apelido" placeholder="Como você é conhecido na bateria">
             </div>
             <div class="form-group">
-                <label>Nacionalidade</label>
-                <select id="nacionalidade_tipo" onchange="toggleNacionalidade()">
+                <label>Nacionalidade <span class="obrigatorio">*</span></label>
+                <select id="nacionalidade_tipo" onchange="toggleNacionalidade()" required>
+                    <option value="">Selecione</option>
                     <option value="Brasileira">Brasileira</option>
                     <option value="Estrangeira">Estrangeira</option>
                 </select>
@@ -444,9 +445,13 @@
         const semCpf = document.getElementById('sem_cpf').checked;
         const cpfInput = document.getElementById('cpf');
         const blocoDoc = document.getElementById('bloco-documento');
+        const tipoDoc = document.getElementById('tipo_documento');
+        const numDoc = document.getElementById('numero_documento');
         cpfInput.style.display = semCpf ? 'none' : '';
         cpfInput.value = '';
         blocoDoc.style.display = semCpf ? 'block' : 'none';
+        tipoDoc.required = semCpf;
+        numDoc.required = semCpf;
         atualizarObrigatoriedadeCpfEmail();
     }
 
