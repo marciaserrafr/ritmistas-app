@@ -227,6 +227,8 @@
         .btn-ficha-desligar:hover  { background: #fff5f5; }
         .btn-ficha-reativar  { border-color: #0f172a; color: #0f172a; }
         .btn-ficha-reativar:hover  { background: #f0f0f0; }
+        .btn-ficha-editar    { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
+        .btn-ficha-editar:hover { background: #B8922A; }
         .btn-ficha-salvar    { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
         .btn-ficha-salvar:hover { background: #B8922A; }
 
@@ -548,7 +550,7 @@
 
         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:14px; border-top:1px solid #f0f0f0; margin-top:16px;">
             <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                <button id="btn-editar-ficha" class="btn-ficha" style="display:none" onclick="ativarEdicaoFicha()">Editar</button>
+                <button id="btn-editar-ficha" class="btn-ficha btn-ficha-editar" style="display:none" onclick="ativarEdicaoFicha()">Editar</button>
                 <button id="btn-salvar-ficha" class="btn-ficha btn-ficha-salvar" style="display:none" onclick="salvarEdicaoFicha()">Salvar</button>
                 <button id="btn-cancelar-ficha" class="btn-ficha" style="display:none" onclick="cancelarEdicaoFicha()">Cancelar</button>
                 <div id="modalCadastroAcoes" style="display:flex; gap:8px; flex-wrap:wrap;"></div>
