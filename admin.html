@@ -217,9 +217,10 @@
             background: white; color: #0f172a;
         }
         .btn-ficha:hover { background: #f8f8f8; }
-        .btn-ficha-ativar    { background: #D4AF37; border-color: #D4AF37; color: #12101a; }
-        .btn-ficha-ativar:hover { background: #B8922A; }
-        .btn-ficha-rejeitar  { border-color: #ccc; color: #888; }
+        .btn-ficha-ativar    { background: #12101a; border-color: #12101a; color: #ffffff; }
+        .btn-ficha-ativar:hover { background: #2a2740; border-color: #2a2740; }
+        .btn-ficha-rejeitar  { border: 1.5px solid #6b1a2e; color: #6b1a2e; background: transparent; }
+        .btn-ficha-rejeitar:hover { background: #f5e6ea; }
         .btn-ficha-suspender { border-color: #d4720a; color: #d4720a; }
         .btn-ficha-suspender:hover { background: #fff8f0; }
         .btn-ficha-desligar  { border-color: #c62828; color: #c62828; }
@@ -292,7 +293,7 @@
         .modal-cadastro h2 { font-size: 20px; margin-bottom: 4px; }
         .modal-cadastro .subtitulo { font-size: 13px; color: #888; margin-bottom: 20px; }
         .ficha-secao { margin-bottom: 18px; }
-        .ficha-secao-titulo { font-size: 10px; font-weight: bold; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
+        .ficha-secao-titulo { font-size: 11px; font-weight: 600; color: #aaa; letter-spacing: 0; margin-bottom: 8px; border-bottom: 1px solid #f0f0f0; padding-bottom: 4px; }
         .ficha-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
         .ficha-campo { font-size: 13px; color: #333; }
         .ficha-campo span { display: block; font-size: 11px; color: #999; margin-bottom: 1px; }
@@ -539,7 +540,7 @@
         </div>
 
         <div id="fc-secao-menor" style="display:none; margin-bottom:18px;">
-            <div class="ficha-secao-titulo" style="font-size:10px;font-weight:bold;color:#999;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;border-bottom:1px solid #f0f0f0;padding-bottom:4px;">Menor de idade</div>
+            <div class="ficha-secao-titulo">Menor de idade</div>
             <div id="fc-declaracao-area" class="declaracao-area"></div>
         </div>
 
@@ -844,7 +845,14 @@
         document.getElementById('fc-estado').textContent = r.estado || '—';
         document.getElementById('fc-pais').textContent = r.pais || 'Brasil';
         document.getElementById('fc-instrumento').textContent = r.instrumento || '—';
-        document.getElementById('fc-status').textContent = statusLabels[status] || '—';
+        const statusBadgeHTML = {
+            pendente:  `<span class="badge badge-pendente">Pendente</span>`,
+            aprovado:  `<span class="badge badge-aprovado">Ativo</span>`,
+            suspenso:  `<span class="badge badge-suspenso">Suspenso</span>`,
+            desligado: `<span class="badge badge-desligado">Desligado</span>`,
+            rejeitado: `<span class="badge badge-rejeitado">Rejeitado</span>`,
+        };
+        document.getElementById('fc-status').innerHTML = statusBadgeHTML[status] || '—';
         document.getElementById('fc-tempo').textContent = r.membro_desde || '—';
         document.getElementById('fc-tipo-sanguineo').textContent = r.tipo_sanguineo || '—';
         document.getElementById('fc-camisa').textContent = r.tamanho_camisa || '—';
