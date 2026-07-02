@@ -360,7 +360,7 @@
         }
         .modal-sa-fechar:hover { color: #333; }
         .modal-sa-body {
-            padding: 20px 24px; overflow-y: auto; flex: 1;
+            padding: 20px 24px; overflow-y: auto; overflow-x: hidden; flex: 1;
         }
         .modal-sa-rodape {
             padding: 16px 24px; border-top: 1px solid var(--cor-borda);
@@ -726,12 +726,9 @@
         const nome = document.getElementById('escola-nome').value.trim();
         if (!nome) { mostrarToast('Informe o nome da escola.', 'erro'); return; }
 
-        const btn = document.getElementById('btn-salvar-escola');
-        btn.disabled = true;
-
         const id = document.getElementById('escola-id').value;
         const sigla = document.getElementById('escola-sigla').value.trim();
-        if (!sigla) { mostrarToast('Informe a sigla da escola.', 'erro'); btn.disabled = false; return; }
+        if (!sigla) { mostrarToast('Informe a sigla da escola.', 'erro'); return; }
 
         const payload = {
             nome,
@@ -754,7 +751,6 @@
             });
         }
 
-        btn.disabled = false;
         if (res.ok) {
             mostrarToast(id ? 'Escola atualizada!' : 'Escola cadastrada!');
             fecharFormEscola();
@@ -919,9 +915,6 @@
         if (!nome) { mostrarToast('Informe o nome da bateria.', 'erro'); return; }
         if (!escolaId) { mostrarToast('Selecione a escola vinculada.', 'erro'); return; }
 
-        const btn = document.getElementById('btn-salvar-bateria');
-        btn.disabled = true;
-
         const id = document.getElementById('bateria-id').value;
         const payload = {
             nome,
@@ -943,7 +936,6 @@
             });
         }
 
-        btn.disabled = false;
         if (res.ok) {
             mostrarToast(id ? 'Bateria atualizada!' : 'Bateria cadastrada!');
             fecharFormBateria();
@@ -1156,9 +1148,6 @@
             if (existente.length) { mostrarToast('Já existe um cadastro com este CPF.', 'erro'); return; }
         }
 
-        const btn = document.getElementById('btn-salvar-acesso');
-        btn.disabled = true;
-
         const payload = { nome, apelido, cpf, perfil, bateria_id: bateriaId };
         if (senha) payload.senha = senha;
         if (!id) payload.status = 'aprovado';
@@ -1174,7 +1163,6 @@
             });
         }
 
-        btn.disabled = false;
         if (res.ok) {
             mostrarToast(id ? 'Acesso atualizado!' : 'Acesso criado com sucesso!');
             fecharFormAcesso();
